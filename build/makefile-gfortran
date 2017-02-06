@@ -1,0 +1,46 @@
+
+PNETCDF=${ESM_SOFT}/pnetcdf/
+
+EXE              = pom2k
+FC	         = gfortran
+FLINKER          = gfortran
+CFLAGS	         =  
+FFLAGS	         =-Wno-tabs -I ${PNETCDF}/include  -J ${DM} -g -fbacktrace
+CPPFLAGS         =
+FPPFLAGS         =
+CLEANFILES       = pom2k *.o *.mod *.nc
+NP               = 1
+SRCDIR           = ./src/
+OBJDIR           = ./lib/
+BINDIR           = ./bin/
+OBJ		 = ${addprefix ${OBJDIR}/, input.o grid.o  file2ic.o proft.o profu.o  \
+		   vertvl.o advave.o baropg.o advct.o advt1.o \
+                   advu.o advv.o dense.o depth.o advq.o profq.o profv.o pom2k.o}
+
+OBJMAIN		 = ${OBJ}
+
+include ${PETSC_DIR}/lib/petsc/conf/variables
+include ${PETSC_DIR}/lib/petsc/conf/rules
+
+${OBJDIR}/%.o: ${SRCDIR}/%.F90
+	-${FC} ${FFLAGS} -c -o $@ $<
+
+main: ${OBJ}
+	-${FLINKER} ${PNETCDF}/lib/libpnetcdf.a ${PETSC_KSP_LIB} -J ${DM} ${DM}/libdm.a -o ${BINDIR}/pom2k ${OBJ}
+
+clean ::
+	-rm lib/*.o
+	-rm bin/${EXE}
+
+check : 
+	-echo ${OBJ}
+	-echo ${DM}
+
+# small:
+# 	make clean
+# 	make main 
+# 	-@${MPIEXEC} -n 4 ./main -m 3 -n 2 -k 3 -ep 3.1 -debug -ksp_type bcgs -pc_type bjacobi -sub_ksp_type preonly -sub_pc_type jacobi
+
+
+
+#include ${PETSC_DIR}/lib/petsc/conf/test
