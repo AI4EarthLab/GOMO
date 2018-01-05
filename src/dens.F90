@@ -8,6 +8,7 @@ subroutine dens(rhoo, t_, s_)
   type(array), intent(inout) :: rhoo
 !  type(array) :: arr
   type(array), intent(in) :: t_, s_
+  type(array) :: zz3d, h3d, fsm3d
   !type(array) :: p, cr, rhor
   type(array) :: tr, sr, tr2, tr3, tr4, p, &
        cr, rhor, rhor1, rhor2, cr1
@@ -18,9 +19,13 @@ subroutine dens(rhoo, t_, s_)
   tr2 = tr * tr;
   tr3 = tr2 * tr;
   tr4 = tr3 * tr;
+
+  zz3d  = make_psudo3d(zz)
+  h3d   = make_psudo3d(h)
+  fsm3d = make_psudo3d(fsm)
   
   !% Approximate pressure in units of bars:
-  p=grav * rhoref * (-zz * mat_ones *  h) * 1.d-5;
+  p=grav * rhoref * (-zz3d * mat_ones *  h3d) * 1.d-5;
 
   rhor2=-0.157406d0+6.793952d-2 * tr-9.095290d-3 * tr2 &
        +1.001685d-4 * tr3 &
@@ -36,7 +41,7 @@ subroutine dens(rhoo, t_, s_)
   
   cr=p / (cr1 * cr1)
   rhor=rhor1+1.d5 * cr * (1.d0-2.d0 * cr);
-  rhoo = rhor / rhoref * fsm;
+  rhoo = rhor / rhoref * fsm3d;
 
 !#ifdef DEBUG
 !  if(get_rank() == 0) &

@@ -16,7 +16,7 @@ subroutine read_init(fnc)
   
   if(get_rank() == 0) &
        print*, "start reading init variables..."
-  
+
   z       = load(fnc,'z');
   zz      = load(fnc,'zz');
   dz      = load(fnc,'dz');

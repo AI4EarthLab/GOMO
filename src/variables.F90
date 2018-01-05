@@ -175,6 +175,7 @@ contains
     
     !call file2ic()
     fnc = trim(in_path)//trim(problem)//".nc"
+    print*, "trim(fnc)=", trim(fnc)
     call read_init(trim(fnc))
 
     dti=dte*isplit;

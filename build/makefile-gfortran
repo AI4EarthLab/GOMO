@@ -60,10 +60,9 @@ ${OBJDIR}/%.o: ${SRCDIR}/%.F90
 
 main : ${OBJ}
 	-${FLINKER} -o ${BINDIR}/pom2k ${OBJ} \
-	-lpnetcdf ${EXT_LIB} \
-	-I ${OPEN_ARRAY} -L${OPEN_ARRAY} \
+	${EXT_LIB} -I ${OPEN_ARRAY} -L${OPEN_ARRAY} \
 	-lopenarray -lm -ldl -lstdc++ \
-	-lboost_program_options -lboost_system -ljit 
+	-lboost_program_options -lboost_system -ljit  -lpnetcdf
 
 run : main
 	-cd ./bin && ./pom2k
