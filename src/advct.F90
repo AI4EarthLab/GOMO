@@ -1,39 +1,58 @@
+#include "common.h"
+
 subroutine advct()
-  use dm
-  use dm_op
-  use grid
-  use input
+  use openarray
+  use config  
+  use variables
   implicit none
+  integer:: ierr, i
 
-  integer         :: ierr
+  ! curv= (ayf_v * DXB(AXF(dy_3d)) &
+  !      - axf_u * DYB(AYF(dx_3d))) / (dx_3d * dy_3d);
 
-  ! curv = dm_zeros(im, jm, kb)
-  ! xflux= dm_zeros(im, jm, kb)
-  ! yflux= dm_zeros(im, jm, kb)
+  curv = (AYF(v) * DXB(AXF(dy))  &
+       - AXF(u) * DYB(AYF(dx))) / (dx * dy)
+  
+  ! do i = 1, kb
+  !    ! CURV(i) = (AYF_V(i) * DXB_AXF_DY - AXF_U(i) * DYB_AYF_DX) &
+  !    !      / (DX_2D * DY_2D)
 
-  ! advx = dm_zeros(im, jm, kb)
-  ! advy = dm_zeros(im, jm, kb)
+  !    CURV_X(i) = (AYF_V(i) * DXB_AXF_DY - AXF_U(i) * DYB_AYF_DX) &
+  !         * DT_3D(1) * AYF_V(1)/ (DX_2D * DY_2D)
 
-  curv = (AYF(v) .em. DXB(AXF(dy_3d)) - &
-       AXF(u) .em. DYB(AYF(dx_3d))) .ed. (dx_3d .em. dy_3d)
+  !    CURV_Y(i) = (AYF_V(i) * DXB_AXF_DY - AXF_U(i) * DYB_AYF_DX) &
+  !         * DT_3D(1) * AXF_U(1)/ (DX_2D * DY_2D)
 
-  xflux= dy_3d .em. (AXF(AXB(dt_3d) .em. u) .em. AXF(u) &
-       - 2.e0 * dt_3d .em. aam .em. DXF(ub) .ed. dx_3d)
+  ! end do
 
-  yflux= AYB(AXB(dx_3d)) .em. ((AXB(AYB(dt_3d) .em. v) .em. AYB(u)) &
-       - AYB(AXB(dt_3d)) .em. AYB(AXB(aam)) .em. &
-       (DYB(ub) .ed. AYB(AXB(dy_3d)) + DXB(vb) .ed. AYB(AXB(dx_3d))))
+  ! call grid_bind(curv_x, gs, ayf_v%grid_pos)
+  ! call grid_bind(curv_y, gs, axf_u%grid_pos)
+  
+  ! tmp1 = dt_3d*aam*2.d0
+  ! tmp2 = axbdt_3d * u
+  ! tmp3 = aybdt_3d * v
+  ! tmp4 = AYB(axbdt_3d ) * AYB(AXB(aam))*(DYB(ub) + DXB(vb))
 
-  advx = DXB(xflux) + DYF(yflux) - aru_3d .em. AXB(curv .em. dt_3d .em. AYF(v))
+  ! advx  = DXB(AXF( tmp2 ) * axf_u - tmp1*DXF(ub)) &
+  !       + DYF(AXB( tmp3 ) * AYB(u) - tmp4 ) &
+  !       - AXB(curv * dt_3d * ayf_v );
 
-  yflux= dx_3d .em. (AYF(AYB(dt_3d) .em. v) .em. AYF(v) &
-       - 2.e0 * dt_3d .em. aam .em. DYF(vb) .ed. dy_3d)
+  advx  = DXB(AXF(AXB(dt) * u) * AXF(u) - dt*aam*2.d0*DXF(ub)) &
+       + DYF(AXB(AYB(dt) * v) * AYB(u) - AYB(AXB(dt)) &
+       * AYB(AXB(aam))*(DYB(ub) + DXB(vb))) &
+       - AXB(curv * dt * AYF(v));
+  
+  call set(sub(advx,1,':',':'), 0.d0)
 
-  xflux= AYB(AXB(dy_3d)) .em. ((AYB(AXB(dt_3d) .em. u) .em. AXB(v)) &
-       - AYB(AXB(dt_3d)) .em. AYB(AXB(aam)) .em. &
-       (DYB(ub) .ed. AYB(AXB(dy_3d)) + DXB(vb) .ed. AYB(AXB(dx_3d))))
+  ! advy  = DXF(AYB( tmp2 ) * AXB(v) - tmp4 ) &
+  !       + DYB(AYF( tmp3 ) * ayf_v - tmp1*DYF(vb)) &
+  !       + AYB(curv * dt_3d * axf_u );
 
-  advy = DXF(xflux) + DYB(yflux) + arv_3d .em. &
-       AYB(curv .em. dt_3d .em. AXF(u)) ! Modify "-aru_3d" to "+arv_3d""
+  advy  = DXF(AYB(AXB(dt) * u) * AXB(v) &
+       - AYB(AXB(dt))*AYB(AXB(aam))*(DYB(ub) + DXB(vb))) &
+       + DYB(AYF(AYB(dt) * v) * AYF(v) - dt * amm * 2.d0 *DYF(vb)) &
+       + AYB(curv * dt * AXF(u));
+  
+  call set(sub(advy,':',1,':'), 0.d0)
 
-end subroutine advct
+end subroutine

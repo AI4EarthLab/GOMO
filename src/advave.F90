@@ -1,61 +1,33 @@
-  subroutine advave(iint)
-    use dm_op
-    use grid
-    use input
-    implicit none
-    integer      :: ierr
-    integer, intent(in) :: iint
 
-    ! if(iint == 3) then
-    !    call dm_print_info(d, ierr)
-    !    call dm_print_info(aam2d, ierr)
-    !    call dm_print_info(uab, ierr)
-    !    call dm_print_info(vab, ierr)              
-    !    call dm_print_info(dx, ierr)
-    !    call dm_print_info(dy, ierr)
-    !    call dm_finalize(ierr)
-    !    stop
-    !  endif
+subroutine advave()
+  use openarray
+  use variables
+  use config
+  implicit none
+  integer:: ierr
 
-    print *, " in file: ", __FILE__, "line:", __LINE__
+  tps = AYB(AXB(d)) * AXB(AYB(aam)) *  (DYB(uab)  + DXB(vab));
 
-       call dm_print_info(d, ierr)
-       call dm_print_info(aam2d, ierr)
-       call dm_print_info(uab, ierr)
-       call dm_print_info(vab, ierr)              
-       call dm_print_info(dx, ierr)
-       call dm_print_info(dy, ierr)
-    
-    tps   = AYB(AXB(d)) .em. AXB(AYB(aam2d)) .em. &
-         (DYB(uab) .em. dm_pow(AYB(AXB(dy)), -1) + &
-         DXB(vab) .em. dm_pow(AYB(AXB(dx)), -1))
+  advua = DXB(AXF( AXB(d) * ua ) * AXF(ua) &
+       - 2.d0 * d * aam * DXF(uab))  &
+       + DYF(AXB(AYB(d) * va ) * AYB(ua)-tps);
+  call set(sub(advua,1,':',':'), 0.d0)
 
-    print *, " in file: ", __FILE__, "line:", __LINE__
-    
-    advua = DXB((AXF(AXB(d) .em. ua) .em. AXF(ua) - 2.e0*d .em. aam2d &
-         .em. DXF(uab) .ed. dx) .em. dy) + &
-         DYF((AXB(AYB(d) .em. va) .em. AYB(ua) - tps) .em. &
-         AYB(AXB(dx)))
+  advva = DXF(AYB( AXB(d) * ua ) * AXB(va)-tps) &
+       +DYB(AYF( AYB(d) * va ) * AYF(va) &
+       - 2.d0 * d * aam * DYF(vab));
+  call set(sub(advva,':',1,':'), 0.d0)
 
-    advva = DYB((AYF(AYB(d) .em. va) .em. AYF(va) - 2.e0*d .em. aam2d &
-         .em. DYF(vab) .ed. dy) .em. dx) + &
-         DXF((AYB(AXB(d) .em. ua) .em. AXB(va) - tps) .em. &
-         AYB(AXB(dy)))
-    print *, " in file: ", __FILE__, "line:", __LINE__
-    
-    if (mode == 2) then
-       print *, " in file: ", __FILE__, "line:", __LINE__
-       
-       wubot = -AXB(cbc) .em. dm_sqrt(dm_squ(uab)+dm_squ(AXB(AYF(vab)))) &
-            .em. uab
-       wvbot = -AYB(cbc) .em. dm_sqrt(dm_squ(vab)+dm_squ(AYB(AXF(uab)))) &
-            .em. vab
-       curv2d= (AYF(va) .em. DXC(dy) - AXF(ua) .em. DYC(dx)) .ed. &
-            (dx .em. dy)
-       advua = advua - aru .em. AXB(curv2d .em. d .em. AYF(va))
-       advva = advva + arv .em. AYB(curv2d .em. d .em. AXF(ua))
-       
-       print *, " in file: ", __FILE__, "line:", __LINE__           
-    end if
+end subroutine
 
-  end subroutine 
+! function  [advua,advva] = advave(aam,uab,vab,ua,va,d)
+
+! % if(mode==2)
+! %     wubot = -AXB(cbc) * sqrt(uab.^2+AXB(AYF(vab)).^2 ) * uab;
+! %     wvbot = -AYB(cbc) * sqrt(vab.^2+AYB(AXF(uab)).^2 ) * vab;
+! %     curv2d = (AYF(va) * DXC(dy) - AXF(ua) * DYC(dx))./(dx*dy);
+! %     advua = advua-aru  * AXB(curv2d * d * AYF(va) );  
+! %     advva = advva+arv  * AYB(curv2d * d * AXF(ua) );
+! % end
+
+!return 

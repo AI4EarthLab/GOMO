@@ -1,0 +1,154 @@
+#:set kernel_file = 'kernels'
+#include "config.h"
+module oa_kernels
+  use oa_dict
+  use oa_petsc
+  use oa_type
+  use oa_array
+  use oa_buffer
+  use oa_transfer
+  use oa_expr
+
+contains
+
+  subroutine init_kernels(ierr)
+    implicit none
+    integer,intent(out) :: ierr
+
+#:if os.path.isfile(kernel_file)
+#:set lines=io.open(kernel_file).read().replace(' ','').split('\n')
+#:for i in lines
+#:if i.strip() != ''
+#:set ii = i.split(':')  
+#:set key=ii[0]
+#:set func_name = 'kernel_{0}'.format(key)
+#:set func=ii[-1]
+    !call dict_add(dict_kernels, ${key}$_8, loc(${func_name}$))    
+    call dict_add(dict_kernels, ${key}$_8, ${func_name}$)
+#:endif    
+#:endfor
+#:endif
+    
+    !call disp(dict_kernels)    
+    ierr = 0
+  end subroutine
+
+#:if os.path.isfile(kernel_file)
+#:set text = io.open(kernel_file).read()
+#:set lines=text.replace(' ','').split('\n')
+#:for i in lines
+#:if i.strip() != ''
+#!  
+#:set ii = i.split(':')  
+#:set key=ii[0]
+#:set func=ii[-1]
+#:set cnt = func.count('A')
+#:set cnt_beta = func.count('X')
+#:set cnt_alpha = func.count('Y')
+#:set cnt_arg = func.count('N')
+
+  !> function ${func}$
+  subroutine kernel_${key}$(A, B, ops_alpha, &
+       ops_beta, ops_args, ops_num, args_num,  A_alpha, A_beta, ierr)
+    implicit none
+    type(array), intent(inout) :: A
+    type(array_ptr), intent(in) :: B(:)
+    real(8), intent(in) :: ops_alpha(:), A_alpha, A_beta
+    real(8), intent(in) :: ops_beta(:)
+    integer, intent(in)  :: args_num, ops_num    
+    real(8), intent(in) :: ops_args(:)
+    real(8), pointer :: res(:,:,:)
+    integer :: xs, xe, ys, ye, zs, ze, i,j,k
+    integer, intent(out) :: ierr
+    real(8) :: t1, t2, inf
+#:for c in range(1,cnt+1)
+    real(8), pointer :: ${'{0}{1}'.format('x', c)}$(:,:,:)
+    type(array), pointer :: ${'{0}{1}'.format('B', c)}$
+#:endfor
+
+    t1 = 1.0
+    t2 = 0.0
+    inf = t1 / t2
+    
+    res => A%data
+    ! print*, "res = ", lbound(res), ubound(res)
+    !print*, "ops_beta", ops_beta
+    !print*, "ops_alpha", ops_alpha
+    ! if(size(ops_args) > 0) then
+    !    print*, "ops_args=", ops_args
+    ! end if
+    
+    call set_corners(lbox(A), xs,ys,zs,xe,ye,ze)
+
+#:for c in range(1,cnt+1)
+    B${c}$ => null()    
+    if(is_equal(A%dmda, B(${c}$)%ptr%dmda)) then
+       x${c}$ => B(${c}$)%ptr%data       
+    else
+       print*, "A is not equal to B(${c}$)"
+       call transfer(B${c}$, A, B(${c}$)%ptr)
+       x${c}$ => B${c}$%data
+    end if
+    !print*, "x${c}$ = ", lbound(x${c}$), ubound(x${c}$)
+#:endfor
+
+#:mute    
+#:set expr = func    
+
+#!:for c in range(1,cnt+1)
+#:for c in range(cnt,0,-1)    
+#:set expr = expr.replace('A{0}'.format(c), 'x'+str(c)+'(i,j,k)', 1)
+#:endfor
+    
+#:for c in range(cnt_beta,0,-1)
+#:set expr = expr.replace('X{0}'.format(c), 'ops_beta({0})'.format(c), 1)
+#:endfor
+
+#:for c in range(cnt_alpha,0,-1)
+#:set expr = expr.replace('Y{0}'.format(c), 'ops_alpha({0})'.format(c), 1)
+#:endfor
+
+#:for c in range(cnt_arg,0,-1)
+#:set expr = expr.replace('N{0}'.format(c), 'ops_args({0})'.format(c), 1)
+#:endfor
+    
+#:endmute
+
+    ! call tic()
+    ! res(:,:,:) = ${expr}$
+    ! call toc()
+    
+    do k = zs,ze
+       do j = ys, ye
+          !dir$ simd 
+          do i = xs, xe
+             res(i, j, k) = ${expr}$
+          end do
+       end do
+    end do
+
+#:if expr.count('/') > 0
+    do k = zs,ze
+       do j = ys, ye
+          do i = xs, xe
+             if(i == xs .or. i == xe .or. &
+                  j == ys .or. j == ye .or. &
+                  k == zs .or. k == ze) then
+                if(isnan(res(i, j, k)) .or. &
+                     res(i,j,k)==inf) &
+                  res(i,j,k) = 0
+             endif
+          end do
+       end do
+    end do
+#:endif
+    
+#:for c in range(1,cnt+1)    
+    call release_ptr(B${c}$)
+#:endfor
+    
+  end subroutine
+#:endif
+#:endfor
+#:endif
+end module
