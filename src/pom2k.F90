@@ -29,13 +29,13 @@ program pom2k
   !both namelist data and init data will be loaded.
   call init_variables()
 
-!  call grid_init('C', dx, dy, dz)
+  call grid_init('C', dx, dy, dz)
   
   !write(*,*) "====end of init_grids"
-!  call init_fields()
+  call init_fields()
 
   ! !write(*,*) "====end of init_fields"
-!  call update_initial()
+  call update_initial()
   ! !write(*,*) "====end of update_initial"
 
 !  call bottom_friction()

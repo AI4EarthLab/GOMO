@@ -10,9 +10,12 @@ subroutine update_initial()
   ua = uab;
   va = vab;
   el = elb;
+
   d  = h + el
+
   et = etb;
   etf= et;
+
   dt = h + et;
 
   ! do k=1,kb
@@ -27,13 +30,13 @@ subroutine update_initial()
 
   ! axbdt = AXB(dt)
   ! aybdt = AYB(dt)
-  
+
   l = dt * 0.1d0
 
   l = make_psudo3d(l)
-  
+
   call grid_bind(l, 7)
-  
+
   q2b = small
   q2 = q2b
   q2lb = l * q2b
