@@ -173,7 +173,7 @@ contains
     curv = mat_zeros
     curv_x = mat_zeros;  curv_y = mat_zeros
     curv2d = mat_zeros_im_jm_1
-    
+
     !call file2ic()
     fnc = trim(in_path)//trim(problem)//".nc"
     print*, "trim(fnc)=", trim(fnc)

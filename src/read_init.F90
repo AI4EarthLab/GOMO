@@ -158,7 +158,7 @@ subroutine read_init(fnc)
 
   ![rho]=dens(sb,tb,h_3d,fsm_3d);
   !call disp(sb, 'tb = ')  
- 
+
   call dens(rho, tb, sb)
 
   ! call disp(tb, 'tb = ')  
