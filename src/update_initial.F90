@@ -25,10 +25,12 @@ subroutine update_initial()
   ! axbdt_3d=AXB(dt_3d)
   ! aybdt_3d=AYB(dt_3d)
 
-  axbdt = AXB(dt)
-  aybdt = AYB(dt)
+  ! axbdt = AXB(dt)
+  ! aybdt = AYB(dt)
   
-  l = dt_3d * 0.1d0
+  l = dt * 0.1d0
+
+  l = make_psudo3d(l)
   
   call grid_bind(l, 7)
   
@@ -46,9 +48,9 @@ subroutine update_initial()
   t = tb
   s = sb
   u = ub
-  axf_u=AXF(u)
+  !axf_u=AXF(u)
   v = vb
-  ayf_v=AYF(v)
+  !ayf_v=AYF(v)
 
 !  call dens(rho, t, s)
 

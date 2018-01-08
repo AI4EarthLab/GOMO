@@ -29,40 +29,40 @@ program pom2k
   !both namelist data and init data will be loaded.
   call init_variables()
 
-  ! call grid_init('C', dx, dy, dz)
+  call grid_init('C', dx, dy, dz)
   
   !write(*,*) "====end of init_grids"
-  ! call init_fields()
+  call init_fields()
 
   ! !write(*,*) "====end of init_fields"
-  ! call update_initial()
+  call update_initial()
   ! !write(*,*) "====end of update_initial"
 
-  ! call bottom_friction()
+  call bottom_friction()
   ! !write(*,*) "====end of bottom_friction"
 
   !  open(unit=60,file='conservation7200.txt')
   !  write(60,'(2A21,3A12,A27,A10)')'vtot','atot','eaver','taver','saver','tsalt','vamax'
 
-!   do iint = 1, iend
+  do iint = 1, iend
 
 !      if(get_rank()==0) print*,"============iint=============",iint
 !      call tic('10')
 
-!      call get_time(iint)
+     call get_time(iint)
+     print*, "time = ", time
 
-!      call tic("surf_forcing")
-!      call surface_forcing(iint)
-!      call toc("surf_forcing")     
+     call tic("surf_forcing")
+     call surface_forcing(iint)
+     call toc("surf_forcing")     
 
-!      call tic("lateral_bc")     
-!      call lateral_bc(iint)
-!      call toc("lateral_bc")          
+     call tic("lateral_bc")     
+     call lateral_bc(iint)
+     call toc("lateral_bc")          
 
-
-!      call tic("lateral_vis")          
-!      call lateral_viscosity()
-!      call toc("lateral_vis")
+     call tic("lateral_vis")          
+     call lateral_viscosity()
+     call toc("lateral_vis")
 
 !      call tic("mode_inter")
 !      call mode_interaction()
@@ -90,7 +90,7 @@ program pom2k
 !         call external_update(iext, vamax, imax, jmax)
 !         call toc("external_update")        
 
-!      end do
+!  end do
 
 !      ! =============================================
 !      ! End of external (2-D) mode
@@ -172,7 +172,7 @@ program pom2k
 
 !      if(iint == max_step) goto 500
 !      !     call toc(1)
-!   enddo
+  enddo
 
 500 print*,"printout at end, iint = ", iint
   !  call disp(uf, 'uf = ')

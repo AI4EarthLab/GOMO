@@ -10,7 +10,7 @@ subroutine lateral_viscosity()
   call tic("advct")
   call advct()
   call toc("advct")
-  
+
   if(npg == 1) then
      call tic("baropg")
      call baropg()
@@ -21,7 +21,7 @@ subroutine lateral_viscosity()
      print*, "Error: invalid value for npg"
      stop
   endif
-
+  print*, "xxxxxxxxx"
   call tic("aam")
 
   aam=horcon * dx * dy &

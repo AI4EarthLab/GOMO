@@ -12,7 +12,9 @@ subroutine bottom_friction()
   !cbc=(kappa./log((1.0+zz(kbm1))*h/z0b)).^2;
   cbc=(kappa/log((1.0+zz_kbm1)*h/z0b))**2;
 
-  cbc=max(cbcmin, cbc);
-  cbc=min(cbcmax, cbc);
+  ! cbc=max(cbcmin, cbc);
+  ! cbc=min(cbcmax, cbc);
 
+  call set(cbc, cbcmin, cbc < cbcmin)
+  call set(cbc, cbcmax, cbc > cbcmax)
 end subroutine

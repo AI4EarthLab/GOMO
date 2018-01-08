@@ -6,13 +6,21 @@ subroutine advct()
   use variables
   implicit none
   integer:: ierr, i
-
+  type(array) :: tmp
+  
   ! curv= (ayf_v * DXB(AXF(dy_3d)) &
   !      - axf_u * DYB(AYF(dx_3d))) / (dx_3d * dy_3d);
 
-  curv = (AYF(v) * DXB(AXF(dy))  &
-       - AXF(u) * DYB(AYF(dx))) / (dx * dy)
+  !! Warning, this expression will stuck...
+  ! tmp = (AYF(v) * DXB(AXF(dy))  &
+  !      - AXF(u) * DYB(AYF(dx))) / (dx * dy)
   
+  ! call disp(tmp, 'tmp = ')
+
+
+  curv = (AYF(v) * DXB(AXF(dy))  &
+       - AXF(u) * DYB(AYF(dx))) / dx / dy
+
   ! do i = 1, kb
   !    ! CURV(i) = (AYF_V(i) * DXB_AXF_DY - AXF_U(i) * DYB_AYF_DX) &
   !    !      / (DX_2D * DY_2D)
@@ -37,6 +45,8 @@ subroutine advct()
   !       + DYF(AXB( tmp3 ) * AYB(u) - tmp4 ) &
   !       - AXB(curv * dt_3d * ayf_v );
 
+  dt = make_psudo3d(dt)
+
   advx  = DXB(AXF(AXB(dt) * u) * AXF(u) - dt*aam*2.d0*DXF(ub)) &
        + DYF(AXB(AYB(dt) * v) * AYB(u) - AYB(AXB(dt)) &
        * AYB(AXB(aam))*(DYB(ub) + DXB(vb))) &
@@ -50,7 +60,7 @@ subroutine advct()
 
   advy  = DXF(AYB(AXB(dt) * u) * AXB(v) &
        - AYB(AXB(dt))*AYB(AXB(aam))*(DYB(ub) + DXB(vb))) &
-       + DYB(AYF(AYB(dt) * v) * AYF(v) - dt * amm * 2.d0 *DYF(vb)) &
+       + DYB(AYF(AYB(dt) * v) * AYF(v) - dt * aam * 2.d0 *DYF(vb)) &
        + AYB(curv * dt * AXF(u));
   
   call set(sub(advy,':',1,':'), 0.d0)

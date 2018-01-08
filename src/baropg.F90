@@ -9,13 +9,24 @@ subroutine baropg()
   implicit none
   integer:: ierr
 
-  drhox=ramp * grav * AXB(dt)  * csum(-DZB(zz) &
-       * AXB(dt)   * DXB(AZB(rho - rmean)) &
-       + DXB(dt) * DZB(AXB(rho - rmean)) *  &
-       AZB(zz) * AZB(dz) , 3) * dum;
+  zz = make_psudo3d(zz)
+  dz = make_psudo3d(dz)
+  dum = make_psudo3d(dum)
+  
+  ! drhox=ramp * grav * AXB(dt)  * csum(-DZB(zz) &
+  !      * DXB(AZB(rho - rmean)) * AXB(dt) &
+  !      + DXB(dt) * DZB(AXB(rho - rmean)) &
+  !      * AZB(zz) * AZB(dz) , 3) * dum;
 
+  print*, "ramp=", ramp
+  ! drhox=ramp*AXB(dt)*mat_ones;
+
+  drhox=AXB(dt)*mat_ones*ramp;
+  
+  call disp(drhox, 'drhox = ')
+  
   drhoy=ramp * grav * AYB(dt)  * csum(-DZB(zz) &
-       * AYB(dt)   * DYB(AZB(rho - rmean))  &
+       * DYB(AZB(rho - rmean)) * AYB(dt)  &
        + DYB(dt) * DZB(AYB(rho - rmean))  &
        * AZB(zz) * AZB(dz) , 3) * dvm;
   
@@ -41,7 +52,7 @@ subroutine baropg_mcc()
   tmpddx=   DXB(d)* dum; tmpd4= AXB(d)*dum;
 
   !tmpdrho=create_field(tmpdrho),gs,3);     
-  call grid_bind(tmp_drho, gs, 3)
+  call grid_bind(tmp_drho, 3)
   
   drho=tmpdrho -(DXB(DXF(DXB(rho)*dum)) / AXB(dx)&
        -2.0*DXB(rho) *(1-dum))/24.0;
@@ -78,7 +89,7 @@ subroutine baropg_mcc()
   tmpd4=     AYB(d)*dvm;
   
   !tmpdrho=create_field(tmpdrho),gs,3);
-  call grid_bind(tmpdrho, gs, 3)
+  call grid_bind(tmpdrho, 3)
 
   
   drho=tmpdrho-(DYB(DYF(DYB(rho) * dvm)) &
