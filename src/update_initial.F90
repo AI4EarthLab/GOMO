@@ -33,7 +33,7 @@ subroutine update_initial()
 
   l = dt * 0.1d0
 
-  l = make_psudo3d(l)
+  !l = make_psudo3d(l)
 
   call grid_bind(l, 7)
 

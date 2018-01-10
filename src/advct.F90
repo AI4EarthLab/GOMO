@@ -45,7 +45,7 @@ subroutine advct()
   !       + DYF(AXB( tmp3 ) * AYB(u) - tmp4 ) &
   !       - AXB(curv * dt_3d * ayf_v );
 
-  dt = make_psudo3d(dt)
+  !dt = make_psudo3d(dt)
 
   advx  = DXB(AXF(AXB(dt) * u) * AXF(u) - dt*aam*2.d0*DXF(ub)) &
        + DYF(AXB(AYB(dt) * v) * AYB(u) - AYB(AXB(dt)) &

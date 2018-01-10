@@ -9,9 +9,9 @@ subroutine baropg()
   implicit none
   integer:: ierr
 
-  zz = make_psudo3d(zz)
-  dz = make_psudo3d(dz)
-  dum = make_psudo3d(dum)
+  !zz = make_psudo3d(zz)
+  !dz = make_psudo3d(dz)
+  !dum = make_psudo3d(dum)
   
   ! drhox=ramp * grav * AXB(dt)  * csum(-DZB(zz) &
   !      * DXB(AZB(rho - rmean)) * AXB(dt) &

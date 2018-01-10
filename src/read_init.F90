@@ -44,8 +44,8 @@ subroutine read_init(fnc)
 
   dx      = load(fnc,'dx')       ; !call disp(dx, 'dx = ')
   dy      = load(fnc,'dy')       ; !call disp(dy, 'dy = ')
-  dx      = make_psudo3d(dx)
-  dy      = make_psudo3d(dy)
+  !dx      = make_psudo3d(dx)
+  !dy      = make_psudo3d(dy)
   cor     = load(fnc,'cor')      ; !call disp(cor, 'cor = ')
   h       = load(fnc,'h')        ;
   fsm     = load(fnc,'fsm')      ;

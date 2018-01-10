@@ -38,7 +38,7 @@ program pom2k
   call update_initial()
   ! !write(*,*) "====end of update_initial"
 
-!  call bottom_friction()
+  call bottom_friction()
   ! !write(*,*) "====end of bottom_friction"
 
   !  open(unit=60,file='conservation7200.txt')
@@ -53,7 +53,7 @@ program pom2k
      print*, "time = ", time
 
      call tic("surf_forcing")
- !    call surface_forcing(iint)
+     !call surface_forcing(iint)
      call toc("surf_forcing")     
 
      call tic("lateral_bc")     
