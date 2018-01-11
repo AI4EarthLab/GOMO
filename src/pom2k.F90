@@ -53,20 +53,20 @@ program pom2k
      print*, "time = ", time
 
      call tic("surf_forcing")
-     !call surface_forcing(iint)
+     call surface_forcing(iint)
      call toc("surf_forcing")     
 
      call tic("lateral_bc")     
- !    call lateral_bc(iint)
+     call lateral_bc(iint)
      call toc("lateral_bc")          
 
      call tic("lateral_vis")          
-!     call lateral_viscosity()
+     call lateral_viscosity()
      call toc("lateral_vis")
 
-!      call tic("mode_inter")
-!      call mode_interaction()
-!      call toc("mode_inter")
+     call tic("mode_inter")
+     call mode_interaction()
+     call toc("mode_inter")
 
 
 !      !==============================================

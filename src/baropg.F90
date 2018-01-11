@@ -23,7 +23,7 @@ subroutine baropg()
 
   drhox=AXB(dt)*mat_ones*ramp;
   
-  call disp(drhox, 'drhox = ')
+  !call disp(drhox, 'drhox = ')
   
   drhoy=ramp * grav * AYB(dt)  * csum(-DZB(zz) &
        * DYB(AZB(rho - rmean)) * AYB(dt)  &

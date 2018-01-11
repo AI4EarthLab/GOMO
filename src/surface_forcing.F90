@@ -12,7 +12,7 @@ subroutine surface_forcing(iint)
        wvsurfb, wvsurff
   integer :: ierr
 
-  print*, "nsbdy = ", nsbdy, 'iint=',iint
+  !print*, "nsbdy = ", nsbdy, 'iint=',iint
   select case (nsbdy)
   case (1,2,3)
      if(iint == 1) then
@@ -30,9 +30,9 @@ subroutine surface_forcing(iint)
 
         ! call disp(mat_zeros_im_jm_1, 'imjm')
         ! call disp(mat_zeros, 'zeros')        
-         call disp(vfluxf, 'vfluxf=')
-         call disp(s, 's=')
-         call display(sub(s,':',':',1)+sbias, 'XX')
+         ! call disp(vfluxf, 'vfluxf=')
+         ! call disp(s, 's=')
+         ! call display(sub(s,':',':',1)+sbias, 'XX')
         
         wssurf=  -vfluxf * (sub(s,':',':',1)+sbias);
         !call disp(wssurf, 'wssurf = ')
