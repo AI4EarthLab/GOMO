@@ -24,12 +24,9 @@ subroutine bcond2_va()
   call set(sub(vaf,[2,imm1], 2), sub(tmp,[2,imm1], 2))
   call set(sub(vaf,[2,imm1], 1), sub(tmp,[2,imm1], 2))  
 
-  call set(sub(vaf, im, r(2,jmm1)), 0.e0)
-  call set(sub(vaf, 1,  r(2,jmm1)), 0.e0)
+  call set(sub(vaf, im, [2,jmm1]), 0.e0)
+  call set(sub(vaf, 1,  [2,jmm1]), 0.e0)
   
   vaf = vaf * dvm
-
-  call destroy(tmpva,ierr); call destroy(tmpel,ierr)
-  call destroy(tmp,ierr)
 
 end subroutine 

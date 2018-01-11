@@ -69,59 +69,58 @@ program pom2k
      call toc("mode_inter")
 
 
-!      !==============================================
-!      ! Begin external (2-D) mode
-!      !==============================================
-!      do iext=1,int(isplit)
+      !==============================================
+      ! Begin external (2-D) mode
+      !==============================================
+      do iext=1,int(isplit)
 
-!         call tic("external_el")
-!         call external_el()
-!         call toc("external_el")        
+         call tic("external_el")
+         call external_el()
+         call toc("external_el")        
 
-!         call tic("external_ua")        
-!         call external_ua(iext)
-!         call toc("external_ua")        
+         call tic("external_ua")        
+         call external_ua(iext)
+         call toc("external_ua")        
 
-!         call tic("external_va")
-!         call external_va(iext)
-!         call toc("external_va")        
+         call tic("external_va")
+         call external_va(iext)
+         call toc("external_va")        
 
-!         call tic("external_update")
-!         call external_update(iext, vamax, imax, jmax)
-!         call toc("external_update")        
+         call tic("external_update")
+         call external_update(iext, vamax, imax, jmax)
+         call toc("external_update")        
 
-!  end do
+      end do
 
-!      ! =============================================
-!      ! End of external (2-D) mode
-!      ! =============================================
+      ! =============================================
+      ! End of external (2-D) mode
+      ! =============================================
 
-!      ! do k=1, kb
-!      !    EGF_3D(k)=EGF_2D
-!      !    D_3D(k)  =D_2D
-!      !    ETF_3D(k)=ETF_2D
-!      ! enddo
-!      ! dhf_3d=h_3d+etf_3d
-!      dhf = h + etf;
+      ! do k=1, kb
+      !    EGF_3D(k)=EGF_2D
+      !    D_3D(k)  =D_2D
+      !    ETF_3D(k)=ETF_2D
+      ! enddo
+      ! dhf_3d=h_3d+etf_3d
+      dhf = h + etf;
      
-!      if(vamax <= vmaxl) then 
-!         if(((iint/=1).or.(time0/=0.e0) ).and. (mode/=2)) then
+      if(vamax <= vmaxl) then 
+         if(((iint/=1).or.(time0/=0.e0) ).and. (mode/=2)) then
 
-!            ! print*,'adjust_uv t='
-!            call tic("adjust_uv")          
-!            call adjust_uv()
-!            call toc("adjust_uv")
+            ! print*,'adjust_uv t='
+            call tic("adjust_uv")          
+            call adjust_uv()
+            call toc("adjust_uv")
 
-!            ! print*,'internal_w t='
-!            call tic("internal_w")
-
-!            call internal_w()
-!            call toc("internal_w")
+            ! print*,'internal_w t='
+            call tic("internal_w")
+            call internal_w()
+            call toc("internal_w")
            
-!            ! print*,'internal_q t='
-!            call tic("internal_q")
-!            call internal_q()
-!            call toc("internal_q")
+            ! print*,'internal_q t='
+            call tic("internal_q")
+            call internal_q()
+            call toc("internal_q")
            
 !            ! print*,'internal_t t='
 !            call tic("internal_t1")
@@ -154,14 +153,14 @@ program pom2k
 !            call tic("adjust_ufvf")
 !            call adjust_ufvf()
 !            call toc("adjust_ufvf")
-!         endif
+         endif
 
 !         ! print*, 'internal_update'
 !         call tic("int_update")
 !         call internal_update()
 !         call toc("int_update")
 
-!      endif
+      endif
 
 !      ! print*, "print_seciton"
 !      call print_section(iint, iext, vamax,imax,jmax, &

@@ -1,7 +1,6 @@
 subroutine external_va(iext)
   use openarray
   use variables
-  use oa_expr
   use config
   implicit none
   integer :: iext

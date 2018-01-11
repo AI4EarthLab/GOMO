@@ -21,11 +21,11 @@ subroutine adjust_uv()
   ! U(kb)=0.d0
   ! V(kb)=0.d0
   
-  call set(u, u-sum(u*dz, 3) + (utb+utf)/(2.d0 * AXB(dt)))
+  u = u-sum(u*dz, 3) + (utb+utf)/(2.d0 * AXB(dt))
   call set(sub(u,':',':',kb) , 0.d0)
   !axf_u=AXF(u)
 
-  call set(v, v-sum(v*dz, 3) + (vtb+vtf)/(2.d0 * AYB(dt)))
+  v = v-sum(v*dz, 3) + (vtb+vtf)/(2.d0 * AYB(dt))
   call set(sub(v,':',':',kb) , 0.d0)
   !ayf_v=AYF(v)
 

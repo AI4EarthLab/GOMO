@@ -45,7 +45,12 @@ OBJ	= ${addprefix ${OBJDIR}/, config.o \
 		read_var.o surface_forcing.o \
 		lateral_bc.o advct.o baropg.o \
 		lateral_viscosity.o advave.o \
-		mode_interaction.o \
+		mode_interaction.o bcond1.o \
+		external_el.o bcond2_ua.o \
+		external_ua.o external_va.o \
+		bcond2_va.o external_update.o \
+		adjust_uv.o internal_w.o\
+		internal_q.o \
 		pom2k.o}
 
 OBJMAIN	= ${OBJ}
