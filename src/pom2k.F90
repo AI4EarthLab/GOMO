@@ -1,12 +1,10 @@
 
 #include "common.h"
-!#include "macro.h"
 #define STENCIL_BOX 1
 program pom2k
   use openarray
   use config
   use variables
-  ! use oa_kernels
   implicit none
   integer :: ierr
   integer :: myrank, mysize
@@ -19,8 +17,6 @@ program pom2k
   !call tic(11)
   call oa_init(MPI_COMM_WORLD, [-1,-1,1])
 
-  !call init_kernels(ierr)
-
   call set_stencil(STENCIL_BOX, 1)
 
   !get commandline option
@@ -30,16 +26,18 @@ program pom2k
   call init_variables()
 
   call grid_init('C', dx, dy, dz)
-  
   !write(*,*) "====end of init_grids"
-  call init_fields()
 
-  ! !write(*,*) "====end of init_fields"
+  call init_fields()
+  !write(*,*) "====end of init_fields"
+
   call update_initial()
-  ! !write(*,*) "====end of update_initial"
+  !write(*,*) "====end of update_initial"
+
+  return
 
   call bottom_friction()
-  ! !write(*,*) "====end of bottom_friction"
+  !write(*,*) "====end of bottom_friction"
 
   !  open(unit=60,file='conservation7200.txt')
   !  write(60,'(2A21,3A12,A27,A10)')'vtot','atot','eaver','taver','saver','tsalt','vamax'
@@ -104,10 +102,11 @@ program pom2k
       ! dhf_3d=h_3d+etf_3d
       dhf = h + etf;
      
+      vamax = 50.0 ! add by 57
       if(vamax <= vmaxl) then 
          if(((iint/=1).or.(time0/=0.e0) ).and. (mode/=2)) then
 
-            ! print*,'adjust_uv t='
+            print*,'adjust_uv t='
             call tic("adjust_uv")          
             call adjust_uv()
             call toc("adjust_uv")

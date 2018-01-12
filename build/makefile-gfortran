@@ -37,6 +37,7 @@ OOO              = \
 		oa_kernels.o
 
 
+#		bcond6.o smoth_update.o\
 
 OBJ	= ${addprefix ${OBJDIR}/, config.o \
 		variables.o dens.o read_init.o  \

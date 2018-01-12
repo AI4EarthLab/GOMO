@@ -13,8 +13,8 @@ module config
   real(kind=8) :: alpha, tbias, sbias, tatm, satm
   integer :: iproblem
   character(len=60) :: problem
-  integer :: days, npg
-  real(kind=8) :: small, pi, rhoref, grav, kappa
+  integer :: npg
+  real(kind=8) :: days, small, pi, rhoref, grav, kappa
   real(kind=8) :: z0b, cbcmin, cbcmax, horcon, umol, hmax
   real(kind=8) :: smoth, aam_init, ramp, vmaxl
   character(len=60) :: source,title, netcdf_file, time_start
