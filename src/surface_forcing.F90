@@ -16,26 +16,18 @@ subroutine surface_forcing(iint)
   select case (nsbdy)
   case (1,2,3)
      if(iint == 1) then
-        ! vfluxf(:,:)=0.e0;   wtsurf(:,:)=0.0;
-        vfluxf = 0.0; wtsurf = 0.0
+       vfluxf = 0.0; wtsurf = 0.0
+       satm = 0.0; tatm = 0.0
+       
+       ! in matlab set all variables to be zero
 
-        !satm=0.e0;          tatm=zeros(im,jm);
-        satm = 0.0; tatm = 0.0
-        
-        !tatm(:,:)=t(:,:,1)+tbias ;
-        !tatm = sub(t, ':',':',1) + tbias;
+       !tatm = sub(t, ':',':',1) + tbias;
+       !wtsurf=  wtsurf+vfluxf*(tatm-sub(t,':',':',1)-tbias);
+       !wssurf=  -vfluxf * (satm - sub(s,':',':',1)+sbias);
 
-        !wtsurf=  wtsurf+vfluxf.*(tatm-t(:,:,1)-tbias);
-        wtsurf = 0.0
+       wtsurf = mat_zeros_im_jm_1;
+       wssurf = mat_zeros_im_jm_1;
 
-        ! call disp(mat_zeros_im_jm_1, 'imjm')
-        ! call disp(mat_zeros, 'zeros')        
-         ! call disp(vfluxf, 'vfluxf=')
-         ! call disp(s, 's=')
-         ! call display(sub(s,':',':',1)+sbias, 'XX')
-        
-        wssurf=  -vfluxf * (sub(s,':',':',1)+sbias);
-        !call disp(wssurf, 'wssurf = ')
      else
         call set(sub(w, ':',':',1), vfluxf)
         return

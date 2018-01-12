@@ -12,9 +12,7 @@ subroutine get_time(iint)
   
   time=dti*iint*1.0/86400.0+time0;
   
-  !if(lramp~=0)
   if(lramp) then
-     !ramp = time/( (2.0*pi)/abs(cor(floor(im/2),floor(jm/2)))/86400.0 );
      cor_im2_jm2 = sub(cor, int(im/2),int(jm/2), 1)
      ramp = time/((2.0*pi)/abs(cor_im2_jm2)/86400.0);
 

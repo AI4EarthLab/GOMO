@@ -154,6 +154,10 @@ contains
     dhf = mat_zeros_im_jm_1;
     dhb = mat_zeros_im_jm_1;
     
+    !------------------------------------------------------
+    !                   start of 3d
+    !------------------------------------------------------
+
     ! d_3d=mat_zeros            ;dt_3d=mat_zeros           ;
     ! dhf_3d=mat_zeros          ;dhb_3d=mat_zeros          ;
     ! egf_3d=mat_zeros          ;etf_3d=mat_zeros          ;
@@ -163,10 +167,14 @@ contains
     ! dz_3d=mat_zeros           ;dzz_3d=mat_zeros          ;
     ! dx_3d=mat_zeros           ;dy_3d =mat_zeros          ;
     
-    ! art_3d=mat_zeros          ;arv_3d=mat_zeros           ;
+    ! art_3d=mat_zeros          ;arv_3d=mat_zeros          ;
     ! aru_3d=mat_zeros          ;fsm_3d=mat_zeros          ;
     ! dum_3d=mat_zeros          ;dvm_3d=mat_zeros          ;
     ! h_3d  =mat_zeros          ;
+
+    !------------------------------------------------------
+    !                   end of 3d
+    !------------------------------------------------------
     
     rad = mat_zeros           
 

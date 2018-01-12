@@ -104,14 +104,21 @@ subroutine read_init(fnc)
   wtsurf = load(fnc,'wtsurf');
   swrad  = load(fnc,'swrad');
 
-!  do i=1,im
-!     do j=1,jm
-!      Z_3D(i,j)=Z_1D
-!      ZZ_3D(i,j)=ZZ_1D
-!      DZ_3D(i,j)=DZ_1D
-!      DZZ_3D(i,j)=DZZ_1D
-!     enddo
-!  enddo
+  dxb_axf_dy = DXB(AXF(dy))
+  dyb_ayf_dx = DYB(AYF(dx))
+
+  !------------------------------------------------------
+  !                   start of 3d
+  !------------------------------------------------------
+
+  !  do i=1,im
+  !     do j=1,jm
+  !      Z_3D(i,j)=Z_1D
+  !      ZZ_3D(i,j)=ZZ_1D
+  !      DZ_3D(i,j)=DZ_1D
+  !      DZZ_3D(i,j)=DZZ_1D
+  !     enddo
+  !  enddo
 
   ! do k=1,kb
   !  DX_3D(k) =DX_2D
@@ -130,9 +137,6 @@ subroutine read_init(fnc)
   ! zz_3d = rep(zz,im,jm,1);
   ! dz_3d = rep(dz,im,jm,1);
   ! dzz_3d = rep(dzz,im,jm,1);
-
-  dxb_axf_dy = DXB(AXF(dy))
-  dyb_ayf_dx = DYB(AYF(dx))
   
   !  dx_3d=rep(dx,1,1,kb);
   !  cor_3d=rep(cor,1,1,kb);  
@@ -154,14 +158,11 @@ subroutine read_init(fnc)
   !    call MPI_Barrier(get_comm(A), ierr)
   ! enddo
 
-  ![rho]=dens(sb,tb,h_3d,fsm_3d);
-  !call disp(sb, 'tb = ')  
+  !------------------------------------------------------
+  !                   end of 3d
+  !------------------------------------------------------
 
   call dens(rho, tb, sb)
-
-  ! call disp(tb, 'tb = ')  
-  !call disp(rho, 'rho = ')
-  ! stop
 
   if(fclim_flag) then
      call dens(rmean, sclim, tclim)
@@ -169,6 +170,5 @@ subroutine read_init(fnc)
      call set(sub(rmean, ':',':',[1,kbm1]), &
           sub(rho,':',':',[1,kbm1]))
   end if
-
 
 end subroutine

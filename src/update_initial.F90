@@ -10,13 +10,15 @@ subroutine update_initial()
   ua = uab;
   va = vab;
   el = elb;
-
-  d  = h + el
-
   et = etb;
   etf= et;
 
+  d  = h + el
   dt = h + et;
+
+  !------------------------------------------------------
+  !                   start of 3d
+  !------------------------------------------------------
 
   ! do k=1,kb
   !   DT_3D(k) =DT_2D
@@ -31,16 +33,16 @@ subroutine update_initial()
   ! axbdt = AXB(dt)
   ! aybdt = AYB(dt)
 
-  l = dt * 0.1d0
+  !------------------------------------------------------
+  !                   end of 3d
+  !------------------------------------------------------
 
-  !l = make_psudo3d(l)
+  l = dt * 0.1d0
 
   call grid_bind(l, 7)
 
   q2b = small
-  q2 = q2b
   q2lb = l * q2b
-  q2l = q2lb
   kh = l * sqrt(q2b)
   km = kh
   kq = kh
@@ -48,29 +50,25 @@ subroutine update_initial()
 
   call set(sub(w, ':',':',1), vfluxf)
 
+  q2 = q2b
+  q2l = q2lb
   t = tb
   s = sb
   u = ub
-  !axf_u=AXF(u)
   v = vb
-  !ayf_v=AYF(v)
 
-!  call dens(rho, t, s)
+  call dens(rho, t, s)
 
-!  if(npg == 1) then
-     ![drhox,drhoy]   = baropg(rho, rmean, dt_3d, ramp);
-!     call baropg()
-!  elseif(npg == 2) then
-     ![drhox,drhoy]   = baropg_mcc(rho,rmean,d_3d,dt_3d,ramp);
-!     call baropg_mcc()     
-!  else
-!     print*, "Error: invalid value for npg";
-!     stop
-!  end if
+  if(npg == 1) then
+     call baropg()
+  elseif(npg == 2) then
+     call baropg_mcc()     
+  else
+     print*, "Error: invalid value for npg";
+     stop
+  end if
 
-  ! drx2d=sum(drhox.*dz_3d, 3);
-  ! dry2d=sum(drhoy.*dz_3d, 3);
-  ! drx2d = sum(drhox * dz_3d, 3)
-  ! dry2d = sum(drhoy * dz_3d, 3);
+  drx2d = sum(drhox * dz, 3)
+  dry2d = sum(drhoy * dz, 3)
   !call disp(drx2d, 'dxr2d = ')
 end subroutine

@@ -34,8 +34,6 @@ program pom2k
   call update_initial()
   !write(*,*) "====end of update_initial"
 
-  return
-
   call bottom_friction()
   !write(*,*) "====end of bottom_friction"
 
@@ -47,79 +45,81 @@ program pom2k
 !      if(get_rank()==0) print*,"============iint=============",iint
 !      call tic('10')
 
-     call get_time(iint)
-     print*, "time = ", time
+    call get_time(iint)
+    print*, "time = ", time
+    print*, "ramp = ", ramp 
 
-     call tic("surf_forcing")
-     call surface_forcing(iint)
-     call toc("surf_forcing")     
+    call tic("surf_forcing")
+    call surface_forcing(iint)
+    call toc("surf_forcing")     
 
-     call tic("lateral_bc")     
-     call lateral_bc(iint)
-     call toc("lateral_bc")          
+    call tic("lateral_bc")     
+    call lateral_bc(iint)
+    call toc("lateral_bc")          
+    return
 
-     call tic("lateral_vis")          
-     call lateral_viscosity()
-     call toc("lateral_vis")
+    call tic("lateral_vis")          
+    call lateral_viscosity()
+    call toc("lateral_vis")
 
-     call tic("mode_inter")
-     call mode_interaction()
-     call toc("mode_inter")
+    call tic("mode_inter")
+    call mode_interaction()
+    call toc("mode_inter")
 
 
-      !==============================================
-      ! Begin external (2-D) mode
-      !==============================================
-      do iext=1,int(isplit)
+     !==============================================
+     ! Begin external (2-D) mode
+     !==============================================
+     do iext=1,int(isplit)
 
-         call tic("external_el")
-         call external_el()
-         call toc("external_el")        
+        call tic("external_el")
+        call external_el()
+        call toc("external_el")        
 
-         call tic("external_ua")        
-         call external_ua(iext)
-         call toc("external_ua")        
+        call tic("external_ua")        
+        call external_ua(iext)
+        call toc("external_ua")        
 
-         call tic("external_va")
-         call external_va(iext)
-         call toc("external_va")        
+        call tic("external_va")
+        call external_va(iext)
+        call toc("external_va")        
 
-         call tic("external_update")
-         call external_update(iext, vamax, imax, jmax)
-         call toc("external_update")        
+        call tic("external_update")
+        call external_update(iext, vamax, imax, jmax)
+        call toc("external_update")        
 
-      end do
+     end do
 
-      ! =============================================
-      ! End of external (2-D) mode
-      ! =============================================
+     ! =============================================
+     ! End of external (2-D) mode
+     ! =============================================
 
-      ! do k=1, kb
-      !    EGF_3D(k)=EGF_2D
-      !    D_3D(k)  =D_2D
-      !    ETF_3D(k)=ETF_2D
-      ! enddo
-      ! dhf_3d=h_3d+etf_3d
-      dhf = h + etf;
-     
-      vamax = 50.0 ! add by 57
-      if(vamax <= vmaxl) then 
-         if(((iint/=1).or.(time0/=0.e0) ).and. (mode/=2)) then
+     ! do k=1, kb
+     !    EGF_3D(k)=EGF_2D
+     !    D_3D(k)  =D_2D
+     !    ETF_3D(k)=ETF_2D
+     ! enddo
+     ! dhf_3d=h_3d+etf_3d
+     dhf = h + etf;
+    
+     vamax = 50.0 ! add by 57
+     if(vamax <= vmaxl) then 
+        if(((iint/=1).or.(time0/=0.e0) ).and. (mode/=2)) then
 
-            print*,'adjust_uv t='
-            call tic("adjust_uv")          
-            call adjust_uv()
-            call toc("adjust_uv")
+           print*,'adjust_uv t='
+           call tic("adjust_uv")          
+           call adjust_uv()
+           call toc("adjust_uv")
 
-            ! print*,'internal_w t='
-            call tic("internal_w")
-            call internal_w()
-            call toc("internal_w")
-           
-            ! print*,'internal_q t='
-            call tic("internal_q")
-            call internal_q()
-            call toc("internal_q")
+           ! print*,'internal_w t='
+           call tic("internal_w")
+           call internal_w()
+           call toc("internal_w")
+          
+           ! print*,'internal_q t='
+           call tic("internal_q")
+           call internal_q()
+           call toc("internal_q")
            
 !            ! print*,'internal_t t='
 !            call tic("internal_t1")

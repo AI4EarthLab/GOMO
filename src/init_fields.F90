@@ -5,15 +5,11 @@ subroutine init_fields()
   implicit none
   
   call grid_bind(aam2d,   3)
-
   call grid_bind(adx2d,   2)
   call grid_bind(ady2d,   1)
-  call grid_bind(art,  3)
-  call grid_bind(aru,  2)
-  call grid_bind(arv,  1)
-  ! call grid_bind(art_3d,  3)
-  ! call grid_bind(aru_3d,  2)
-  ! call grid_bind(arv_3d,  1)
+  call grid_bind(art,     3)
+  call grid_bind(aru,     2)
+  call grid_bind(arv,     1)
   call grid_bind(cbc,     3)
   call grid_bind(cor,     3)
   call grid_bind(d,       3)
@@ -23,41 +19,29 @@ subroutine init_fields()
   call grid_bind(fsm,     3)
   call grid_bind(dum,     2)
   call grid_bind(dvm,     1)
-
   call grid_bind(advx,    2)
   call grid_bind(advy,    1)
-
   call grid_bind(advua,   2)
   call grid_bind(advva,   1)
   call grid_bind(curv2d,  3)
-
   call grid_bind(drhox,   2)
   call grid_bind(drhoy,   1)
-
   call grid_bind(e_atmos, 3)
   call grid_bind(egb,     3)
   call grid_bind(egf,     3)
-  ! call grid_bind(egb_3d,  3)
-  ! call grid_bind(egf_3d,  3)
   call grid_bind(el,      3)
   call grid_bind(elb,     3)
   call grid_bind(elf,     3)
   call grid_bind(et,      3)
   call grid_bind(etb,     3)
   call grid_bind(etf,     3)
-  ! call grid_bind(etb_3d,  3)
-  ! call grid_bind(etf_3d,  3)
   call grid_bind(fluxua,  2)
   call grid_bind(fluxva,  1)
   call grid_bind(h,       3)
-  ! call grid_bind(h_3d,    3)
-  ! call grid_bind(psi,     3)
   call grid_bind(rot,     3)
-
   call grid_bind(swrad,   7)
   call grid_bind(vfluxb,  7)
   call grid_bind(vfluxf,  7)
-
   call grid_bind(tsurf,   3)
   call grid_bind(ssurf,   3)
   call grid_bind(ua,      2)
@@ -70,7 +54,6 @@ subroutine init_fields()
   call grid_bind(vaf,     1)
   call grid_bind(vtb,     1)
   call grid_bind(vtf,     1)
-
   call grid_bind(wssurf,  3)
   call grid_bind(wtsurf,  3)
   call grid_bind(wubot,   2)
@@ -80,10 +63,8 @@ subroutine init_fields()
   call grid_bind(wubot1,  2)
   call grid_bind(wvbot1,  1)
   call grid_bind(aam,     3)
-
   call grid_bind(a,       3)
   call grid_bind(c,       3)
-
   call grid_bind(dtef,    3)
   call grid_bind(ee,      3)
   call grid_bind(gg,      3)
@@ -115,7 +96,6 @@ subroutine init_fields()
   call grid_bind(v,       1)
   call grid_bind(w,       7)
   call grid_bind(zflux,   7)
-
   call grid_bind(ele,     3)
   call grid_bind(eln,     3)
   call grid_bind(els,     3)
@@ -136,7 +116,26 @@ subroutine init_fields()
   call grid_bind(vabs,    1)
   call grid_bind(vbn,     1)
   call grid_bind(vbs,     1)
+  call grid_bind(rad,     7)
+
+
+  !------------------------------------------------------
+  !                   start of 3d
+  !------------------------------------------------------
+
+  ! call grid_bind(art_3d,  3)
+  ! call grid_bind(aru_3d,  2)
+  ! call grid_bind(arv_3d,  1)
+  ! call grid_bind(egb_3d,  3)
+  ! call grid_bind(egf_3d,  3)
+  ! call grid_bind(etb_3d,  3)
+  ! call grid_bind(etf_3d,  3)
+  ! call grid_bind(h_3d,    3)
+  ! call grid_bind(psi,     3)
   ! call grid_bind(d_3d,    3)
   ! call grid_bind(dt_3d,   3)
-  call grid_bind(rad,     7)
+
+  !------------------------------------------------------
+  !                   end of 3d
+  !------------------------------------------------------
 end subroutine

@@ -8,20 +8,11 @@ subroutine baropg()
   use config
   implicit none
   integer:: ierr
-
-  !zz = make_psudo3d(zz)
-  !dz = make_psudo3d(dz)
-  !dum = make_psudo3d(dum)
   
-  ! drhox=ramp * grav * AXB(dt)  * csum(-DZB(zz) &
-  !      * DXB(AZB(rho - rmean)) * AXB(dt) &
-  !      + DXB(dt) * DZB(AXB(rho - rmean)) &
-  !      * AZB(zz) * AZB(dz) , 3) * dum;
-
-  print*, "ramp=", ramp
-  ! drhox=ramp*AXB(dt)*mat_ones;
-
-  drhox=AXB(dt)*mat_ones*ramp;
+  drhox=ramp * grav * AXB(dt)  * csum(-DZB(zz) &
+       * DXB(AZB(rho - rmean)) * AXB(dt) &
+       + DXB(dt) * DZB(AXB(rho - rmean)) &
+       * AZB(zz) * AZB(dz) , 3) * dum;
   
   !call disp(drhox, 'drhox = ')
   
@@ -29,6 +20,8 @@ subroutine baropg()
        * DYB(AZB(rho - rmean)) * AYB(dt)  &
        + DYB(dt) * DZB(AYB(rho - rmean))  &
        * AZB(zz) * AZB(dz) , 3) * dvm;
+
+  !call disp(drhoy, 'drhoy = ')
   
 end subroutine
 
