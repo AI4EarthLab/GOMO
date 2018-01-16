@@ -9,22 +9,39 @@ subroutine baropg()
   implicit none
   integer:: ierr
 
-  !call open_debug()
-  !still have bug, don't know why there's nan
-  drhox=ramp * grav * AXB(dt)  * csum(-DZB(zz) &
+  type(array) tmp
+
+  ! split one to two
+  !drhox=ramp * grav * AXB(dt)  * csum(-DZB(zz) &
+  !     * DXB(AZB(rho - rmean)) * AXB(dt) &
+  !     + DXB(dt) * DZB(AXB(rho - rmean)) &
+  !     * AZB(zz) * AZB(dz) , 3) * dum;
+
+  !call set(sub(drhox, ':', ':', kb), 0.d0)
+  !call disp(drhox, "old drhox = ")
+
+  tmp=-DZB(zz) &
        * DXB(AZB(rho - rmean)) * AXB(dt) &
        + DXB(dt) * DZB(AXB(rho - rmean)) &
-       * AZB(zz) * AZB(dz) , 3) * dum;
+       * AZB(zz) * AZB(dz)! , 3);
+  call set(sub(tmp,':',':',kb),0.d0)
   
-  !call close_debug()
+  drhox=ramp * grav * AXB(dt)  * csum(tmp, 3) * dum;
   call set(sub(drhox, ':', ':', kb), 0.d0)
   !call disp(drhox, 'drhox = ')
-  
-  drhoy=ramp * grav * AYB(dt)  * csum(-DZB(zz) &
+
+  !drhoy=ramp * grav * AYB(dt)  * csum(-DZB(zz) &
+  !     * DYB(AZB(rho - rmean)) * AYB(dt)  &
+  !     + DYB(dt) * DZB(AYB(rho - rmean))  &
+  !     * AZB(zz) * AZB(dz) , 3) * dvm;
+
+  tmp=-DZB(zz) &
        * DYB(AZB(rho - rmean)) * AYB(dt)  &
        + DYB(dt) * DZB(AYB(rho - rmean))  &
-       * AZB(zz) * AZB(dz) , 3) * dvm;
+       * AZB(zz) * AZB(dz)
+  call set(sub(tmp,':',':',kb),0.d0)
 
+  drhoy=ramp * grav * AYB(dt)  * csum(tmp, 3) * dvm;
   call set(sub(drhoy, ':', ':', kb), 0.d0)
   !call disp(drhoy, 'drhoy = ')
   

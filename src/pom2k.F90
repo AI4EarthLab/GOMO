@@ -86,10 +86,21 @@ program pom2k
         call tic("external_update")
         call external_update(iext, vamax, imax, jmax)
         call toc("external_update")        
-    return
 
      end do
+     
+     call disp(elf, "elf = ")
+     call disp(uaf, "uaf = ")
+     call disp(advua, "advua = ")
+     call disp(vaf, "vaf = ")
+     call disp(advva, "advva = ")
+     call disp(utf, "utf = ")
+     call disp(vtf, "vtf = ")
+     print *, "vamax = ", vamax
+     print *, "vmaxl = ", vmaxl
+     print *, "isplit = ", int(isplit)
 
+    return
      ! =============================================
      ! End of external (2-D) mode
      ! =============================================

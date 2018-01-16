@@ -15,10 +15,15 @@ subroutine external_update(iext, vamax, imax, jmax)
      etf=(etf+0.5*elf)*fsm
   endif
 
+  !call disp(vaf, "vaf = ")
+  
   vamax = abs_max(vaf)
   call set(pos, abs_max_at(vaf))
   imax = pos(1)
   jmax = pos(2)
+  
+  !print *, "vamax = ", vamax
+  !print *, "vmaxl = ", vmaxl
   
   if(vamax<=vmaxl) then            
      uab=ua+0.5*smoth*(uab-2.0*ua+uaf)
@@ -34,5 +39,8 @@ subroutine external_update(iext, vamax, imax, jmax)
         vtf=vtf+2.0* va * AYB(d) * isp2i
      endif
   endif
+
+  !call disp(utf, "utf = ")
+  !call disp(vtf, "vtf = ")
 
 end subroutine

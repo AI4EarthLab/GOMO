@@ -43,6 +43,6 @@ subroutine lateral_viscosity()
   call set(sub(aam, im,':',':'), aam_init)
   call set(sub(aam, ':',':',kb), aam_init)
   
-  !call disp(aam, "aam = ")
+  call disp(aam, "aam = ")
 
 end subroutine
