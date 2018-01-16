@@ -56,7 +56,6 @@ program pom2k
     call tic("lateral_bc")     
     call lateral_bc(iint)
     call toc("lateral_bc")          
-    return
 
     call tic("lateral_vis")          
     call lateral_viscosity()
@@ -87,6 +86,7 @@ program pom2k
         call tic("external_update")
         call external_update(iext, vamax, imax, jmax)
         call toc("external_update")        
+    return
 
      end do
 

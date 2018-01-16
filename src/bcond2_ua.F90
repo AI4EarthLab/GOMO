@@ -27,4 +27,6 @@ subroutine bcond2_ua()
   call set(sub(uaf, [2,imm1], 1 ), 0.d0)
   uaf = uaf * dum
 
+  !call disp(uaf, "uaf = ")
+
 end subroutine bcond2_ua

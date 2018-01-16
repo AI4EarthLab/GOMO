@@ -21,28 +21,28 @@ subroutine lateral_viscosity()
      print*, "Error: invalid value for npg"
      stop
   endif
-  print*, "xxxxxxxxx"
   call tic("aam")
+  
+  !call open_debug()
+
+  ! pos of u and v has changed before, need check OpenArray
+  call grid_bind(u, 2)
+  call grid_bind(v, 1)
 
   aam=horcon * dx * dy &
        * sqrt(DXF(u)**2 + DYF(v)**2 &
        + 0.5*(DYB(AYF(AXF(u))) + DXB(AXF(AYF(v))))**2);
 
-  ! do i = 1, kb
-  !    AAM(i) = horcon * DX_2D * DY_2D * AAM(i)
-  ! end do
+  !call close_debug()
+
   call toc("aam")
-  
-  ! aam_expr=horcon * dx_3d * dy_3d &
-  !      *sqrt(DXF(u)**2 + DYF(v)**2 &
-  !      +0.5*(DYB(AYF(axf_u)) + DXB(AXF(ayf_v)) )**2);
-  ! call gen_hash(aam_expr)
-  ! call write_graph(aam_expr, file="aam_expr.dot")
   
   call set(sub(aam, ':',1,':'),  aam_init)
   call set(sub(aam, ':',jm,':'), aam_init)
   call set(sub(aam, 1,':',':'),  aam_init)
   call set(sub(aam, im,':',':'), aam_init)
   call set(sub(aam, ':',':',kb), aam_init)
+  
+  !call disp(aam, "aam = ")
 
 end subroutine

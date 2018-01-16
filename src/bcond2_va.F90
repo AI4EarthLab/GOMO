@@ -28,5 +28,6 @@ subroutine bcond2_va()
   call set(sub(vaf, 1,  [2,jmm1]), 0.e0)
   
   vaf = vaf * dvm
+  !call disp(vaf, "vaf = ")
 
 end subroutine 

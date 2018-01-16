@@ -8,12 +8,16 @@ subroutine baropg()
   use config
   implicit none
   integer:: ierr
-  
+
+  !call open_debug()
+  !still have bug, don't know why there's nan
   drhox=ramp * grav * AXB(dt)  * csum(-DZB(zz) &
        * DXB(AZB(rho - rmean)) * AXB(dt) &
        + DXB(dt) * DZB(AXB(rho - rmean)) &
        * AZB(zz) * AZB(dz) , 3) * dum;
   
+  !call close_debug()
+  call set(sub(drhox, ':', ':', kb), 0.d0)
   !call disp(drhox, 'drhox = ')
   
   drhoy=ramp * grav * AYB(dt)  * csum(-DZB(zz) &
@@ -21,6 +25,7 @@ subroutine baropg()
        + DYB(dt) * DZB(AYB(rho - rmean))  &
        * AZB(zz) * AZB(dz) , 3) * dvm;
 
+  call set(sub(drhoy, ':', ':', kb), 0.d0)
   !call disp(drhoy, 'drhoy = ')
   
 end subroutine
