@@ -80,8 +80,8 @@ contains
     
     call LoadConfig()
     
-    mat_zeros         = zeros(im, jm, kb)
-    mat_ones          = ones(im, jm, kb)
+    mat_zeros         = zeros(im, jm, kb, sw=1, dt=2)
+    mat_ones          = ones(im, jm, kb, sw=1, dt=2)
     mat_zeros_im_jm_1 = sub(mat_zeros, ':', ':', 1)
     mat_zeros_im_1_1  = sub(mat_zeros, ':', 1, 1)
     mat_zeros_im_1_kb = sub(mat_zeros, ':', 1, ':')

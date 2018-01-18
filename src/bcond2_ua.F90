@@ -23,10 +23,9 @@ subroutine bcond2_ua()
   tmp = ramp * (tmpua - rfw * sqrt(grav/h) * (el - tmpel))
   call set(sub(uaf, 2, [2,jmm1]), sub(tmp, 2, [2,jmm1]))
   call set(sub(uaf, 1, [2,jmm1]), sub(tmp, 2, [2,jmm1]))
-  call set(sub(uaf, [2,imm1], jm), 0.d0)
-  call set(sub(uaf, [2,imm1], 1 ), 0.d0)
+  call set(sub(uaf, [1,im], jm), 0.d0)
+  call set(sub(uaf, [1,im], 1 ), 0.d0)
   uaf = uaf * dum
 
-  !call disp(uaf, "uaf = ")
 
 end subroutine bcond2_ua

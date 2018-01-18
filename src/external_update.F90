@@ -21,9 +21,12 @@ subroutine external_update(iext, vamax, imax, jmax)
   call set(pos, abs_max_at(vaf))
   imax = pos(1)
   jmax = pos(2)
-  
-  !print *, "vamax = ", vamax
-  !print *, "vmaxl = ", vmaxl
+ 
+  print *, "in external_update"
+  print *, "vamax = ", vamax
+  print *, "vmaxl = ", vmaxl
+  print *, "imax = ", imax
+  print *, "jmax = ", jmax
   
   if(vamax<=vmaxl) then            
      uab=ua+0.5*smoth*(uab-2.0*ua+uaf)
@@ -37,10 +40,11 @@ subroutine external_update(iext, vamax, imax, jmax)
         egf=egf+el*ispi
         utf=utf+2.0* ua * AXB(d) * isp2i
         vtf=vtf+2.0* va * AYB(d) * isp2i
+        print *, "in erxternal_update, need update bcond"
      endif
   endif
 
-  !call disp(utf, "utf = ")
-  !call disp(vtf, "vtf = ")
+  call disp(utf, "utf = ")
+  call disp(vtf, "vtf = ")
 
 end subroutine

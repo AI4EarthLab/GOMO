@@ -12,7 +12,7 @@ subroutine surface_forcing(iint)
        wvsurfb, wvsurff
   integer :: ierr
 
-  !print*, "nsbdy = ", nsbdy, 'iint=',iint
+  print*, "nsbdy = ", nsbdy, 'iint=',iint
   select case (nsbdy)
   case (1,2,3)
      if(iint == 1) then

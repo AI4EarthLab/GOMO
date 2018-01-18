@@ -11,6 +11,5 @@ subroutine bcond1()
   call set(sub(elf, ':',  1 ), sub(elf, ':' ,  2 ))
   call set(sub(elf, ':',  jm), sub(elf, ':' , jmm1))
   elf=elf*fsm
-  !call disp(elf, "elf = ")
 
 end subroutine bcond1

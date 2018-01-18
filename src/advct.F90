@@ -31,7 +31,7 @@ subroutine advct()
   call set(sub(advx,':',1,':'), 0.d0)
   call set(sub(advx,':',jm,':'), 0.d0)
   
-  !call disp(advx, "advx = ")
+  call disp(advx, "advx = ")
 
   ! same as advx, advy should split into two equations
 
@@ -53,6 +53,6 @@ subroutine advct()
   call set(sub(advy,1,':',':'), 0.d0)
   call set(sub(advy,im,':',':'), 0.d0)
   
-  !call disp(advy, "advy = ")
+  call disp(advy, "advy = ")
 
 end subroutine

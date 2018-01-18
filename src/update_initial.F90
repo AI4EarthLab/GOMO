@@ -58,11 +58,13 @@ subroutine update_initial()
   v = vb
 
   call dens(rho, t, s)
+  call disp(rho, "rho = ")
 
+  print *, "npg = ", npg
   if(npg == 1) then
-     call baropg()
+    call baropg()
   elseif(npg == 2) then
-     call baropg_mcc()     
+    call baropg_mcc()     
   else
      print*, "Error: invalid value for npg";
      stop
@@ -70,5 +72,6 @@ subroutine update_initial()
 
   drx2d = sum(drhox * dz, 3)
   dry2d = sum(drhoy * dz, 3)
-  !call disp(drx2d, 'dxr2d = ')
+  call disp(drx2d, 'dxr2d = ')
+  call disp(dry2d, 'dry2d = ')
 end subroutine

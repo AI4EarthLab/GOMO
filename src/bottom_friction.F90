@@ -13,5 +13,5 @@ subroutine bottom_friction()
 
   call set(cbc, cbcmin, cbc < cbcmin)
   call set(cbc, cbcmax, cbc > cbcmax)
-  !call disp(cbc, "cbc = ")
+  call disp(cbc, "cbc = ")
 end subroutine

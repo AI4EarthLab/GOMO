@@ -70,6 +70,7 @@ program pom2k
      ! Begin external (2-D) mode
      !==============================================
      do iext=1,int(isplit)
+     !do iext=1,2
 
         call tic("external_el")
         call external_el()

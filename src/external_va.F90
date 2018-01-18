@@ -9,6 +9,8 @@ subroutine external_va(iext)
      advva = DXF(AYB(AXB(d)*ua)*AXB(va) &
           -AYB(AXB(d))*AXB(AYB(aam2d))*(DYB(uab) + DXB(vab))) &
           +DYB(AYF(AYB(d)*va)* AYF(va)-2.0*d * aam2d * DYF(vab))
+    print *, "in external_va"
+    call disp(advva, "advva = ")
   endif
 
 
@@ -18,9 +20,7 @@ subroutine external_va(iext)
        + alpha*(DYB(elb)+ DYB(elf))+DYB(e_atmos)) &
        + dry2d +(wvsurf-wvbot))) / AYB(h+elf)
 
-  
-  !call disp(vaf, "vaf = ")
-  
   call bcond2_va()
+  call disp(vaf, "vaf = ")
 
 end subroutine
