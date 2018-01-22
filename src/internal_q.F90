@@ -71,6 +71,7 @@ subroutine internal_q()
   
   cc=cc/sqrt((1.d0-0.01642d0*p/cc)*(1.d0-0.4d0*p/cc**2))
 
+  return
   call set(sub(cc,':',':',kb), 0.d0)
 
   q2b =abs(q2b);  q2lb=abs(q2lb);
@@ -83,7 +84,6 @@ subroutine internal_q()
   kappa_l0 = kappa * l0 
 
   call set(l, max(l, kappa_l0), (z > -0.5d0))
-  return
 
   gh = l**2 * boygr / q2b
   call set(gh, 0.028d0, gh > 0.028d0)
@@ -97,112 +97,66 @@ subroutine internal_q()
   call disp(gh, "gh = ")
   return
 
-  ! kn= sef*km*(DZB(axf_u) **2 + DZB(ayf_v)**2)/(dhf**2)&
-  !      -shiw*km*boygr + kh*boygr
-
-  kn = sef*km*(DZB(AXF(u)) **2 + DZB(AYF(v))**2)/(dhf**2)&
+  kn = km*sef*(DZB(AXF(u)) **2 + DZB(AYF(v))**2)/(dhf**2)&
        -shiw*km*boygr + kh*boygr
-  
-
-  !     stf=ones(im,jm,kb);
   dtef=sqrt(q2b)/(b1*l+small)
-  !      dtef(:,:,1)=0.e0;   dtef(:,:,kb)=0.e0;
-  ! DTEF(1) = 0.d0
-  ! DTEF(kb)=0.d0
   
   call set(DTEF(1),  0.d0)
   call set(DTEF(kb), 0.d0)
-
   
   do k=2,kbm1
      call set(GG(k),1.d0/(A(k)+C(k)*(1.d0-EE(k-1))-2.d0*dti2*DTEF(k)-1.d0))
      call set(EE(k),A(k)*GG(k))
      call set(GG(k),(-2.d0*dti2*KN(k)+C(k)*GG(k-1)-Q2F(k))*GG(k))
-  !    GG(k)=1.d0/(A(k)+C(k)*(1.d0-EE(k-1))-2.d0*dti2*DTEF(k)-1.d0)
-  !    EE(k)=A(k)*GG(k)
-  !    GG(k)=(-2.d0*dti2*KN(k)+C(k)*GG(k-1)-Q2F(k))*GG(k)
   enddo
 
   
   do k=kbm1,1,-1
      call set(Q2F(k), EE(k)*Q2F(k+1)+GG(k))
-  !   Q2F(k)=EE(k)*Q2F(k+1)+GG(k)
   enddo
   
   call grid_bind(q2f, 7)
 
   !!-----------------------solve q2lf
+  call set(EE(2), 0.d0)
+  call set(GG(2), 0.d0)
   call set(Q2LF(kb), 0.d0) 
-  !Q2LF(kb)= 0.d0
-
-!  call set(EE(2), 0.D0)
-!  call set(GG(2), 0.D0)
 
   do k=2,kbm1
-     call set(DTEF(k),DTEF(k)*(1.e0+e2*((1.e0/abs(z1(k)-z1(1))&
-          +1.e0/abs(z1(k)-z1(kb)))* &
-          L(k)/( (h+etf)*kappa))**2))
-!     DTEF(k)=DTEF(k)*(1.e0+e2*((1.e0/abs(z1(k)-z1(1))&
-!          +1.e0/abs(z1(k)-z1(kb)))* &
-!          L(k)/(DH_2D*kappa))**2)
+     call set(DTEF(k),DTEF(k)*(1.d0+e2*((1.d0/abs(z1(k)-z1(1))&
+          +1.d0/abs(z1(k)-z1(kb)))* &
+          L(k)/(dhf*kappa))**2))
   enddo
 
   do k=2,kbm1
      call set(GG(k),1.d0/(A(k)+C(k)*(1.d0-EE(k-1))-dti2*DTEF(k)-1.d0))
      call set(EE(k),A(k)*GG(k))
      call set(GG(k),(-dti2*KN(k)*L(k)*e1+C(k)*GG(k-1)-Q2LF(k))*GG(k))
-!     GG(k)=1.d0/(A(k)+C(k)*(1.d0-EE(k-1))-dti2*DTEF(k)-1.d0)
-!     EE(k)=A(k)*GG(k)
-!     GG(k)=(-dti2*KN(k)*L(k)*e1+C(k)*GG(k-1)-Q2LF(k))*GG(k)
   enddo
 
   do k=kbm1,2,-1
      call set(Q2LF(k), EE(k)*Q2LF(k+1)+GG(k))  
-!     Q2LF(k)= EE(k)*Q2LF(k+1)+GG(k)   
   enddo
   
   call grid_bind(q2lf, 7)
-
-  ! !filter = (q2f<=small .or. q2lf<=small)
-  ! filter = mat_zeros
-  ! where(q2f%data<=small .or. q2lf%data<=small) &
-  !      filter%data = 1.0_8
 
   filter = (q2f <= small) .or. (q2lf <= small)
   
   call set(sub(filter, ':',':',1),  0)
   call set(sub(filter, ':',':',kb), 0)
 
-  !q2f(filter.data) = small
-  !call set(q2f, small, filter=filter)
-  ! where(filter%data == 1.0_8) &
-  !      q2f%data = small
   call set(q2f, small, filter)
-  
-  !q2lf(filter.data) = 0.1 * dt(filter.data) * small
-  !call set(q2lf, 0.1d0 * dt * small, filter = filter)
-  ! where(filter%data == 1.0_8) &
-  !      q2lf%data = 0.1d0 * dt%data * small
 
   call set(q2lf, 0.1d0 * dt * small, filter)
   
-  stf=ones(im,jm,kb)
-  sh=a2*(1.d0-6.d0*a1/b1*stf)/(1.d0-(3.d0*a2*b2/stf+18.d0*a1*a2)*gh)
+  sh=a2*(1.d0-6.d0*a1/b1)/(1.d0-(3.d0*a2*b2+18.d0*a1*a2)*gh)
 
-  sm=(a1*(1.d0-3.d0*c1-6.d0*a1/b1*stf) &
+  sm=(a1*(1.d0-3.d0*c1-6.d0*a1/b1) &
        + sh*(18.d0*a1*a1+9.d0*a1*a2)*gh)/(1.d0-(9.d0*a1*a2)*gh)
 
-  !kn=l*sqrt(abs(q2));
-  !kn = l%data * sqrt(abs(q2%data))
   kn = l * sqrt(abs(q2))
-  
-  !kq=(kn*0.41d0*sh+kq)*0.5d0
   kq = (kn * 0.41d0 * sh + kq) * 0.5d0
-  
-  !km=(kn*sm+km)*0.5d0;
   km = (kn * sm + km) * 0.5d0;
-  
-  !kh=(kn*sh+kh)*0.5d0
   kh = (kn * sh + kh) * 0.5d0;
 
   call set(sub(km,':',jm,':'), &
@@ -223,9 +177,8 @@ subroutine internal_q()
   call set(sub(kh, 1, ':',':'), &
        sub(kh,  2, ':',':')*sub(fsm,  1,':',':')) 
 
-  ! call bcond6(q2f, q2lf,q2, q2l)
+  !call bcond6(q2f, q2lf,q2, q2l)
 
-  ! call smoth_update(q2f,q2lf,q2,q2l,q2b,q2lb)
+  !call smoth_update(q2f,q2lf,q2,q2l,q2b,q2lb)
 
-  !utau2,l0,p,cc,boygr,gh,dtef,stf
 end subroutine
