@@ -70,7 +70,7 @@ program pom2k
      ! Begin external (2-D) mode
      !==============================================
      do iext=1,int(isplit)
-     !do iext=1,2
+     !do iext=1,30
 
         call tic("external_el")
         call external_el()
@@ -90,31 +90,22 @@ program pom2k
 
      end do
      
-     call disp(elf, "elf = ")
-     call disp(uaf, "uaf = ")
-     call disp(advua, "advua = ")
-     call disp(vaf, "vaf = ")
-     call disp(advva, "advva = ")
+     ! call disp(elf, "elf = ")
+     ! call disp(uaf, "uaf = ")
+     ! call disp(advua, "advua = ")
+     ! call disp(vaf, "vaf = ")
+     ! call disp(advva, "advva = ")
      call disp(utf, "utf = ")
      call disp(vtf, "vtf = ")
      print *, "vamax = ", vamax
      print *, "vmaxl = ", vmaxl
      print *, "isplit = ", int(isplit)
+     if (iint == 3) return
 
-    return
      ! =============================================
      ! End of external (2-D) mode
      ! =============================================
-
-     ! do k=1, kb
-     !    EGF_3D(k)=EGF_2D
-     !    D_3D(k)  =D_2D
-     !    ETF_3D(k)=ETF_2D
-     ! enddo
-     ! dhf_3d=h_3d+etf_3d
-     dhf = h + etf;
     
-     vamax = 50.0 ! add by 57
      if(vamax <= vmaxl) then 
         if(((iint/=1).or.(time0/=0.e0) ).and. (mode/=2)) then
 
@@ -123,15 +114,16 @@ program pom2k
            call adjust_uv()
            call toc("adjust_uv")
 
-           ! print*,'internal_w t='
+           print*,'internal_w t='
            call tic("internal_w")
            call internal_w()
            call toc("internal_w")
           
-           ! print*,'internal_q t='
+           print*,'internal_q t='
            call tic("internal_q")
            call internal_q()
            call toc("internal_q")
+           return
            
 !            ! print*,'internal_t t='
 !            call tic("internal_t1")
@@ -166,10 +158,10 @@ program pom2k
 !            call toc("adjust_ufvf")
          endif
 
-!         ! print*, 'internal_update'
-!         call tic("int_update")
-!         call internal_update()
-!         call toc("int_update")
+         ! print*, 'internal_update'
+         call tic("int_update")
+         call internal_update()
+         call toc("int_update")
 
       endif
 

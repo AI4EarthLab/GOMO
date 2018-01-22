@@ -9,8 +9,6 @@ subroutine external_va(iext)
      advva = DXF(AYB(AXB(d)*ua)*AXB(va) &
           -AYB(AXB(d))*AXB(AYB(aam2d))*(DYB(uab) + DXB(vab))) &
           +DYB(AYF(AYB(d)*va)* AYF(va)-2.0*d * aam2d * DYF(vab))
-    print *, "in external_va"
-    call disp(advva, "advva = ")
   endif
 
 

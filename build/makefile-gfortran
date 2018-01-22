@@ -51,7 +51,7 @@ OBJ	= ${addprefix ${OBJDIR}/, config.o \
 		external_ua.o external_va.o \
 		bcond2_va.o external_update.o \
 		adjust_uv.o internal_w.o\
-		internal_q.o \
+		internal_q.o internal_update.o\
 		pom2k.o}
 
 OBJMAIN	= ${OBJ}

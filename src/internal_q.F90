@@ -13,27 +13,22 @@ subroutine internal_q()
   integer :: ierr, k, i
   
   ! call MPI_Barrier(MPI_COMM_WORLD, ierr)
-  dh = h + etf;
+  dhf = h + etf;
 
   q2f= (q2b*dhb-dti2*(-DZB(AZF(w*q2)) &
-       + DXF(AXB(q2)* AZB(u) *AXB(dt) &
-       -AZB(AXB(aam))*AXB(h)* dum *DXB(q2b)) &
-       +DYF(AYB(q2)*  AZB(v)* AYB(dt) &
-       -AZB(AYB(aam))*AYB(h)* dvm *DYB(q2b))))/dhf
+       + DXF(AXB(q2) *AXB(dt)* AZB(u) &
+       -AZB(AXB(aam))*AXB(h)*DXB(q2b)*dum) &
+       +DYF(AYB(q2)* AYB(dt)* AZB(v) &
+       -AZB(AYB(aam))*AYB(h)*DYB(q2b)*dvm)))/dhf
 
   q2lf= (q2lb*dhb-dti2*(-DZB(AZF(w*q2l)) &
-       +DXF(AXB(q2l)* AZB(u) *AXB(dt) &
-       -AZB(AXB(aam))*AXB(h)* dum *DXB(q2lb)) &
-       +DYF(AYB(q2l)* AZB(v)* AYB(dt) &
-       -AZB(AYB(aam))*AYB(h)* dvm *DYB(q2lb))))/dhf
+       +DXF(AXB(q2l)*AXB(dt)* AZB(u) &
+       -AZB(AXB(aam))*AXB(h)* DXB(q2lb)*dum ) &
+       +DYF(AYB(q2l)*AYB(dt)*AZB(v)  &
+       -AZB(AYB(aam))*AYB(h)*DYB(q2lb)*dvm)))/dhf
 
-  call tic("q2f")
-   q2f= DZB(AZF(w*q2)) &
-        + DXF(AXB(q2)*AXB(dt)*AZB(u) &
-        - AZB(AXB(aam))*AXB(h)*DXB(q2b)*dum) &
-        + DYF(AYB(q2)*AYB(dt)*AZB(v) &
-        - AZB(AYB(aam))*AYB(h)*DYB(q2b)*dvm)
-  call toc("q2f")
+  call disp(q2f, "q2f = ")
+  call disp(q2lf, "q2lf = ")
 
   a1=0.92d0;      b1=16.6d0;  a2=0.74d0;
   b2=10.1d0;      c1=0.08d0
@@ -43,76 +38,31 @@ subroutine internal_q()
 !  a=mat_zeros;; c=mat_zeros
   ee=mat_zeros; gg=mat_zeros; l0=mat_zeros;
 
-  !call set(sub(a,':',':',r(2,kbm1)), sub(dzz,':',':',r(1,kbm2)))
   do i = 2, kbm1
-     !A(i) = dzz1(i-1)
-     call set(A(i), dzz1(i-1))
+    call set(A(i), dzz1(i-1)*dz1(i))
   end do
-
-  a=-dti2*(AZF(kq)+umol)/(a*dz*dhf*dhf)
-
-  ! AZF_kq = AZF(kq)
-  ! do i = 2, kbm1
-  !    A(i) = -dti2 * (AZF_kq(:,:,i-1) + umol) / &
-  !         (A(i) * dz1(i) * dhf%data(:,:,0)**2)
-  ! end do
   
-  ! a(1)=a(kbm1:kb)=0
+  a=-dti2*(AZF(kq)+umol)/(a*dhf*dhf)
   call set(A(1),  0.d0)
   call set(A(kb), 0.d0)
-  
-  ! A(1)= 0.d0
-  ! A(kb)=0.d0
 
-  ! call set(sub(c,':',':',r(2,kbm1)), &
-  !      sub(dzz,':',':',r(1,kbm2))*sub(dz,':',':',r(1,kbm2)))
-  ! do i = 2, kbm1
-  !    C(i) = dzz1(i-1) * dz1(i-1)
-  ! end do
-
-  !call set(sub(c,':',':',[2,kbm1]), &
-  !     sub(dzz,':',':',[1,kbm2])*sub(dz,':',':',[1,kbm2]))
-  
-  !call set(c, shift(dzz * dz, 0,0,1));
-  !c = shift(dzz * dz, 0,0,1);
-  
-  !c=-dti2*(AZB(kq)+umol)/(c*dhf*dhf)
-  AZB_kq = AZB(kq)
   do i = 2, kbm1
-     ! C(i) = -dti2 * (AZB_kq(:,:,i-1) + umol)/&
-     !      (C(i) * dhf%data(:,:,0)**2)
-     !call set(C(i), -dti2 * (sub(AZB_kq,':',':',i) + umol)/&
-     !     (C(i) * sub(dhf,':',':',0)**2))
+     call set(C(i), dzz1(i-1)*dz1(i-1))
   end do
+  
+  c=-dti2*(AZB(kq)+umol)/(c*dhf*dhf)
   
   call set(C(1), 0.d0)
   call set(C(kb),0.d0)
-  ! C(1)= 0.d0
-  ! C(kb)=0.d0
 
   utau2 = sqrt(AXF(wusurf)**2 +AYF(wvsurf)**2)
-  !    gg(:,:,1)=(15.8*cbcnst)^(2./3.)*utau2;
-
+  
   call set(GG(1),(15.8d0*cbcnst)**(2.d0/3.d0)*utau2)
-  !GG(1)=(15.8d0*cbcnst)**(2.d0/3.d0)*UTAU2
 
-  !l0 = surfl/grav*utau2
-  ! do k=1,kb
-  !    L0(k)=surfl/grav*UTAU2
-  ! enddo
-
-  l0 = rep(surfl/grav*utau2, 1, 1, kb)
-  
-  ! do k=1,kb
-  !    call set(L0(k), surfl/grav*utau2)
-  ! enddo
-  
-  !  l0=surfl*utau2/grav
-  !    q2f(:,:,kb) = sqrt(AXF(wubot).^2 +AYF(wvbot).^2) .* (16.6e0^(2.e0/3.e0))*sef;
+  l0 = surfl*utau2/grav
 
   call set(sub(q2f,':',':',kb), &
        sqrt(AXF(wubot)**2 +AYF(wvbot)**2)*(16.6d0**(2.d0/3.d0))*sef)
-
 
   p=grav*rhoref*(-zz * h)*1.d-4
 
@@ -121,31 +71,19 @@ subroutine internal_q()
   
   cc=cc/sqrt((1.d0-0.01642d0*p/cc)*(1.d0-0.4d0*p/cc**2))
 
-  call set(sub(cc,':',':',kb), 0.0)
+  call set(sub(cc,':',':',kb), 0.d0)
 
-  !q2b =abs(q2b);  q2lb=abs(q2lb);
-  q2b =abs(q2b);;  q2lb=abs(q2lb)
-  !boygr=-grav* DZB(rho)./h + DIVISION(grav^2 , AZB(cc.^2));  boygr(:,:,1)=0.e0;
+  q2b =abs(q2b);  q2lb=abs(q2lb);
   boygr=-grav*DZB(rho)/h + grav**2/AZB(cc**2)
-  call set(sub(boygr,':',':',1), 0.0)
+  call set(sub(boygr,':',':',1), 0.d0)
+
+  l=q2lb / q2b
 
   call grid_bind(l0, 7)
   kappa_l0 = kappa * l0 
 
-  l=q2lb / q2b
-
-  !call tic(2)
-  !l=(z>-0.5d0)* max(l, kappa_l0)+(z<=-0.5d0)* l
-  ! where(z%data > -0.5) &
-  !      l%data = max(l%data, kappa_l0%data)
-
   call set(l, max(l, kappa_l0), (z > -0.5d0))
-
-  ! gh=l**2 * boygr /q2b
-  ! call set(gh, 0.028d0, gh>0.028d0)
-  ! gh = l
-  ! gh%data = l%data**2 * boygr%data / q2b%data
-  ! where(gh%data > 0.028d0) gh%data = 0.028d0
+  return
 
   gh = l**2 * boygr / q2b
   call set(gh, 0.028d0, gh > 0.028d0)
@@ -153,10 +91,11 @@ subroutine internal_q()
   call set(L(1),  kappa * L0(1))
   call set(L(kb) , 0.d0)
   
-!  call set(sub(l,':',':',1), kappa*L0(1))
-!  call set(sub(l,':',':',kb), 0.d0)
   call set(sub(gh,':',':',1),  0.d0)
   call set(sub(gh,':',':',kb), 0.d0)      
+  call disp(l, "l = ")
+  call disp(gh, "gh = ")
+  return
 
   ! kn= sef*km*(DZB(axf_u) **2 + DZB(ayf_v)**2)/(dhf**2)&
   !      -shiw*km*boygr + kh*boygr
