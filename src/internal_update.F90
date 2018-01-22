@@ -8,8 +8,8 @@ subroutine internal_update()
 
   egb = egf
   etb = et
-  et  = etf
-  dt  = h + et
+  et = etf
+  dt = h + et
 
   dhb = etb + h
   utb = utf

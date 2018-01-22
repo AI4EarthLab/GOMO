@@ -10,8 +10,10 @@ EXT_LIB = -L${EXT_PATH}/lib64/
 JIT_LIB = ${EXT_PATH}/lib64/
 
 EXE              = pom2k
-FC	         = mpif90
-FLINKER          = mpif90 
+#FC	         = mpif90
+#FLINKER          = mpif90 
+FC	         = mpifort
+FLINKER          = mpifort
 CFLAGS	         =
 FFLAGS	         =-Wno-tabs -I ${EXT_PATH}/include \
 		  -J ${OBJDIR} -I ${OPEN_ARRAY} -g \
@@ -51,7 +53,8 @@ OBJ	= ${addprefix ${OBJDIR}/, config.o \
 		external_ua.o external_va.o \
 		bcond2_va.o external_update.o \
 		adjust_uv.o internal_w.o\
-		internal_q.o internal_update.o\
+		internal_q.o internal_update.o \
+		bcond6.o smoth_update.o \
 		pom2k.o}
 
 OBJMAIN	= ${OBJ}

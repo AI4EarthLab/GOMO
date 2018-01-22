@@ -11,9 +11,9 @@ subroutine update_initial()
   va = vab;
   el = elb;
   et = etb;
-  etf= et;
+  etf = et;
 
-  d  = h + el
+  d = h + el
   dt = h + et;
 
   !------------------------------------------------------

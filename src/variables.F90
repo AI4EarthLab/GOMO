@@ -52,6 +52,8 @@ module variables
   ! type(array)   :: e_atmos_3d, etf_3d, dhf_3d, dhb_3d
   ! type(array)   :: axbdt_3d,aybdt_3d
 
+  type(array) z_3d, dt_3d
+
   type(array)  :: dhf, dhb
   
   type(array)   :: mat_zeros, mat_ones, axf_u,ayf_v

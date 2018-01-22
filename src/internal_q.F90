@@ -11,6 +11,8 @@ subroutine internal_q()
   type(array) :: filter, AZB_kq
   type(array) :: dh, kn, sh, sm, kappa_l0
   integer :: ierr, k, i
+
+  type(node) tmp
   
   ! call MPI_Barrier(MPI_COMM_WORLD, ierr)
   dhf = h + etf;
@@ -27,8 +29,8 @@ subroutine internal_q()
        +DYF(AYB(q2l)*AYB(dt)*AZB(v)  &
        -AZB(AYB(aam))*AYB(h)*DYB(q2lb)*dvm)))/dhf
 
-  call disp(q2f, "q2f = ")
-  call disp(q2lf, "q2lf = ")
+  ! call disp(q2f, "q2f = ")
+  ! call disp(q2lf, "q2lf = ")
 
   a1=0.92d0;      b1=16.6d0;  a2=0.74d0;
   b2=10.1d0;      c1=0.08d0
@@ -59,19 +61,26 @@ subroutine internal_q()
   
   call set(GG(1),(15.8d0*cbcnst)**(2.d0/3.d0)*utau2)
 
-  l0 = surfl*utau2/grav
+  l0 = rep(surfl*utau2/grav, 1, 1, kb)
 
   call set(sub(q2f,':',':',kb), &
        sqrt(AXF(wubot)**2 +AYF(wvbot)**2)*(16.6d0**(2.d0/3.d0))*sef)
 
-  p=grav*rhoref*(-zz * h)*1.d-4
+  ! call disp(a, "a = ")
+  ! call disp(c, "c = ")
+  ! call disp(utau2, "utau2 = ")
+  ! call disp(gg, "gg = ")
+  ! call disp(l0, "l0 = ")
+  ! call disp(q2f, "q2f = ")
+
+
+  p=grav*rhoref*(-zz * mat_ones * h)*1.d-4
 
   cc=1449.10d0+0.00821d0*p+4.55d0*(t+tbias) &
        -0.045d0*(t+tbias)**2 +1.34d0*(s+sbias-35.0d0)
   
   cc=cc/sqrt((1.d0-0.01642d0*p/cc)*(1.d0-0.4d0*p/cc**2))
 
-  return
   call set(sub(cc,':',':',kb), 0.d0)
 
   q2b =abs(q2b);  q2lb=abs(q2lb);
@@ -82,8 +91,13 @@ subroutine internal_q()
 
   call grid_bind(l0, 7)
   kappa_l0 = kappa * l0 
-
-  call set(l, max(l, kappa_l0), (z > -0.5d0))
+  
+  ! call disp(p, "p = ")
+  ! call disp(cc, "cc = ")
+  ! call disp(boygr, "boygr = ")
+  ! call disp(l, "l = ")
+  
+  call set(l, max(l, kappa_l0), (z_3d > -0.5d0))
 
   gh = l**2 * boygr / q2b
   call set(gh, 0.028d0, gh > 0.028d0)
@@ -93,9 +107,8 @@ subroutine internal_q()
   
   call set(sub(gh,':',':',1),  0.d0)
   call set(sub(gh,':',':',kb), 0.d0)      
-  call disp(l, "l = ")
-  call disp(gh, "gh = ")
-  return
+  ! call disp(l, "l = ")
+  ! call disp(gh, "gh = ")
 
   kn = km*sef*(DZB(AXF(u)) **2 + DZB(AYF(v))**2)/(dhf**2)&
        -shiw*km*boygr + kh*boygr
@@ -103,6 +116,9 @@ subroutine internal_q()
   
   call set(DTEF(1),  0.d0)
   call set(DTEF(kb), 0.d0)
+  
+  ! call disp(kn, "kn = ")
+  ! call disp(dtef, "dtef = ")
   
   do k=2,kbm1
      call set(GG(k),1.d0/(A(k)+C(k)*(1.d0-EE(k-1))-2.d0*dti2*DTEF(k)-1.d0))
@@ -147,7 +163,8 @@ subroutine internal_q()
 
   call set(q2f, small, filter)
 
-  call set(q2lf, 0.1d0 * dt * small, filter)
+  dt_3d = rep(dt, 1, 1, kb)
+  call set(q2lf, 0.1d0 * dt_3d * small, filter)
   
   sh=a2*(1.d0-6.d0*a1/b1)/(1.d0-(3.d0*a2*b2+18.d0*a1*a2)*gh)
 
@@ -177,8 +194,24 @@ subroutine internal_q()
   call set(sub(kh, 1, ':',':'), &
        sub(kh,  2, ':',':')*sub(fsm,  1,':',':')) 
 
-  !call bcond6(q2f, q2lf,q2, q2l)
+  ! call disp(q2f, "q2f = ")
+  ! call disp(q2, "q2 = ")
+  ! call disp(q2b, "q2b = ")
+  ! call disp(q2lf, "q2lf = ")
+  ! call disp(q2l, "q2l = ")
+  ! call disp(q2lb, "q2lb = ")
+  ! call disp(km, "km = ")
+  ! call disp(kq, "kq = ")
+  ! call disp(kh, "kh = ")
 
-  !call smoth_update(q2f,q2lf,q2,q2l,q2b,q2lb)
+  call bcond6()
+  call smoth_update()
+  
+  call disp(q2f, "q2f = ")
+  call disp(q2lf, "q2lf = ")
+  call disp(q2, "q2 = ")
+  call disp(q2l, "q2l = ")
+  call disp(q2b, "q2b = ")
+  call disp(q2lb, "q2lb = ")
 
 end subroutine

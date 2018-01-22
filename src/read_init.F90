@@ -42,6 +42,8 @@ subroutine read_init(fnc)
   dz1  = tmp_dz1(1,1,:)
   dzz1 = tmp_dzz1(1,1,:)
 
+  z_3d  = rep(z,im,jm,1);
+
   dx      = load(fnc,'dx')       ; !call disp(dx, 'dx = ')
   dy      = load(fnc,'dy')       ; !call disp(dy, 'dy = ')
   cor     = load(fnc,'cor')      ; !call disp(cor, 'cor = ')
