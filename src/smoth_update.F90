@@ -11,14 +11,16 @@ subroutine smoth_update()
 end subroutine smoth_update
 
 
-! subroutine smoth_update1(q2f_, u_, ub_)
-!   use openarray
-!   use variables
-!   use config
-!   implicit none
-!   type(array), intent(inout) :: q2f_, u_, ub_
-!   
-!   ub_%data = u_%data+0.5d0*smoth*(q2f_%data+ub_%data-2.d0*u_%data)
-!   u_%data = q2f_%data
-! 
-! end subroutine
+subroutine smoth_update1(q2f_, u_, ub_)
+  use openarray
+  use variables
+  use config
+  implicit none
+  type(array), intent(inout) :: q2f_, u_, ub_
+  
+  ! ub_%data = u_%data+0.5d0*smoth*(q2f_%data+ub_%data-2.d0*u_%data)
+  ! u_%data = q2f_%data
+  ub = u+0.5d0*smoth*(q2f+ub-2.d0*u)
+  u = q2f
+
+end subroutine

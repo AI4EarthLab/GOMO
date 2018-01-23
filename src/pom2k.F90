@@ -125,11 +125,11 @@ program pom2k
            call toc("internal_q")
            return
            
-!            ! print*,'internal_t t='
-!            call tic("internal_t1")
-!            call internal_t(tf,t,tb,wtsurf,tsurf,nbct, &
-! swrad,tclim,tbe,tbw,tbn,tbs)
-!            call toc("internal_t1")
+           print*,'internal_t t='
+           call tic("internal_t1")
+           call internal_t(tf,t,tb,wtsurf,tsurf,nbct, &
+swrad,tclim,tbe,tbw,tbn,tbs)
+           call toc("internal_t1")
            
 !            ! print*,'internal_t t='
 !            call tic("internal_t2")

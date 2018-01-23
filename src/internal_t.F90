@@ -18,99 +18,74 @@ subroutine internal_t(ff,f,fb,wfsurf,fsurf,nbc,frad,fclim,fbe,fbw,fbn,fbs)
   ad2=(/0.23d0,20.d0 ,17.d0, 14.d0, 7.9d0/)
 
   if(nadv==1) then
-     call tic("internal_t_ff")
-     ff=( fb*dhb_3d &
-          - dti2*(DXF(axbdt_3d *AXB(f)*u &
-          -AXB(aam)*AXB(h_3d)*tprni*DXB(fb)*dum_3d) + &
-          DYF(aybdt_3d *AYB(f)*v-AYB(aam)*AYB(h_3d)*tprni &
-          *DYB(fb)*dvm_3d)-DZF(AZB(f)*w)))/dhf_3d
-     call toc("internal_t_ff")     
+    call tic("internal_t_ff")
+    ff=( dhb*fb &
+      - dti2*(DXF(AXB(dt)*AXB(f)*u &
+      -AXB(aam)*AXB(h)*tprni*DXB(fb)*dum) + &
+      DYF(AYB(dt)*AYB(f)*v-AYB(aam)*AYB(h)*tprni &
+      *DYB(fb)*dvm)-DZF(AZB(f)*w)))/dhf
+    call toc("internal_t_ff")     
   else
-     ff=mat_zeros
-     call advt2(ff,f,fb,fclim)
+    ff=mat_zeros
+    call advt2(ff,f,fb,fclim)
   endif
  
   rad=mat_zeros
-  dh=h+etf       ! ; dh_3d=h_3d+etf_3d
+  dh=h+etf       
 
-  !call set(sub(a,':',':',r(1,kbm2)) , -dti2*( sub(kh,':',':',r(2,kbm1))+umol ) )
-  !a=a/(dz_3d*dzz_3d*dhf_3d*dhf_3d)              !a(kbm1:kb)=0
+  call set(sub(a,':',':',[1,kbm2]), -dti2*(sub(kh,':',':',[2,kbm1])+umol))
+  a = a/(dz*dzz*dhf*dhf) 
+  call set(A(kbm1), 0.d0)
+  call set(A(kb), 0.d0)
 
-  do i = 1, kbm2
-     A(i) = -dti2 * (KH(i+1) + umol) / (dz1(i) * dzz1(i) * DHF_3D(i)**2)
-  end do
-  
-  A(kbm1)= 0.d0
-  A(kb)= 0.d0
-
-  !call set(sub(c,':',':',r(2,kbm1)) , sub(dzz_3d,':',':',r(1,kbm2)))
   do i = 2, kbm1
-     C(i) = dzz1(i-1)
+    call set(C(i), dzz1(i-1))
   enddo
-  
-  !c=-dti2*(kh+umol)/(dz_3d*c*dhf_3d*dhf_3d)
-  do i = 2, kbm1
-     C(i) = -dti2*(KH(i) + umol) / (dz1(i) * C(i) * DHF_3D(i)**2)
-  end do
-  
-  C(1)=0.d0
-  C(kb)=0.d0
+  c=-dti2*(kh+umol)/(dz*c*dhf*dhf)
+  call set(C(1), 0.d0)
+  call set(C(kb), 0.d0)
 
   if(nbc==2 .or. nbc==4) then
-     do k=1,kb 
-        RAD(k)=FRAD
-     enddo
-     rad= rad*(rr(ntp)*exp(z_3d*dhf_3d/ad1(ntp)) &
-          +(1.d0-rr(ntp))*exp(z_3d*dhf_3d/ad2(ntp)))
-     call set(sub(rad,':',':',kb) , 0.d0)
+    rad = mat_ones*frad*(rr(ntp)*exp(z*dhf/ad1(ntp)) &
+        +(1.d0-rr(ntp))*exp(z*dhf/ad2(ntp)))
+    call set(sub(rad,':',':',kb) , 0.d0)
   end if
 
   if(nbc==1) then
-!     call set( EE(1), A(1)/( A(1)-1.d0 ))
-!     call set( GG(1), ( dti2*wfsurf/( DZ(1)*dh )-FF(1) )/(A(1)-1.d0) )
-     EE(1)=A(1)/( A(1)-1.d0 )
-     GG(1)=( dti2*WFSURF_2D/( DZ(1)*DH_2D )-FF(1) )/(A(1)-1.d0)
+    call set(EE(1), A(1)/(A(1)-1.d0))
+    call set(GG(1), (dti2*wfsurf/(DZ(1)*dh)-FF(1))/(A(1)-1.d0) )
   elseif(nbc==2) then
-!     call set( EE(1), A(1)/( A(1)-1.d0 ))
-!     call set( GG(1), ( dti2*(wfsurf+RAD(1)-RAD(2))/( DZ(1)*dh )-FF(1) )/(A(1)-1.d0) )
-      EE(1)= A(1)/( A(1)-1.d0 )
-      GG(1)= (dti2*(WFSURF_2D+RAD(1)-RAD(2))/( DZ(1)*DH_2D )-FF(1) )/(A(1)-1.d0) 
+    call set( EE(1), A(1)/( A(1)-1.d0 ))
+    call set( GG(1), ( dti2*(wfsurf+RAD(1)-RAD(2))/( DZ(1)*dh )-FF(1) )/(A(1)-1.d0) )
   elseif(nbc==3 .or. nbc==4) then
-!     call set(EE(1), 0.d0)
-!     call set(GG(1), fsurf)
-     EE(1)= 0.d0
-     GG(1)= FSURF_2D
+    call set(EE(1), 0.d0)
+    call set(GG(1), fsurf)
   endif
   
   do k=2,kbm1
-!     call set(GG(k), 1.d0 / (A(k)+C(k)*(1.d0-EE(k-1)) -1.d0))
-!     call set(EE(k), A(k) * GG(k))
-!     call set(GG(k), (C(k) * GG(k-1) - FF(k) &
-!          +dti2*(RAD(k)-RAD(k+1))/(DZ(k)*dh)) * GG(k))
-     GG(k)= 1.d0 / (A(k)+C(k)*(1.d0-EE(k-1)) -1.d0)
-     EE(k)= A(k) * GG(k)
-     GG(k)= (C(k) * GG(k-1) - FF(k) &
-          +dti2*(RAD(k)-RAD(k+1))/(DZ(k)*DH_2D)) * GG(k)
+    call set(GG(k), 1.d0 / (A(k)+C(k)*(1.d0-EE(k-1)) -1.d0))
+    call set(EE(k), A(k) * GG(k))
+    call set(GG(k), (C(k) * GG(k-1) - FF(k) &
+         +dti2*(RAD(k)-RAD(k+1))/(dh*DZ(k))) * GG(k))
   enddo
 
-!  call disp(ee,'internal_t ee=')
-!  call disp(gg,'internal_t gg=')
+  call disp(ee,'internal_t ee=')
+  call disp(gg,'internal_t gg=')
 
 
   !call disp_info(f, 'f_'//trim(i2s(__LINE__)))
   
   do k=kbm1,1,-1
-  !   call set(FF(k),EE(k)*FF(k+1)+GG(k))
-     FF(k)=EE(k)*FF(k+1)+GG(k)
+    call set(FF(k),EE(k)*FF(k+1)+GG(k))
   enddo
 
-!  call disp(ff, 'ff = after internal_t')
+  call disp(ff, 'ff = after internal_t')
 
   call tic("bcond4")
   call bcond4(ff,f,fb,fbe,fbw,fbn,fbs)
   call toc("bcond4")
   
-!  call disp(ff,'ff = after bcond4')
+  call disp(ff,'ff = after bcond4')
   !call disp_info(f, 'f_'//trim(i2s(__LINE__)))
 
   call tic("smoth_update1")
@@ -121,8 +96,5 @@ subroutine internal_t(ff,f,fb,wfsurf,fsurf,nbc,frad,fclim,fbe,fbw,fbn,fbs)
 !  call disp(f,'f')
 !  call disp(fb,'fb')
 !  print*,"end of internal_t"
-
-  call destroy(dh, ierr)
-!  call destroy(dh_3d, ierr)
   
 end subroutine
