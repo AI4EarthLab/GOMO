@@ -131,34 +131,34 @@ program pom2k
 swrad,tclim,tbe,tbw,tbn,tbs)
            call toc("internal_t1")
            
-!            ! print*,'internal_t t='
-!            call tic("internal_t2")
-!            call internal_t(sf,s,sb,wssurf,ssurf,nbcs, &
-! swrad0,sclim,sbe,sbw,sbn,sbs)
-!            call toc("internal_t2")
+           print*,'internal_t t='
+           call tic("internal_t2")
+           call internal_t(sf,s,sb,wssurf,ssurf,nbcs, &
+swrad0,sclim,sbe,sbw,sbn,sbs)
+           call toc("internal_t2")
            
-!            ! print*, "dens"           
-!            call tic("dens")
-!            call dens(rho, t, s)
-!            call toc("dens")
+           print*, "dens"           
+           call tic("dens")
+           call dens(rho, t, s)
+           call toc("dens")
            
-!            ! print*,'internal_u t='
-!            call tic("internal_u")
-!            call internal_u()
-!            call toc("internal_u")
+           print*,'internal_u t='
+           call tic("internal_u")
+           call internal_u()
+           call toc("internal_u")
 
-!            ! print*,'internal_v t='
-!            call tic("internal_v")
-!            call internal_v()
-!            call toc("internal_v")
+           print*,'internal_v t='
+           call tic("internal_v")
+           call internal_v()
+           call toc("internal_v")
 
-!            ! print*,'internal_ufvf t='
-!            call tic("adjust_ufvf")
-!            call adjust_ufvf()
-!            call toc("adjust_ufvf")
+           print*,'internal_ufvf t='
+           call tic("adjust_ufvf")
+           call adjust_ufvf()
+           call toc("adjust_ufvf")
          endif
 
-         ! print*, 'internal_update'
+         print*, 'internal_update'
          call tic("int_update")
          call internal_update()
          call toc("int_update")
