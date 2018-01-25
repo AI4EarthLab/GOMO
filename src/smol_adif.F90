@@ -18,7 +18,7 @@ subroutine smol_adif(xmassflux,ymassflux,zwflux,ff)
 
   !%     Recalculate mass fluxes with antidiffusion velocity:
   call set(xmassflux, 0.d0, &
-       filter=(ff<value_min) .or. (shift(ff,1,1)<value_min))
+       mask=(ff<value_min) .or. (shift(ff,1,1)<value_min))
   
   flagno = ((ff>=value_min) .and. (shift(ff,1,1)>=value_min))
   
@@ -28,10 +28,10 @@ subroutine smol_adif(xmassflux,ymassflux,zwflux,ff)
   
   xmassflux=(udx-u2dt)*DXB(ff)*AXB(dx)/(2.d0*AXB(ff)+epsilon)*sw
 
-  call set(xmassflux, 0.d0, filter=abs(udx)<abs(u2dt))
+  call set(xmassflux, 0.d0, mask=abs(udx)<abs(u2dt))
   
   call set(ymassflux, 0.d0, &
-       filter=(ff<value_min).or.(shift(ff,1,2)<value_min))
+       mask=(ff<value_min).or.(shift(ff,1,2)<value_min))
   
   flagno = (ff>=value_min) .and. (shift(ff,1,2)>=value_min)
   
@@ -44,7 +44,7 @@ subroutine smol_adif(xmassflux,ymassflux,zwflux,ff)
   call set(ymassflux, 0.d0, abs(vdy)<abs(v2dt))
   
   call set(zwflux, 0.d0, &
-       filter=(ff<value_min) .or. (shift(ff,1,3)<value_min))
+       mask=(ff<value_min) .or. (shift(ff,1,3)<value_min))
   
   flagno=((ff>=value_min) .and. (shift(ff,1,3)>=value_min))
   
@@ -52,7 +52,7 @@ subroutine smol_adif(xmassflux,ymassflux,zwflux,ff)
   w2dt = dti2*zwflux*zwflux* flagno/(circshift(dzz,1,3)*dt) !change shift parameters.
   zwflux = -(wdz-w2dt)*DZB(ff)* AZB(dz)/(2.d0*AZB(ff)+epsilon)*sw
 
-  call set(zwflux, 0.d0, filter=abs(wdz) < abs(w2dt))
+  call set(zwflux, 0.d0, mask=abs(wdz) < abs(w2dt))
   
   xmassflux=xmassflux/AXB(dy)
   ymassflux=ymassflux/AYB(dx)
