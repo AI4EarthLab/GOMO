@@ -194,24 +194,15 @@ subroutine internal_q()
   call set(sub(kh, 1, ':',':'), &
        sub(kh,  2, ':',':')*sub(fsm,  1,':',':')) 
 
-  ! call disp(q2f, "q2f = ")
-  ! call disp(q2, "q2 = ")
-  ! call disp(q2b, "q2b = ")
-  ! call disp(q2lf, "q2lf = ")
-  ! call disp(q2l, "q2l = ")
-  ! call disp(q2lb, "q2lb = ")
-  ! call disp(km, "km = ")
-  ! call disp(kq, "kq = ")
-  ! call disp(kh, "kh = ")
 
   call bcond6()
   call smoth_update()
   
-  call disp(q2f, "q2f = ")
-  call disp(q2lf, "q2lf = ")
-  call disp(q2, "q2 = ")
-  call disp(q2l, "q2l = ")
-  call disp(q2b, "q2b = ")
-  call disp(q2lb, "q2lb = ")
+  !call disp(q2f, "q2f = ")
+  !call disp(q2, "q2 = ")
+  !call disp(q2b, "q2b = ")
+  !call disp(q2lf, "q2lf = ")
+  !call disp(q2l, "q2l = ")
+  !call disp(q2lb, "q2lb = ")
 
 end subroutine

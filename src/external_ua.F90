@@ -18,6 +18,6 @@ subroutine external_ua(iext)
        + drx2d+(wusurf-wubot)) ) / AXB(h+elf)
 
   call bcond2_ua()
-  call disp(uaf, "uaf = ")
+  !call disp(uaf, "uaf = ")
 
 end subroutine external_ua

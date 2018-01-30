@@ -6,16 +6,16 @@
 !#define A(x)   a%data(:, :, x-1)
 #define C(x)   sub(c,  ':', ':', x)
 !#define C(x)   c%data(:, :, x-1)
-!#define VF(x)  sub(vf, ':', ':', x)
 
 #define KH(x) kh%data(:,:,x-1)
 
 #define DHF_3D(x) dhf_3d%data(:,:,x-1)
 
-#define VF(x)  vf%data(:, :, x-1)
+#define VF(x)  sub(vf, ':', ':', x)
+!#define VF(x)  vf%data(:, :, x-1)
 #define VB(x)  sub(vb, ':', ':', x)
-!#define UF(x)  sub(uf, ':', ':', x)
-#define UF(x)  uf%data(:, :, x-1)
+#define UF(x)  sub(uf, ':', ':', x)
+!#define UF(x)  uf%data(:, :, x-1)
 #define UB(x)  sub(ub, ':', ':', x)
 !#define TF(x)  sub(tf, ':', ':', x)
 #define TF(x)  tf%data(:, :, x-1)

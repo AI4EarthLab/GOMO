@@ -16,7 +16,7 @@ subroutine adjust_uv()
   v = v-sum(v*dz, 3) + (vtb+vtf)/(2.d0 * AYB(dt))
   call set(sub(v,':',':',kb) , 0.d0)
   
-  call disp(u, "u = ")
-  call disp(v, "v = ")
+  !call disp(u, "u = ")
+  !call disp(v, "v = ")
 
 end subroutine

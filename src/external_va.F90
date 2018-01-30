@@ -19,6 +19,6 @@ subroutine external_va(iext)
        + dry2d +(wvsurf-wvbot))) / AYB(h+elf)
 
   call bcond2_va()
-  call disp(vaf, "vaf = ")
+  !call disp(vaf, "vaf = ")
 
 end subroutine

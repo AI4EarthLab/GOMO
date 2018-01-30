@@ -9,7 +9,7 @@ subroutine baropg()
   implicit none
   integer:: ierr
 
-  type(array) tmp
+  type(array) tmp, tmp1
 
   ! split one to two
   !drhox=ramp * grav * AXB(dt)  * csum(-DZB(zz) &
@@ -19,18 +19,21 @@ subroutine baropg()
 
   !call set(sub(drhox, ':', ':', kb), 0.d0)
   !call disp(drhox, "old drhox = ")
-  print *, "start baropg()"
-
+  !print *, "start baropg()"
+  
   tmp=-DZB(zz) &
        * DXB(AZB(rho - rmean)) * AXB(dt) &
        + DXB(dt) * DZB(AXB(rho - rmean)) &
        * AZB(zz) * AZB(dz)! , 3);
+
+  tmp1 = -zz * AXB(dt) * DXB(rho-rmean)
+  call set(sub(tmp, ':',':',1), sub(tmp1, ':',':',1))
   call set(sub(tmp,':',':',kb),0.d0)
   call disp(tmp, "tmpx = ")
   
   drhox=ramp * grav * AXB(dt)  * csum(tmp, 3) * dum;
   call set(sub(drhox, ':', ':', kb), 0.d0)
-  call disp(drhox, 'drhox = ')
+  !call disp(drhox, 'drhox = ')
 
   !drhoy=ramp * grav * AYB(dt)  * csum(-DZB(zz) &
   !     * DYB(AZB(rho - rmean)) * AYB(dt)  &
@@ -41,14 +44,17 @@ subroutine baropg()
        * DYB(AZB(rho - rmean)) * AYB(dt)  &
        + DYB(dt) * DZB(AYB(rho - rmean))  &
        * AZB(zz) * AZB(dz)
+
+  tmp1 = -zz * AYB(dt) * DYB(rho-rmean)
+  call set(sub(tmp, ':',':',1), sub(tmp1, ':',':',1))
   call set(sub(tmp,':',':',kb),0.d0)
   call disp(tmp, "tmpy = ")
 
   drhoy=ramp * grav * AYB(dt)  * csum(tmp, 3) * dvm;
   call set(sub(drhoy, ':', ':', kb), 0.d0)
-  call disp(drhoy, 'drhoy = ')
+  !call disp(drhoy, 'drhoy = ')
 
-  print *, "end baropg()"
+  !print *, "end baropg()"
   
 end subroutine
 

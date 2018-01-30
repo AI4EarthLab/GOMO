@@ -9,6 +9,6 @@ subroutine external_el()
     elf= elb-2.0*dte*((DXF(AXB(d)*ua)+DYF(AYB(d)*va))-vfluxf)
     
     call bcond1()
-    call disp(elf, "elf = ")
+    !call disp(elf, "elf = ")
 
 end subroutine external_el

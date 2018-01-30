@@ -58,7 +58,7 @@ subroutine update_initial()
   v = vb
 
   call dens(rho, t, s)
-  call disp(rho, "rho = ")
+  !call disp(rho, "rho = ")
 
   print *, "npg = ", npg
   if(npg == 1) then
@@ -72,6 +72,6 @@ subroutine update_initial()
 
   drx2d = sum(drhox * dz, 3)
   dry2d = sum(drhoy * dz, 3)
-  call disp(drx2d, 'dxr2d = ')
-  call disp(dry2d, 'dry2d = ')
+  !call disp(drx2d, 'dxr2d = ')
+  !call disp(dry2d, 'dry2d = ')
 end subroutine

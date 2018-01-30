@@ -4,7 +4,7 @@ subroutine internal_v()
   use config
   use variables
   implicit none
-  type(array) dh_3d, tmpa,tmpdzz_3d
+  type(array) dh, tmpa,tmpdzz
   integer :: ierr, k, i
 
   dh=AYB(dhf)
@@ -34,7 +34,7 @@ subroutine internal_v()
   call set(C(kb), 0.d0)
 
   call set( EE(1), A(1)/( A(1)-1.d0 ) )
-  call set( GG(1), (dti2*wvsurf/( DZ(1)*DH(1))-VF(1))/(A(1)-1.d0)  )
+  call set( GG(1), (dti2*wvsurf/( DZ(1)*dh)-VF(1))/(A(1)-1.d0)  )
 
   do k=2,kbm2
     call set(GG(k), 1.d0 / (A(k) + C(k) * (1.d0 - EE(k-1)) -1.d0))
@@ -47,7 +47,7 @@ subroutine internal_v()
   call set(sub(tps,im,':',':'), 0.d0)
 
   call set(VF(kbm1) , ( C(kbm1)* GG(kbm2)-VF(kbm1) )/ &
-       (tps*dti2 /(-DZ(kbm1)*sub(dh,':',':',kbm1))-1.d0-C(kbm1)*( EE(kbm2)-1.d0 ) ) ) 
+       (tps*dti2 /(-DZ(kbm1)*dh)-1.d0-C(kbm1)*( EE(kbm2)-1.d0 ) ) ) 
  
   do k=kbm2,1,-1
     call set(VF(k) , EE(k)*VF(k+1)+GG(k) )
@@ -58,7 +58,8 @@ subroutine internal_v()
 
   call bcond3_v()
 
-  print*,"vf after bcond"
-  call disp(vf,'vf = ')
+  !print*,"vf after bcond"
+  !call disp(vf,'vf = ')
+  !call disp(wvbot,'wvbot = ')
   
 end subroutine

@@ -112,6 +112,9 @@ subroutine bcond4(ff,f,fb,fbe,fbw,fbn,fbs)
           sub(tmp2, ':',2,[2,kbm2]))
   !endif
 
+  call set(sub(ff, ':',1,[2,kbm2]), 0.d0)
+  call set(sub(ff, ':',jm,[2,kbm2]), 0.d0)
+
   !print*, __FILE__, __LINE__
   
   ff = ff * fsm

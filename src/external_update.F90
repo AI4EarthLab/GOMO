@@ -43,7 +43,7 @@ subroutine external_update(iext, vamax, imax, jmax)
      endif
   endif
 
-  call disp(utf, "utf = ")
-  call disp(vtf, "vtf = ")
+  !call disp(utf, "utf = ")
+  !call disp(vtf, "vtf = ")
 
 end subroutine

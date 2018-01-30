@@ -24,6 +24,7 @@ subroutine internal_t(ff,f,fb,wfsurf,fsurf,nbc,frad,fclim,fbe,fbw,fbn,fbs)
       -AXB(aam)*AXB(h)*tprni*DXB(fb)*dum) + &
       DYF(AYB(dt)*AYB(f)*v-AYB(aam)*AYB(h)*tprni &
       *DYB(fb)*dvm)-DZF(AZB(f)*w)))/dhf
+    call disp(ff, "nadv=1, ff = ")
     call toc("internal_t_ff")     
   else
     ff=mat_zeros
@@ -69,13 +70,12 @@ subroutine internal_t(ff,f,fb,wfsurf,fsurf,nbc,frad,fclim,fbe,fbw,fbn,fbs)
          +dti2*(RAD(k)-RAD(k+1))/(dh*DZ(k))) * GG(k))
   enddo
 
-  call disp(ee,'internal_t ee=')
-  call disp(gg,'internal_t gg=')
-
-
   !call disp_info(f, 'f_'//trim(i2s(__LINE__)))
   
-  do k=kbm1,1,-1
+  call set(FF(kbm1), (C(kbm1)*GG(kbm2)-FF(kbm1)+dti2*(RAD(kbm1)-RAD(kb)) &
+          /(dh*DZ(kbm1))) / (C(kbm1)*(1.d0-EE(kbm2))-1.d0))
+
+  do k=kbm2,1,-1
     call set(FF(k),EE(k)*FF(k+1)+GG(k))
   enddo
 
@@ -92,9 +92,9 @@ subroutine internal_t(ff,f,fb,wfsurf,fsurf,nbc,frad,fclim,fbe,fbw,fbn,fbs)
   call smoth_update1(ff,f,fb)
   call toc("smoth_update1")
   
-!  call disp(ff,'ff')
-!  call disp(f,'f')
-!  call disp(fb,'fb')
-!  print*,"end of internal_t"
+  !call disp(ff,'ff = ')
+  !call disp(f,'f = ')
+  !call disp(fb,'fb =')
+  !print*,"end of internal_t"
   
 end subroutine

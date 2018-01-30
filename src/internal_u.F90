@@ -5,7 +5,7 @@ subroutine internal_u()
   use config
   use variables
   implicit none
-  type(array) :: dh, tmpdzz_3d, bondu
+  type(array) :: dh, tmpdzz, bondu
   integer :: ierr, k, i
 
 
@@ -32,7 +32,7 @@ subroutine internal_u()
   gg =mat_zeros
   call grid_bind(a, 6)
 
-  call set(sub(a,':',':',[1,kbm2]),-dti2*( sub(c,':',':',r(2,kbm1))+ umol))
+  call set(sub(a,':',':',[1,kbm2]),-dti2*( sub(c,':',':',[2,kbm1])+ umol))
   a=a/(dz*dzz*dh*dh)
 
   call set(A(kbm1), 0.d0)
@@ -47,7 +47,7 @@ subroutine internal_u()
   call set(C(kb) ,0)
   
   call set(EE(1),A(1)/(A(1)-1.d0) )
-  call set(GG(1),(dti2*wusurf/(DZ(1)*DH(1))-UF(1))/(A(1)-1.d0))
+  call set(GG(1),(dti2*wusurf/(DZ(1)*dh)-UF(1))/(A(1)-1.d0))
 
   do k=2,kbm2
     call set(GG(k), 1.d0 / (A(k) + C(k) * (1.d0 - EE(k-1)) -1.d0))
@@ -59,7 +59,7 @@ subroutine internal_u()
 
   
  call set(UF(kbm1) , (C(kbm1)*GG(kbm2)-UF(kbm1))/ &
-      (tps*dti2 /(-DZ(kbm1)*sub(dh,':',':',kbm1))-&
+      (tps*dti2 /(-DZ(kbm1)*dh)-&
       1.d0-C(kbm1)*( EE(kbm2)-1.d0))) 
   
   do k=kbm2,1,-1
@@ -71,5 +71,8 @@ subroutine internal_u()
   wubot=-tps*UF(kbm1)
   
   call bcond3_u()
+
+  !call disp(uf, "uf = ")
+  !call disp(wubot, "wubot = ")
 
 end subroutine
