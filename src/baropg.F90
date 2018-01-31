@@ -29,7 +29,7 @@ subroutine baropg()
   tmp1 = -zz * AXB(dt) * DXB(rho-rmean)
   call set(sub(tmp, ':',':',1), sub(tmp1, ':',':',1))
   call set(sub(tmp,':',':',kb),0.d0)
-  call disp(tmp, "tmpx = ")
+  !call disp(tmp, "tmpx = ")
   
   drhox=ramp * grav * AXB(dt)  * csum(tmp, 3) * dum;
   call set(sub(drhox, ':', ':', kb), 0.d0)
@@ -48,7 +48,7 @@ subroutine baropg()
   tmp1 = -zz * AYB(dt) * DYB(rho-rmean)
   call set(sub(tmp, ':',':',1), sub(tmp1, ':',':',1))
   call set(sub(tmp,':',':',kb),0.d0)
-  call disp(tmp, "tmpy = ")
+  !call disp(tmp, "tmpy = ")
 
   drhoy=ramp * grav * AYB(dt)  * csum(tmp, 3) * dvm;
   call set(sub(drhoy, ':', ':', kb), 0.d0)

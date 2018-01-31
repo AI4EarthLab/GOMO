@@ -24,7 +24,8 @@ subroutine internal_t(ff,f,fb,wfsurf,fsurf,nbc,frad,fclim,fbe,fbw,fbn,fbs)
       -AXB(aam)*AXB(h)*tprni*DXB(fb)*dum) + &
       DYF(AYB(dt)*AYB(f)*v-AYB(aam)*AYB(h)*tprni &
       *DYB(fb)*dvm)-DZF(AZB(f)*w)))/dhf
-    call disp(ff, "nadv=1, ff = ")
+    call set(sub(ff, ':',':',kb), 0.d0)
+    !call disp(ff, "nadv=1, ff = ")
     call toc("internal_t_ff")     
   else
     ff=mat_zeros
@@ -79,13 +80,13 @@ subroutine internal_t(ff,f,fb,wfsurf,fsurf,nbc,frad,fclim,fbe,fbw,fbn,fbs)
     call set(FF(k),EE(k)*FF(k+1)+GG(k))
   enddo
 
-  call disp(ff, 'ff = after internal_t')
+  !call disp(ff, 'ff = after internal_t')
 
   call tic("bcond4")
   call bcond4(ff,f,fb,fbe,fbw,fbn,fbs)
   call toc("bcond4")
   
-  call disp(ff,'ff = after bcond4')
+  !call disp(ff,'ff = after bcond4')
   !call disp_info(f, 'f_'//trim(i2s(__LINE__)))
 
   call tic("smoth_update1")

@@ -42,7 +42,7 @@ program pom2k
   !  open(unit=60,file='conservation7200.txt')
   !  write(60,'(2A21,3A12,A27,A10)')'vtot','atot','eaver','taver','saver','tsalt','vamax'
 
-  do iint = 1, iend
+  do iint = 1, 2 !iend
 
 !      if(get_rank()==0) print*,"============iint=============",iint
 !      call tic('10')
@@ -54,7 +54,7 @@ program pom2k
     call tic("surf_forcing")
     call surface_forcing(iint)
     call toc("surf_forcing")     
-    call disp(w, "surface_forcing w = ")
+    !call disp(w, "surface_forcing w = ")
 
     call tic("lateral_bc")     
     call lateral_bc(iint)
@@ -63,25 +63,25 @@ program pom2k
     call tic("lateral_vis")          
     call lateral_viscosity()
     call toc("lateral_vis")
-    call disp(advx, "advx = ")
-    call disp(advy, "advy = ")
-    call disp(drhox, 'drhox = ')
-    call disp(drhoy, 'drhoy = ')
-    call disp(aam, "aam = ")
+    !call disp(advx, "advx = ")
+    !call disp(advy, "advy = ")
+    !call disp(drhox, 'drhox = ')
+    !call disp(drhoy, 'drhoy = ')
+    !call disp(aam, "aam = ")
 
     call tic("mode_inter")
     call mode_interaction()
     call toc("mode_inter")
-    call disp(adx2d, "adx2d = ")
-    call disp(ady2d, "ady2d = ")
-    call disp(drx2d, "drx2d = ")
-    call disp(dry2d, "dry2d = ")
-    call disp(aam2d, "aam2d = ")
-    call disp(advua, "advua = ");
-    call disp(advva, "advva = ");
-    call disp(egf, "egf = ")
-    call disp(utf, "utf = ")
-    call disp(vtf, "vtf = ")
+    !call disp(adx2d, "adx2d = ")
+    !call disp(ady2d, "ady2d = ")
+    !call disp(drx2d, "drx2d = ")
+    !call disp(dry2d, "dry2d = ")
+    !call disp(aam2d, "aam2d = ")
+    !call disp(advua, "advua = ");
+    !call disp(advva, "advva = ");
+    !call disp(egf, "egf = ")
+    !call disp(utf, "utf = ")
+    !call disp(vtf, "vtf = ")
 
 
      !==============================================
@@ -93,30 +93,30 @@ program pom2k
         call tic("external_el")
         call external_el()
         call toc("external_el")        
-        call disp(elf, "elf = ")
+        !call disp(elf, "elf = ")
 
         call tic("external_ua")        
         call external_ua(iext)
         call toc("external_ua")        
-        call disp(uaf, "uaf = ")
-        call disp(advua, "advua = ")
+        !call disp(uaf, "uaf = ")
+        !call disp(advua, "advua = ")
 
         call tic("external_va")
         call external_va(iext)
         call toc("external_va")        
-        call disp(vaf, "vaf = ")
-        call disp(advva, "advva = ")
+        !call disp(vaf, "vaf = ")
+        !call disp(advva, "advva = ")
 
         call tic("external_update")
         call external_update(iext, vamax, imax, jmax)
         call toc("external_update")        
-        call disp(utf, "utf = ")
-        call disp(vtf, "vtf = ")
+        !call disp(utf, "utf = ")
+        !call disp(vtf, "vtf = ")
 
      end do
      
      fk = vamax * ones(1,1,1,2)
-     call disp(fk, "vamax = ")
+     !call disp(fk, "vamax = ")
      print *, "vamax = ", vamax
      print *, "vmaxl = ", vmaxl
      print *, "isplit = ", int(isplit)
@@ -132,28 +132,28 @@ program pom2k
            call tic("adjust_uv")          
            call adjust_uv()
            call toc("adjust_uv")
-           call disp(u, "u = ")
-           call disp(v, "v = ")
+           !call disp(u, "u = ")
+           !call disp(v, "v = ")
 
            print*,'internal_w t='
            call tic("internal_w")
            call internal_w()
            call toc("internal_w")
-           call disp(w, "w = ")
+           !call disp(w, "w = ")
           
            print*,'internal_q t='
            call tic("internal_q")
            call internal_q()
            call toc("internal_q")
-           call disp(q2f, "q2f = ")
-           call disp(q2, "q2 = ")
-           call disp(q2b, "q2b = ")
-           call disp(q2lf, "q2lf = ")
-           call disp(q2l, "q2l = ")
-           call disp(q2lb, "q2lb = ")
-           call disp(km, "km = ")
-           call disp(kq, "kq = ")
-           call disp(kh, "kh = ")
+           !call disp(q2f, "q2f = ")
+           !call disp(q2, "q2 = ")
+           !call disp(q2b, "q2b = ")
+           !call disp(q2lf, "q2lf = ")
+           !call disp(q2l, "q2l = ")
+           !call disp(q2lb, "q2lb = ")
+           !call disp(km, "km = ")
+           !call disp(kq, "kq = ")
+           !call disp(kh, "kh = ")
            
            
            print*,'internal_t t='
@@ -161,47 +161,47 @@ program pom2k
            call internal_t(tf,t,tb,wtsurf,tsurf,nbct, &
 swrad,tclim,tbe,tbw,tbn,tbs)
            call toc("internal_t1")
-           call disp(tf,'tf = ')
-           call disp(t,'t = ')
-           call disp(tb,'tb =')
+           !call disp(tf,'tf = ')
+           !call disp(t,'t = ')
+           !call disp(tb,'tb =')
            
            print*,'internal_t t='
            call tic("internal_t2")
            call internal_t(sf,s,sb,wssurf,ssurf,nbcs, &
 swrad0,sclim,sbe,sbw,sbn,sbs)
            call toc("internal_t2")
-           call disp(sf,'sf = ')
-           call disp(s,'s = ')
-           call disp(sb,'sb =')
+           !call disp(sf,'sf = ')
+           !call disp(s,'s = ')
+           !call disp(sb,'sb =')
            
            print*, "dens"           
            call tic("dens")
            call dens(rho, t, s)
            call toc("dens")
-           call disp(rho, "rho = ")
+           !call disp(rho, "rho = ")
            
            print*,'internal_u t='
            call tic("internal_u")
            call internal_u()
            call toc("internal_u")
-           call disp(uf, "uf = ")
-           call disp(wubot, "wubot = ")
+           !call disp(uf, "uf = ")
+           !call disp(wubot, "wubot = ")
 
            print*,'internal_v t='
            call tic("internal_v")
            call internal_v()
            call toc("internal_v")
-           call disp(vf,'vf = ')
-           call disp(wvbot,'wvbot = ')
+           !call disp(vf,'vf = ')
+           !call disp(wvbot,'wvbot = ')
 
            print*,'internal_ufvf t='
            call tic("adjust_ufvf")
            call adjust_ufvf()
            call toc("adjust_ufvf")
-           call disp(u, "u = ")
-           call disp(v, "v = ")
-           call disp(ub, "ub = ")
-           call disp(vb, "vb = ")
+           !call disp(u, "u = ")
+           !call disp(v, "v = ")
+           !call disp(ub, "ub = ")
+           !call disp(vb, "vb = ")
          endif
 
          print*, 'internal_update'

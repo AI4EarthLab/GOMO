@@ -12,8 +12,8 @@ JIT_LIB = ${EXT_PATH}/lib64/
 EXE              = pom2k
 #FC	         = mpif90
 #FLINKER          = mpif90 
-FC	         = mpifort
-FLINKER          = mpifort
+FC	         = mpifort -O3
+FLINKER          = mpifort -O3
 CFLAGS	         =
 FFLAGS	         =-Wno-tabs -I ${EXT_PATH}/include \
 		  -J ${OBJDIR} -I ${OPEN_ARRAY} -g \

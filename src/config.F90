@@ -37,7 +37,7 @@ module config
 contains
 
   subroutine LoadConfig()
-    open(1, file='config.tiny')
+    open(1, file='config.txt')
     read(1, setting)
     imm1 = im - 1
     imm2 = im - 2
