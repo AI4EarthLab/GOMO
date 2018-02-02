@@ -44,14 +44,6 @@ module variables
 
   type(array) xflux, yflux, zflux, curv, curv2d, curv_x, curv_y
 
-  ! type(array) :: dx_3d, dy_3d, cor_3d, h_3d, art_3d, aru_3d, arv_3d
-  ! type(array) :: fsm_3d, dum_3d, dvm_3d, dt_3d, d_3d
-
-  ! type(array) z_3d, zz_3d, dz_3d, dzz_3d  
-  ! type(array)   :: etb_3d,  egf_3d, egb_3d
-  ! type(array)   :: e_atmos_3d, etf_3d, dhf_3d, dhb_3d
-  ! type(array)   :: axbdt_3d,aybdt_3d
-
   type(array) z_3d, dt_3d
 
   type(array)  :: dhf, dhb
@@ -156,35 +148,12 @@ contains
     dhf = mat_zeros_im_jm_1;
     dhb = mat_zeros_im_jm_1;
     
-    !------------------------------------------------------
-    !                   start of 3d
-    !------------------------------------------------------
-
-    ! d_3d=mat_zeros            ;dt_3d=mat_zeros           ;
-    ! dhf_3d=mat_zeros          ;dhb_3d=mat_zeros          ;
-    ! egf_3d=mat_zeros          ;etf_3d=mat_zeros          ;
-    ! etb_3d=mat_zeros          ;egb_3d=mat_zeros          ;
-    ! e_atmos_3d=mat_zeros      ;cor_3d=mat_zeros          ;
-    ! z_3d=mat_zeros            ;zz_3d=mat_zeros           ;
-    ! dz_3d=mat_zeros           ;dzz_3d=mat_zeros          ;
-    ! dx_3d=mat_zeros           ;dy_3d =mat_zeros          ;
-    
-    ! art_3d=mat_zeros          ;arv_3d=mat_zeros          ;
-    ! aru_3d=mat_zeros          ;fsm_3d=mat_zeros          ;
-    ! dum_3d=mat_zeros          ;dvm_3d=mat_zeros          ;
-    ! h_3d  =mat_zeros          ;
-
-    !------------------------------------------------------
-    !                   end of 3d
-    !------------------------------------------------------
-    
     rad = mat_zeros           
 
     curv = mat_zeros
     curv_x = mat_zeros;  curv_y = mat_zeros
     curv2d = mat_zeros_im_jm_1
 
-    !call file2ic()
     fnc = trim(in_path)//trim(problem)//".nc"
     print*, "trim(fnc)=", trim(fnc)
     call read_init(trim(fnc))

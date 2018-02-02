@@ -22,3 +22,17 @@ subroutine smoth_update1(q2f_, u_, ub_)
   u_ = q2f_
 
 end subroutine
+
+subroutine fuck_you()
+  use openarray
+  use variables
+  use config
+  implicit none
+  type(array) :: fk1, fk2, fk
+  
+    fk1 = ones(7,5,6,1,2)
+    fk2 = ones(7,5,6,1,2)
+    fk = fk1 + fk2
+
+end subroutine
+

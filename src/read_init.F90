@@ -106,64 +106,6 @@ subroutine read_init(fnc)
   wtsurf = load(fnc,'wtsurf');
   swrad  = load(fnc,'swrad');
 
-  dxb_axf_dy = DXB(AXF(dy))
-  dyb_ayf_dx = DYB(AYF(dx))
-
-  !------------------------------------------------------
-  !                   start of 3d
-  !------------------------------------------------------
-
-  !  do i=1,im
-  !     do j=1,jm
-  !      Z_3D(i,j)=Z_1D
-  !      ZZ_3D(i,j)=ZZ_1D
-  !      DZ_3D(i,j)=DZ_1D
-  !      DZZ_3D(i,j)=DZZ_1D
-  !     enddo
-  !  enddo
-
-  ! do k=1,kb
-  !  DX_3D(k) =DX_2D
-  !  DY_3D(k) =DY_2D
-  !  COR_3D(k)=COR_2D
-  !  ART_3D(k)=ART_2D
-  !  ARV_3D(k)=ARV_2D
-  !  ARU_3D(k)=ARU_2D
-  !  FSM_3D(k)=FSM_2D
-  !  DUM_3D(k)=DUM_2D
-  !  DVM_3D(k)=DVM_2D
-  !  H_3D(k)  =H_2D
-  ! enddo
-
-  ! z_3d  = rep(z,im,jm,1);
-  ! zz_3d = rep(zz,im,jm,1);
-  ! dz_3d = rep(dz,im,jm,1);
-  ! dzz_3d = rep(dzz,im,jm,1);
-  
-  !  dx_3d=rep(dx,1,1,kb);
-  !  cor_3d=rep(cor,1,1,kb);  
-  !  art_3d=rep(art,1,1,kb);  
-  !  arv_3d=rep(arv,1,1,kb);  
-  !  dum_3d=rep(dum,1,1,kb);
-  
-  !  dy_3d=rep(dy,1,1,kb);   
-  !  h_3d=rep(h,1,1,kb);     
-  !  aru_3d=rep(aru,1,1,kb); 
-  !  fsm_3d=rep(fsm,1,1,kb); 
-  !  dvm_3d=rep(dvm,1,1,kb);
-  
-  ! do ii = 0, get_size(get_comm(dy_3d))
-  !    if(get_rank() == ii) then
-  !       call printx("A%data", dy_3d%data)
-  !    endif
-
-  !    call MPI_Barrier(get_comm(A), ierr)
-  ! enddo
-
-  !------------------------------------------------------
-  !                   end of 3d
-  !------------------------------------------------------
-
   call dens(rho, tb, sb)
 
   if(fclim_flag) then

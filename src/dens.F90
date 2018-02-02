@@ -17,7 +17,6 @@ subroutine dens(rhoo, t_, s_)
   tr3 = tr2 * tr;
   tr4 = tr3 * tr;
 
-  !% Approximate pressure in units of bars:
   p=grav * rhoref * (-zz * mat_ones *  h) * 1.d-5;
 
   rhor2=-0.157406d0+6.793952d-2 * tr-9.095290d-3 * tr2 &
@@ -35,10 +34,5 @@ subroutine dens(rhoo, t_, s_)
   cr=p / (cr1 * cr1)
   rhor=rhor1+1.d5 * cr * (1.d0-2.d0 * cr);
   rhoo = rhor / rhoref * fsm;
-
-!#ifdef DEBUG
-!  if(get_rank() == 0) &
-!       print*, "@@", __FILE__, __LINE__
-!#endif
   
 end subroutine

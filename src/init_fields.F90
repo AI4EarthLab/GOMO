@@ -118,24 +118,4 @@ subroutine init_fields()
   call grid_bind(vbs,     1)
   call grid_bind(rad,     7)
 
-
-  !------------------------------------------------------
-  !                   start of 3d
-  !------------------------------------------------------
-
-  ! call grid_bind(art_3d,  3)
-  ! call grid_bind(aru_3d,  2)
-  ! call grid_bind(arv_3d,  1)
-  ! call grid_bind(egb_3d,  3)
-  ! call grid_bind(egf_3d,  3)
-  ! call grid_bind(etb_3d,  3)
-  ! call grid_bind(etf_3d,  3)
-  ! call grid_bind(h_3d,    3)
-  ! call grid_bind(psi,     3)
-  ! call grid_bind(d_3d,    3)
-  ! call grid_bind(dt_3d,   3)
-
-  !------------------------------------------------------
-  !                   end of 3d
-  !------------------------------------------------------
 end subroutine

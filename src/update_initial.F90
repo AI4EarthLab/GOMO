@@ -16,27 +16,6 @@ subroutine update_initial()
   d = h + el
   dt = h + et;
 
-  !------------------------------------------------------
-  !                   start of 3d
-  !------------------------------------------------------
-
-  ! do k=1,kb
-  !   DT_3D(k) =DT_2D
-  !   ETB_3D(k)=ETB_2D
-  !   D_3D(k)  =D_2D
-  !   E_ATMOS_3D(k)=E_ATMOS_2D
-  ! enddo
-
-  ! axbdt_3d=AXB(dt_3d)
-  ! aybdt_3d=AYB(dt_3d)
-
-  ! axbdt = AXB(dt)
-  ! aybdt = AYB(dt)
-
-  !------------------------------------------------------
-  !                   end of 3d
-  !------------------------------------------------------
-
   l = dt * 0.1d0
 
   call grid_bind(l, 7)

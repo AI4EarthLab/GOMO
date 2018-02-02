@@ -12,8 +12,8 @@ JIT_LIB = ${EXT_PATH}/lib64/
 EXE              = pom2k
 #FC	         = mpif90
 #FLINKER          = mpif90 
-FC	         = mpifort -O3
-FLINKER          = mpifort -O3
+FC	         = mpifort -O3 -g -DBOOST_LOG_DYN_LINK
+FLINKER          = mpifort -O3 -g
 CFLAGS	         =
 FFLAGS	         =-Wno-tabs -I ${EXT_PATH}/include \
 		  -J ${OBJDIR} -I ${OPEN_ARRAY} -g \
@@ -80,7 +80,7 @@ main : ${OBJ}
 	-${FLINKER} -o ${BINDIR}/pom2k ${OBJ} \
 	${EXT_LIB} -I ${OPEN_ARRAY} -L${OPEN_ARRAY} \
 	-lopenarray -lm -ldl -lstdc++ \
-	-lboost_program_options -lboost_system -ljit  -lpnetcdf
+	-lboost_program_options -lboost_system -lboost_log -lboost_log_setup -lboost_thread -ljit -lpnetcdf # /home/siofive/pnetcdf.intel/lib/libpnetcdf.a
 
 run : main
 	-cd ./bin && ./pom2k

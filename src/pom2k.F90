@@ -14,7 +14,7 @@ program pom2k
   real(kind=8) :: vamax
   integer :: max_step
 
-  type(array) :: fk
+  type(array) :: fk, fk1, fk2
 
   !call tic(11)
   call oa_init(MPI_COMM_WORLD, [-1,-1,1])
@@ -23,7 +23,17 @@ program pom2k
 
   !get commandline option
   call oa_get_option(max_step, "s", -1)
-  
+
+  call open_debug()
+
+  do
+    call fuck_you()
+    !fk1 = ones(7,5,6,1,2)
+    !fk2 = ones(7,5,6,1,2)
+    !fk = fk1 + fk2
+  end do
+  call end_debug()
+
   !both namelist data and init data will be loaded.
   call init_variables()
 
@@ -42,7 +52,7 @@ program pom2k
   !  open(unit=60,file='conservation7200.txt')
   !  write(60,'(2A21,3A12,A27,A10)')'vtot','atot','eaver','taver','saver','tsalt','vamax'
 
-  do iint = 1, 2 !iend
+  do iint = 1, iend
 
 !      if(get_rank()==0) print*,"============iint=============",iint
 !      call tic('10')
