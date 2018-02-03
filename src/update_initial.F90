@@ -49,7 +49,14 @@ subroutine update_initial()
      stop
   end if
 
+  ! call disp(drhox, 'drhox')
+  ! call disp(drhoy, 'drhoy')
+
+  ! call disp(dz, 'dz')
+
+  ! call open_debug()
   drx2d = sum(drhox * dz, 3)
+  ! call close_debug()
   dry2d = sum(drhoy * dz, 3)
   !call disp(drx2d, 'dxr2d = ')
   !call disp(dry2d, 'dry2d = ')

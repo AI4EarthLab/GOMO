@@ -9,7 +9,7 @@ subroutine baropg()
   implicit none
   integer:: ierr
 
-  type(array) tmp, tmp1
+  type(array) tmp, tmp1, ttt
 
   ! split one to two
   !drhox=ramp * grav * AXB(dt)  * csum(-DZB(zz) &
@@ -31,8 +31,12 @@ subroutine baropg()
   call set(sub(tmp,':',':',kb),0.d0)
   !call disp(tmp, "tmpx = ")
   
+  ! ttt = csum(tmp, 3)
+  ! call disp(ttt, 'ttt')
   drhox=ramp * grav * AXB(dt)  * csum(tmp, 3) * dum;
+
   call set(sub(drhox, ':', ':', kb), 0.d0)
+  ! call disp(drhox, 'drhox2')
   !call disp(drhox, 'drhox = ')
 
   !drhoy=ramp * grav * AYB(dt)  * csum(-DZB(zz) &

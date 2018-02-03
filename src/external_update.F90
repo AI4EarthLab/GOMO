@@ -16,8 +16,9 @@ subroutine external_update(iext, vamax, imax, jmax)
   endif
 
   !call disp(vaf, "vaf = ")
-  
+
   vamax = abs_max(vaf)
+
   call set(pos, abs_max_at(vaf))
   imax = pos(1)
   jmax = pos(2)

@@ -120,4 +120,15 @@ subroutine surface_forcing(iint)
    
   end select
 
+  call destroy(wtsurfb)
+  call destroy(wtsurff)
+  call destroy(swradb)
+  call destroy(swradf)
+  call destroy(wssurfb) 
+  call destroy(wssurff) 
+  call destroy(wusurfb)
+  call destroy(wusurff)
+  call destroy(wvsurfb)
+  call destroy(wvsurff)
+
 end subroutine

@@ -18,7 +18,11 @@ subroutine advct()
   !     * AYB(AXB(aam))*(DYB(ub) + DXB(vb))) &
   !     - AXB(curv * dt * AYF(v));
 
+  ! call open_debug()
+
   tmp  = AXF(AXB(dt) * u) * AXF(u) - dt*aam*2.d0*DXF(ub)
+  ! call close_debug()
+
   call set(sub(tmp,1,':',':'), 0.d0)
   call set(sub(tmp,im,':',':'), 0.d0)
 
@@ -41,7 +45,9 @@ subroutine advct()
   !     + DYB(AYF(AYB(dt) * v) * AYF(v) - dt * aam * 2.d0 *DYF(vb)) &
   !     + AYB(curv * dt * AXF(u));
 
-  tmp = AYF(AYB(dt) * v) * AYF(v) - dt * aam * 2.d0 *DYF(vb)
+  ! call open_debug()
+  tmp = AYF(AYB(dt) * v) * AYF(v) - dt*aam*2.d0*DYF(vb)
+!  call close_debug()
   call set(sub(tmp,':',1,':'), 0.d0)
   call set(sub(tmp,':',jm,':'), 0.d0)
   

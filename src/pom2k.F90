@@ -24,15 +24,19 @@ program pom2k
   !get commandline option
   call oa_get_option(max_step, "s", -1)
 
-  call open_debug()
+  !call open_debug()
 
-  do
-    call fuck_you()
-    !fk1 = ones(7,5,6,1,2)
-    !fk2 = ones(7,5,6,1,2)
-    !fk = fk1 + fk2
-  end do
-  call end_debug()
+  !!do i=1,2
+  !!do
+  !!  !call fuck_you()
+  !  fk1 = ones(7,5,6,1,2)
+  !  fk2 = zeros(7,5,6,1,2)
+  !  fk = fk1 + fk1 - fk1
+  !  call disp(fk, "fk = ")
+  !!  fk = 1.d0 + fk2 + 1.d0
+  !!end do
+  !call close_debug()
+  !return
 
   !both namelist data and init data will be loaded.
   call init_variables()
@@ -52,14 +56,16 @@ program pom2k
   !  open(unit=60,file='conservation7200.txt')
   !  write(60,'(2A21,3A12,A27,A10)')'vtot','atot','eaver','taver','saver','tsalt','vamax'
 
-  do iint = 1, iend
+  do iint = 1, 10
 
 !      if(get_rank()==0) print*,"============iint=============",iint
 !      call tic('10')
 
+
     call get_time(iint)
     print*, "time = ", time
     print*, "ramp = ", ramp 
+
 
     call tic("surf_forcing")
     call surface_forcing(iint)
@@ -69,6 +75,8 @@ program pom2k
     call tic("lateral_bc")     
     call lateral_bc(iint)
     call toc("lateral_bc")          
+
+
 
     call tic("lateral_vis")          
     call lateral_viscosity()
@@ -93,7 +101,6 @@ program pom2k
     !call disp(utf, "utf = ")
     !call disp(vtf, "vtf = ")
 
-
      !==============================================
      ! Begin external (2-D) mode
      !==============================================
@@ -104,6 +111,7 @@ program pom2k
         call external_el()
         call toc("external_el")        
         !call disp(elf, "elf = ")
+
 
         call tic("external_ua")        
         call external_ua(iext)
@@ -134,7 +142,7 @@ program pom2k
      ! =============================================
      ! End of external (2-D) mode
      ! =============================================
-    
+
      if(vamax <= vmaxl) then 
         if(((iint/=1).or.(time0/=0.e0) ).and. (mode/=2)) then
 
