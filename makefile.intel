@@ -1,25 +1,27 @@
 
-PETSC_INC=-I${PETSC_DIR}/include -I${PETSC_DIR}/${PETSC_ARCH}/include
-PETSC_LIB=-L${PETSC_DIR}/${PETSC_ARCH}/lib
 
 SRCDIR           = ./src/
 OBJDIR           = ./lib/
 BINDIR           = ./bin/
 
+EXT_LIB = -L${EXT_PATH}/lib64/
+JIT_LIB = ${EXT_PATH}/lib64/
+
 EXE              = pom2k
-FC	         = mpiifort -O2
-FLINKER          = mpiifort -O2
+#FC	         = mpif90
+#FLINKER          = mpif90 
+FC	         = mpiifort -O3 -g -DBOOST_LOG_DYN_LINK
+FLINKER          = mpiifort -O3 -g
 CFLAGS	         =
-FFLAGS	         =-I ${PNETCDF}/include \
-		   -I ${OPEN_ARRAY} 
+FFLAGS	         =-I ${EXT_PATH}/include \
+		  -I ${OPEN_ARRAY} -g \
 
 CPPFLAGS         =
 FPPFLAGS         =
 CLEANFILES       = pom2k *.o *.mod *.nc
 NP               = 1
 
-OBJ		 = ${addprefix ${OBJDIR}/, \
-		input.o variables.o init_fields.o \
+OOO              = \
 		print_section.o read_var.o \
 		dens.o baropg.o bottom_friction.o lateral_bc.o \
 		get_time.o advct.o advt2.o lateral_viscosity.o \
@@ -32,32 +34,51 @@ OBJ		 = ${addprefix ${OBJDIR}/, \
 		internal_v.o internal_w.o \
 		internal_update.o \
 		surface_forcing.o update_initial.o \
-		read_init.o oa_kernels.o pom2k.o}
+		oa_kernels.o
+
+
+#		bcond6.o smoth_update.o\
+
+OBJ	= ${addprefix ${OBJDIR}/, config.o \
+		variables.o dens.o read_init.o  \
+		init_fields.o update_initial.o \
+		bottom_friction.o get_time.o \
+		read_var.o surface_forcing.o \
+		lateral_bc.o advct.o baropg.o \
+		lateral_viscosity.o advave.o \
+		mode_interaction.o bcond1.o \
+		external_el.o bcond2_ua.o \
+		external_ua.o external_va.o \
+		bcond2_va.o external_update.o \
+		adjust_uv.o internal_w.o\
+		internal_q.o internal_update.o \
+		bcond6.o smoth_update.o \
+		advt2.o bcond4.o internal_t.o \
+		smol_adif.o bcond3_u.o bcond3_v.o \
+		internal_u.o internal_v.o \
+		adjust_ufvf.o pom2k.o}
 
 OBJMAIN	= ${OBJ}
-
-#include ${PETSC_DIR}/lib/petsc/conf/variables
-#include ${PETSC_DIR}/lib/petsc/conf/rules
-
 
 .DEFAULT_GOAL := all
 
 all :
 	@./fypp1 -p  -m re -m string -m io -m os --create-parents \
 	src/oa_kernels.fypp src/oa_kernels.F90
-	@make main -f makefile.intel
+	@make main
 
 
 ${OBJDIR}/%.o: ${SRCDIR}/%.F90
 	-${FC} ${FFLAGS} -c -o $@ $<
 
+
 %.o: %.mod
 
 main : ${OBJ}
-	-${FLINKER} ${OBJ}  ${PETSC_KSP_LIB} \
-	${PETSC_LIB} -I ${OPEN_ARRAY} ${OPEN_ARRAY}/libopenarray.a \
-	${PNETCDF}/lib/libpnetcdf.a \
-	-o ${BINDIR}/pom2k  -lpetsc 
+	-${FLINKER} -o ${BINDIR}/pom2k ${OBJ} \
+	${EXT_LIB} -I ${OPEN_ARRAY} -L${OPEN_ARRAY} \
+	-lopenarray -lm -ldl -lstdc++ \
+	-lboost_program_options -lboost_system -lboost_log -lboost_log_setup -lboost_thread -ljit -lpnetcdf # /home/siofive/pnetcdf.intel/lib/libpnetcdf.a
 
 run : main
 	-cd ./bin && ./pom2k
@@ -68,7 +89,7 @@ run4 : main
 run2 : main
 	-cd ./bin && mpirun -np 2 ./pom2k
 oalib :
-	-cd ../../OpenArray/ && make oalib -f makefile.intel
+	-cd ../../OpenArray/ && make oalib
 clean ::
 	-rm lib/*.o
 	-rm bin/${EXE}

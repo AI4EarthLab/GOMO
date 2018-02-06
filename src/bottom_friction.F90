@@ -7,11 +7,16 @@ subroutine bottom_friction()
   use config
   implicit none
   real(kind=8) :: zz_kbm1
-
+  type(array) :: a1, a2
+  
   zz_kbm1 = sub(zz, 1,1,kbm1)
   cbc=(kappa/log((1.0+zz_kbm1)*h/z0b))**2;
 
+
+
+  ! a1 = 
   call set(cbc, cbcmin, cbc < cbcmin)
   call set(cbc, cbcmax, cbc > cbcmax)
+
   !call disp(cbc, "cbc = ")
 end subroutine

@@ -116,7 +116,7 @@ program pom2k
         !call disp(vtf, "vtf = ")
 
      end do
-     
+
      fk = vamax * ones(1,1,1,2)
      !call disp(fk, "vamax = ")
      print *, "vamax = ", vamax
@@ -142,7 +142,7 @@ program pom2k
            call internal_w()
            call toc("internal_w")
            !call disp(w, "w = ")
-          
+
            print*,'internal_q t='
            call tic("internal_q")
            call internal_q()
@@ -157,7 +157,7 @@ program pom2k
            !call disp(kq, "kq = ")
            !call disp(kh, "kh = ")
            
-           
+
            print*,'internal_t t='
            call tic("internal_t1")
            call internal_t(tf,t,tb,wtsurf,tsurf,nbct, &
