@@ -14,7 +14,7 @@ FC	         = mpiifort -O3 -g -DBOOST_LOG_DYN_LINK
 FLINKER          = mpiifort -O3 -g
 CFLAGS	         =
 FFLAGS	         =-I ${EXT_PATH}/include \
-		  -J ${OBJDIR} -I ${OPEN_ARRAY} -g \
+		  -I ${OPEN_ARRAY} -g \
 
 CPPFLAGS         =
 FPPFLAGS         =

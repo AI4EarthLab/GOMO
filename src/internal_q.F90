@@ -43,7 +43,7 @@ subroutine internal_q()
   do i = 2, kbm1
     call set(A(i), dzz1(i-1)*dz1(i))
   end do
-  
+
   a=-dti2*(AZF(kq)+umol)/(a*dhf*dhf)
   call set(A(1),  0.d0)
   call set(A(kb), 0.d0)
@@ -84,24 +84,27 @@ subroutine internal_q()
   call set(sub(cc,':',':',kb), 0.d0)
 
   q2b =abs(q2b);  q2lb=abs(q2lb);
+
   boygr=-grav*DZB(rho)/h + grav**2/AZB(cc**2)
+
   call set(sub(boygr,':',':',1), 0.d0)
 
   l=q2lb / q2b
 
   call grid_bind(l0, 7)
   kappa_l0 = kappa * l0 
-  
+
   ! call disp(p, "p = ")
   ! call disp(cc, "cc = ")
   ! call disp(boygr, "boygr = ")
   ! call disp(l, "l = ")
-  
+
   call set(l, max(l, kappa_l0), (z_3d > -0.5d0))
 
   gh = l**2 * boygr / q2b
-  call set(gh, 0.028d0, gh > 0.028d0)
   
+  call set(gh, 0.028d0, gh > 0.028d0)
+
   call set(L(1),  kappa * L0(1))
   call set(L(kb) , 0.d0)
   
