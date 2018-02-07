@@ -1,6 +1,7 @@
 
 # PETSC_INC=-I${PETSC_DIR}/include -I${PETSC_DIR}/${PETSC_ARCH}/include
 # PETSC_LIB=-L${PETSC_DIR}/${PETSC_ARCH}/lib
+export OPEN_ARRAY=/home/siofive/OpenArray_CXX/build
 
 SRCDIR           = ./src/
 OBJDIR           = ./lib/
