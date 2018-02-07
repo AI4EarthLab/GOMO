@@ -140,6 +140,7 @@ subroutine internal_q()
   call set(EE(2), 0.d0)
   call set(GG(2), 0.d0)
   call set(Q2LF(kb), 0.d0) 
+  call set(Q2LF(1), 0.d0)
 
   do k=2,kbm1
      call set(DTEF(k),DTEF(k)*(1.d0+e2*((1.d0/abs(z1(k)-z1(1))&
