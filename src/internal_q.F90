@@ -28,7 +28,7 @@ subroutine internal_q()
        -AZB(AXB(aam))*AXB(h)* DXB(q2lb)*dum ) &
        +DYF(AYB(q2l)*AYB(dt)*AZB(v)  &
        -AZB(AYB(aam))*AYB(h)*DYB(q2lb)*dvm)))/dhf
-
+  call check_all("==============================")
   ! call disp(q2f, "q2f = ")
   ! call disp(q2lf, "q2lf = ")
 

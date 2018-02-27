@@ -129,7 +129,7 @@ tatm             = 0.0,
 ! Salinity of atm
 satm             = 0.0,
 
-days = 0.1625,
+days = 0.7625,
 prtd1=0.0125,
 prtd2=1.0,
 swtch=1000.0,

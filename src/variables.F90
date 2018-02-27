@@ -174,4 +174,76 @@ contains
     !write(*,*) "===end of init_variables"
   end subroutine
 
+    subroutine check_all(prefix)
+    implicit none
+    character(len=*) :: prefix
+
+    if(has_nan_or_inf(u) .or. &
+         has_nan_or_inf(v) .or. &
+         has_nan_or_inf(uaf) .or. &
+         has_nan_or_inf(vaf) .or. &
+         has_nan_or_inf(t) .or. &
+         has_nan_or_inf(s) .or. &
+                                ! has_nan_or_inf(q2f) .or. &
+                                ! has_nan_or_inf(q2b) .or. &
+         has_nan_or_inf(q2lf) .or. &
+         has_nan_or_inf(q2lb) .or. &
+         has_nan_or_inf(q2) .or. &
+         has_nan_or_inf(dt)) then
+
+       print*, prefix
+       ! call disp(u, "u = ")
+       ! call disp(v, "v = ")
+       ! call disp(uaf, "uaf = ")
+       ! call disp(vaf, "vaf = ")
+       ! call disp(dt, "dt = ")
+       ! call disp(t, "t = ")
+       ! call disp(s, "s = ")
+       ! call disp(q2f, "q2f = ")
+       ! call disp(q2b, "q2b = ")
+       ! call disp(q2lf, "q2lf = ")
+       ! call disp(q2lb, "q2lb = ")       
+       !call set(sub(q2lb, ':', ':', 1), 0)
+
+       ! call disp(q2l, "q2l = ")
+       
+    ! call disp(u, "u = ")
+    ! call disp(v, "v = ")
+    !call disp(w, "w = ")    
+    ! call disp(uaf, "uaf = ")
+    ! call disp(vaf, "vaf = ")
+    ! call disp(dt, "dt = ")
+    ! call disp(t, "t = ")
+    ! call disp(s, "s = ")
+    ! call disp(q2b, "q2b = ")
+    ! call disp(dhb, "dhb = ")
+    ! call disp(dhf, "dhf = ")    
+    ! call disp(q2, "q2 = ")    
+    call disp(q2l, "q2l = ")
+    call disp(q2lf, "q2lf = ")
+    call disp(q2lb, "q2lb = ")
+    call disp(fsm, "fsm = ")       
+       ! call print_c_ptr(q2%ptr)
+       ! call print_c_ptr(q2b%ptr)
+       ! call print_c_ptr(q2f%ptr)
+       ! call print_c_ptr(q2lb%ptr)
+       ! call print_c_ptr(q2lf%ptr)
+
+       ! call print_c_ptr(s%ptr)
+       ! call print_c_ptr(t%ptr)
+       ! call print_c_ptr(u%ptr)
+       ! call print_c_ptr(v%ptr)
+
+
+       ! call disp(dhb, "dhb = ")
+       ! call disp(dhf, "dhf = ")
+       ! call disp(aam, "aam = ")              
+       ! call disp(w, "w = ")              
+       ! call disp(q2, "q2 = ")                     
+       ! call disp(s, "s = ")
+       !call check_all1()
+       stop
+    end if
+  end subroutine
+
 end module
