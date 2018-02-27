@@ -16,8 +16,11 @@ subroutine bcond3_u()
   call set(sub(uf, im,[2,jmm1],[1,kbm1]), sub(tmp, im,[2,jmm1],[1,kbm1]) )
   call set(sub(uf, 2 ,[2,jmm1],[1,kbm1]), sub(tmp, 2 ,[2,jmm1],[1,kbm1]) )
   call set(sub(uf, 1 ,[2,jmm1],[1,kbm1]), sub(tmp, 2 ,[2,jmm1],[1,kbm1]) )
-  call set(sub(uf, [2,imm1], jm ,[1,kbm1]), 0.d0 )
-  call set(sub(uf, [2,imm1], 1  ,[1,kbm1]), 0.d0 )
+  ! why [2,imm1] ???????
+  !call set(sub(uf, [2,imm1], jm ,[1,kbm1]), 0.d0 )
+  !call set(sub(uf, [2,imm1], 1  ,[1,kbm1]), 0.d0 )
+  call set(sub(uf, [1,im], jm ,[1,kbm1]), 0.d0 )
+  call set(sub(uf, [1,im], 1  ,[1,kbm1]), 0.d0 )
 
   uf = uf * dum
 end subroutine

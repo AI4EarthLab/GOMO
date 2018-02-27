@@ -106,7 +106,7 @@ program pom2k
         call tic("external_va")
         call external_va(iext)
         call toc("external_va")        
-        !call disp(vaf, "vaf = ")
+        !call disp(vaf, "external_va vaf = ")
         !call disp(advva, "advva = ")
 
         call tic("external_update")
@@ -117,7 +117,8 @@ program pom2k
 
      end do
 
-     fk = vamax * ones(1,1,1,2)
+     !call disp(vaf, "vaf = ")
+     !fk = vamax * ones(1,1,1,2) 
      !call disp(fk, "vamax = ")
      print *, "vamax = ", vamax
      print *, "vmaxl = ", vmaxl
