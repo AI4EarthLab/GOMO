@@ -55,10 +55,10 @@ subroutine internal_t(ff,f,fb,wfsurf,fsurf,nbc,frad,fclim,fbe,fbw,fbn,fbs)
 
   if(nbc==1) then
     call set(EE(1), A(1)/(A(1)-1.d0))
-    call set(GG(1), (dti2*wfsurf/(DZ(1)*dh)-FF(1))/(A(1)-1.d0) )
+    call set(GG(1), (dti2*wfsurf/(dz1(1)*dh)-FF(1))/(A(1)-1.d0) )
   elseif(nbc==2) then
     call set( EE(1), A(1)/( A(1)-1.d0 ))
-    call set( GG(1), ( dti2*(wfsurf+RAD(1)-RAD(2))/( DZ(1)*dh )-FF(1) )/(A(1)-1.d0) )
+    call set( GG(1), ( dti2*(wfsurf+RAD(1)-RAD(2))/( dz1(1)*dh )-FF(1) )/(A(1)-1.d0) )
   elseif(nbc==3 .or. nbc==4) then
     call set(EE(1), 0.d0)
     call set(GG(1), fsurf)
@@ -68,13 +68,13 @@ subroutine internal_t(ff,f,fb,wfsurf,fsurf,nbc,frad,fclim,fbe,fbw,fbn,fbs)
     call set(GG(k), 1.d0 / (A(k)+C(k)*(1.d0-EE(k-1)) -1.d0))
     call set(EE(k), A(k) * GG(k))
     call set(GG(k), (C(k) * GG(k-1) - FF(k) &
-         +dti2*(RAD(k)-RAD(k+1))/(dh*DZ(k))) * GG(k))
+         +dti2*(RAD(k)-RAD(k+1))/(dh*dz1(k))) * GG(k))
   enddo
 
   !call disp_info(f, 'f_'//trim(i2s(__LINE__)))
   
   call set(FF(kbm1), (C(kbm1)*GG(kbm2)-FF(kbm1)+dti2*(RAD(kbm1)-RAD(kb)) &
-          /(dh*DZ(kbm1))) / (C(kbm1)*(1.d0-EE(kbm2))-1.d0))
+          /(dh*dz1(kbm1))) / (C(kbm1)*(1.d0-EE(kbm2))-1.d0))
 
   do k=kbm2,1,-1
     call set(FF(k),EE(k)*FF(k+1)+GG(k))
