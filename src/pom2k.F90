@@ -49,8 +49,8 @@ program pom2k
 
 
     call get_time(iint)
-    print*, "time = ", time
-    print*, "ramp = ", ramp 
+    !print*, "time = ", time
+    !print*, "ramp = ", ramp 
 
 
     call tic("surf_forcing")
@@ -120,9 +120,9 @@ program pom2k
      !call disp(vaf, "vaf = ")
      !fk = vamax * ones(1,1,1,2) 
      !call disp(fk, "vamax = ")
-     print *, "vamax = ", vamax
-     print *, "vmaxl = ", vmaxl
-     print *, "isplit = ", int(isplit)
+     if (get_rank() == 0) print *, "vamax = ", vamax
+     !print *, "vmaxl = ", vmaxl
+     !print *, "isplit = ", int(isplit)
 
      ! =============================================
      ! End of external (2-D) mode
@@ -131,20 +131,20 @@ program pom2k
      if(vamax <= vmaxl) then 
         if(((iint/=1).or.(time0/=0.e0) ).and. (mode/=2)) then
 
-           print*,'adjust_uv t='
+           !print*,'adjust_uv t='
            call tic("adjust_uv")          
            call adjust_uv()
            call toc("adjust_uv")
            !call disp(u, "u = ")
            !call disp(v, "v = ")
 
-           print*,'internal_w t='
+           !print*,'internal_w t='
            call tic("internal_w")
            call internal_w()
            call toc("internal_w")
            !call disp(w, "w = ")
 
-           print*,'internal_q t='
+           !print*,'internal_q t='
            call tic("internal_q")
            call internal_q()
            call toc("internal_q")
@@ -159,7 +159,7 @@ program pom2k
            !call disp(kh, "kh = ")
            
 
-           print*,'internal_t t='
+           !print*,'internal_t t='
            call tic("internal_t1")
            call internal_t(tf,t,tb,wtsurf,tsurf,nbct, &
 swrad,tclim,tbe,tbw,tbn,tbs)
@@ -168,7 +168,7 @@ swrad,tclim,tbe,tbw,tbn,tbs)
            !call disp(t,'t = ')
            !call disp(tb,'tb =')
            
-           print*,'internal_t t='
+           !print*,'internal_t t='
            call tic("internal_t2")
            call internal_t(sf,s,sb,wssurf,ssurf,nbcs, &
 swrad0,sclim,sbe,sbw,sbn,sbs)
@@ -177,27 +177,27 @@ swrad0,sclim,sbe,sbw,sbn,sbs)
            !call disp(s,'s = ')
            !call disp(sb,'sb =')
            
-           print*, "dens"           
+           !print*, "dens"           
            call tic("dens")
            call dens(rho, t, s)
            call toc("dens")
            !call disp(rho, "rho = ")
            
-           print*,'internal_u t='
+           !print*,'internal_u t='
            call tic("internal_u")
            call internal_u()
            call toc("internal_u")
            !call disp(uf, "uf = ")
            !call disp(wubot, "wubot = ")
 
-           print*,'internal_v t='
+           !print*,'internal_v t='
            call tic("internal_v")
            call internal_v()
            call toc("internal_v")
            !call disp(vf,'vf = ')
            !call disp(wvbot,'wvbot = ')
 
-           print*,'internal_ufvf t='
+           !print*,'internal_ufvf t='
            call tic("adjust_ufvf")
            call adjust_ufvf()
            call toc("adjust_ufvf")
@@ -207,7 +207,7 @@ swrad0,sclim,sbe,sbw,sbn,sbs)
            !call disp(vb, "vb = ")
          endif
 
-         print*, 'internal_update'
+         !print*, 'internal_update'
          call tic("int_update")
          call internal_update()
          call toc("int_update")
@@ -253,9 +253,9 @@ swrad0,sclim,sbe,sbw,sbn,sbs)
   !  call disp(el,  'el = ')
   !  call disp(elf, 'elf = ')
   !  call disp(etf, 'etf = ')
-  print*, "vamax = ", vamax
-  print*, 'imax=', imax
-  print*, 'jmax=', jmax
+  !print*, "vamax = ", vamax
+  !print*, 'imax=', imax
+  !print*, 'jmax=', jmax
 
   ! call save(h, file='dt.nc', var='data')
   ! call system('ncmpidump dt.nc | ncgen -o dt.nc')

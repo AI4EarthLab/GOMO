@@ -4,7 +4,7 @@ subroutine internal_u()
   use config
   use variables
   implicit none
-  type(array) :: dh, tmpa, tmpdzz, bondu, tmparray
+  type(array) :: dh, tmpa, bondu, tmparray
   integer :: ierr, k, i, pos(3), imax, jmax
   real(kind=8) :: tmpmax
 
@@ -32,15 +32,18 @@ subroutine internal_u()
   !bondu = AXB(w) * AZB(u)
   !call set(sub(uf,im,':',':') , sub(bondu,im,':',':')) 
 
-  tmpdzz = dzz
-  call set(sub(tmpdzz,':',':',[2,kbm1]),sub(dzz,':',':',[1,kbm2]))
+  ! change tmpdzz to a global array, in order to save make_pseudo_3d's
+  ! operations
+  !tmpdzz = dzz
+  !call set(sub(tmpdzz,':',':',[2,kbm1]),sub(dzz,':',':',[1,kbm2]))
+
   c=-dti2*(c+umol)/(dz*tmpdzz*dh*dh)
   
   call set(C(1) ,0)
   call set(C(kb) ,0)
   
   call set(EE(1),A(1)/(A(1)-1.d0) )
-  call set(GG(1),(dti2*wusurf/(DZ(1)*dh)-UF(1))/(A(1)-1.d0))
+  call set(GG(1),(dti2*wusurf/(dz1(1)*dh)-UF(1))/(A(1)-1.d0))
 
   do k=2,kbm2
     call set(GG(k), 1.d0 / (A(k) + C(k) * (1.d0 - EE(k-1)) -1.d0))
@@ -54,7 +57,7 @@ subroutine internal_u()
 
   
  call set(UF(kbm1) , (C(kbm1)*GG(kbm2)-UF(kbm1))/ &
-      (tps*dti2 /(-DZ(kbm1)*dh)-&
+      (tps*dti2 /(-dz1(kbm1)*dh)-&
       1.d0-C(kbm1)*( EE(kbm2)-1.d0))) 
   
   do k=kbm2,1,-1

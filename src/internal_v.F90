@@ -4,7 +4,7 @@ subroutine internal_v()
   use config
   use variables
   implicit none
-  type(array) dh, tmpa,tmpdzz
+  type(array) dh, tmpa
   integer :: ierr, k, i
 
   dh=AYB(dhf)
@@ -27,14 +27,17 @@ subroutine internal_v()
   call set(A(kbm1), 0.d0)
   call set(A(kb), 0.d0)
   
-  tmpdzz=dzz
-  call set(sub(tmpdzz,':',':',[2,kbm1]),sub(dzz,':',':',[1,kbm2]))
+  ! change tmpdzz to a global array, in order to save make_pseudo_3d's
+  ! operations
+  !tmpdzz=dzz
+  !call set(sub(tmpdzz,':',':',[2,kbm1]),sub(dzz,':',':',[1,kbm2]))
+
   c=-dti2*(c+umol)/(dz*tmpdzz*dh*dh) 
   call set(C(1), 0.d0)
   call set(C(kb), 0.d0)
 
   call set( EE(1), A(1)/( A(1)-1.d0 ) )
-  call set( GG(1), (dti2*wvsurf/( DZ(1)*dh)-VF(1))/(A(1)-1.d0)  )
+  call set( GG(1), (dti2*wvsurf/( dz1(1)*dh)-VF(1))/(A(1)-1.d0)  )
 
   do k=2,kbm2
     call set(GG(k), 1.d0 / (A(k) + C(k) * (1.d0 - EE(k-1)) -1.d0))
@@ -47,7 +50,7 @@ subroutine internal_v()
   call set(sub(tps,  im,':',':'), 0.d0)
 
   call set(VF(kbm1) , ( C(kbm1)* GG(kbm2)-VF(kbm1) )/ &
-       (tps*dti2 /(-DZ(kbm1)*dh)-1.d0-C(kbm1)*( EE(kbm2)-1.d0 ) ) ) 
+       (tps*dti2 /(-dz1(kbm1)*dh)-1.d0-C(kbm1)*( EE(kbm2)-1.d0 ) ) ) 
  
   do k=kbm2,1,-1
     call set(VF(k) , EE(k)*VF(k+1)+GG(k) )

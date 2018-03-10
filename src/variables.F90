@@ -40,7 +40,7 @@ module variables
   type(array) uabe     , uabw     , ube     , ubw
   type(array) vabn     , vabs     , vbn     , vbs
 
-  type(array) z, zz, dz, dzz
+  type(array) z, zz, dz, dzz, tmpdzz
 
   type(array) xflux, yflux, zflux, curv, curv2d, curv_x, curv_y
 

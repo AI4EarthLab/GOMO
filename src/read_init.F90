@@ -36,6 +36,9 @@ subroutine read_init(fnc)
   tmp_dz1  = dz
   tmp_dzz1 = dzz
 
+  tmpdzz=dzz
+  call set(sub(tmpdzz,':',':',[2,kbm1]),sub(dzz,':',':',[1,kbm2]))
+
   !stencil must be correctly set!
   z1   = tmp_z1(1,1,:)
   zz1  = tmp_zz1(1,1,:)
