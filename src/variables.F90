@@ -155,7 +155,7 @@ contains
     curv2d = mat_zeros_im_jm_1
 
     fnc = trim(in_path)//trim(problem)//".nc"
-    print*, "trim(fnc)=", trim(fnc)
+    !print*, "trim(fnc)=", trim(fnc)
     call read_init(trim(fnc))
 
     dti=dte*isplit;

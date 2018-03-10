@@ -8,7 +8,7 @@ subroutine advave()
 
   type(array) tmp
 
-  print *, "in advave()"
+  !print *, "in advave()"
 
   tps = AYB(AXB(d)) * AXB(AYB(aam2d)) *  (DYB(uab)  + DXB(vab));
   !call disp(tps, "tps = ")

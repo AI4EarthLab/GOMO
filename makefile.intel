@@ -1,4 +1,7 @@
 
+# PETSC_INC=-I${PETSC_DIR}/include -I${PETSC_DIR}/${PETSC_ARCH}/include
+# PETSC_LIB=-L${PETSC_DIR}/${PETSC_ARCH}/lib
+OPEN_ARRAY=/home/wangdong/siofive/OpenArray_CXX/build
 
 SRCDIR           = ./src/
 OBJDIR           = ./lib/
@@ -10,12 +13,12 @@ JIT_LIB = ${EXT_PATH}/lib64/
 EXE              = pom2k
 #FC	         = mpif90
 #FLINKER          = mpif90 
-FC	         = mpiifort -O3 -g -DBOOST_LOG_DYN_LINK
-FLINKER          = mpiifort -O3 -g
+FC	         = mpiifort -O3 -g -DBOOST_LOG_DYN_LINK -w
+FLINKER          = mpiifort -O3 -g -w
 CFLAGS	         =
-FFLAGS	         =-I ${EXT_PATH}/include \
-		  -I ${OPEN_ARRAY} -g \
-
+FFLAGS	         =-Wno-tabs -I ${EXT_PATH}/include \
+		  -J ${OBJDIR} -I ${OPEN_ARRAY} -g \
+		 -fbacktrace -ffree-line-length-0 
 CPPFLAGS         =
 FPPFLAGS         =
 CLEANFILES       = pom2k *.o *.mod *.nc

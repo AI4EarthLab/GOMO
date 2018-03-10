@@ -5,7 +5,7 @@ subroutine mode_interaction()
   use variables
   implicit none
 
-  print *, "in mode_interaction"
+  !print *, "in mode_interaction"
   adx2d = sum(advx*dz,  3);
   ady2d = sum(advy*dz,  3);
   drx2d = sum(drhox*dz, 3);

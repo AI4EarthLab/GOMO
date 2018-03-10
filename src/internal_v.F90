@@ -43,8 +43,8 @@ subroutine internal_v()
   enddo
 
   tps=AYB(cbc) * sqrt( AYB( AXF( UB(kbm1) ) )**2 + VB(kbm1)**2 )
-  call set(sub(tps,1, ':',':'), 0.d0)
-  call set(sub(tps,im,':',':'), 0.d0)
+  call set(sub(tps, ':',  1,':'), 0.d0)
+  call set(sub(tps,  im,':',':'), 0.d0)
 
   call set(VF(kbm1) , ( C(kbm1)* GG(kbm2)-VF(kbm1) )/ &
        (tps*dti2 /(-DZ(kbm1)*dh)-1.d0-C(kbm1)*( EE(kbm2)-1.d0 ) ) ) 

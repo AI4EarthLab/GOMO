@@ -39,7 +39,7 @@ subroutine update_initial()
   call dens(rho, t, s)
   !call disp(rho, "rho = ")
 
-  print *, "npg = ", npg
+  !print *, "npg = ", npg
   if(npg == 1) then
     call baropg()
   elseif(npg == 2) then

@@ -1,45 +1,38 @@
 #include "common.h"
-
 subroutine internal_u()
   use openarray
   use config
   use variables
   implicit none
-  type(array) :: dh, tmpdzz, bondu
-  integer :: ierr, k, i
+  type(array) :: dh, tmpa, tmpdzz, bondu, tmparray
+  integer :: ierr, k, i, pos(3), imax, jmax
+  real(kind=8) :: tmpmax
 
+  dh=AXB(dhf)
 
-  dh=AXB( dhf )
   uf=(AXB(dhb)*ub-dti2*(advx + &
        drhox - AXB(cor*dt*AYF(v) )+  &
        grav* AXB(dt)*(DXB(egf+egb)+ &
        DXB(e_atmos)*2.d0)*0.5d0-  &
        DZF(AXB(w) * AZB(u)))) /dh
   
-  
-  !    uf(:,:,kb)=0.e0;  bond=AXB(w) .* AZB(u); uf(im,:,:) = bond(im,:,:) ;   %add by hx
   call set(UF(kb),0.d0)
-  bondu = AXB(w) * AZB(u)
-  call set(sub(uf,im,':',':') , sub(bondu,im,':',':')) 
-
+  
   call set(sub(dh,1,':',':'),1.d0)
   call set(sub(dh,':',1,':'),1.d0)
 
   c=AXB(km)
-  
-  a = mat_zeros
-  ee =mat_zeros
-  gg =mat_zeros
-  call grid_bind(a, 6)
-
-  call set(sub(a,':',':',[1,kbm2]),-dti2*( sub(c,':',':',[2,kbm1])+ umol))
-  a=a/(dz*dzz*dh*dh)
-
+  call set(sub(c,1,':',':'),0.d0)
+  tmpa=mat_zeros
+  call set(sub(tmpa,':',':',[1,kbm2]),-dti2*( sub(c,':',':',[2,kbm1])+ umol))
+  a=tmpa/(dz*dzz*dh*dh)
   call set(A(kbm1), 0.d0)
   call set(A(kb), 0.d0)
 
+  !bondu = AXB(w) * AZB(u)
+  !call set(sub(uf,im,':',':') , sub(bondu,im,':',':')) 
+
   tmpdzz = dzz
-  call grid_bind(tmpdzz, 2)
   call set(sub(tmpdzz,':',':',[2,kbm1]),sub(dzz,':',':',[1,kbm2]))
   c=-dti2*(c+umol)/(dz*tmpdzz*dh*dh)
   
@@ -56,6 +49,8 @@ subroutine internal_u()
   enddo
  
   tps=AXB(cbc) * sqrt( UB(kbm1)**2 + AXB( AYF( VB(kbm1)))**2)
+  call set(sub(tps,   1,':',':'), 0.d0)
+  call set(sub(tps, ':', jm,':'), 0.d0)
 
   
  call set(UF(kbm1) , (C(kbm1)*GG(kbm2)-UF(kbm1))/ &
@@ -67,10 +62,9 @@ subroutine internal_u()
   end do
 
   uf=uf*dum;
-
-  wubot=-tps*UF(kbm1)
-  
   call bcond3_u()
+  
+  wubot=-tps*UF(kbm1)
 
   !call disp(uf, "uf = ")
   !call disp(wubot, "wubot = ")
