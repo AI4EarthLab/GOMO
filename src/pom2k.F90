@@ -16,7 +16,6 @@ program pom2k
 
   type(array) :: fk, fk1, fk2
 
-  !call tic(11)
   call oa_init(MPI_COMM_WORLD, [-1,-1,1])
 
   call set_stencil(STENCIL_BOX, 1)
@@ -44,14 +43,7 @@ program pom2k
 
   do iint = 1, iend 
 
-!      if(get_rank()==0) print*,"============iint=============",iint
-!      call tic('10')
-
-
     call get_time(iint)
-    !print*, "time = ", time
-    !print*, "ramp = ", ramp 
-
 
     call tic("surf_forcing")
     call surface_forcing(iint)
@@ -89,13 +81,11 @@ program pom2k
      ! Begin external (2-D) mode
      !==============================================
      do iext=1,int(isplit)
-     !do iext=1,30
 
         call tic("external_el")
         call external_el()
         call toc("external_el")        
         !call disp(elf, "elf = ")
-
 
         call tic("external_ua")        
         call external_ua(iext)
@@ -117,12 +107,7 @@ program pom2k
 
      end do
 
-     !call disp(vaf, "vaf = ")
-     !fk = vamax * ones(1,1,1,2) 
-     !call disp(fk, "vamax = ")
      if (get_rank() == 0) print *, "vamax = ", vamax
-     !print *, "vmaxl = ", vmaxl
-     !print *, "isplit = ", int(isplit)
 
      ! =============================================
      ! End of external (2-D) mode

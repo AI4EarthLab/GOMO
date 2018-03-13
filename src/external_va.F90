@@ -11,7 +11,6 @@ subroutine external_va(iext)
           +DYB(AYF(AYB(d)*va)* AYF(va)-2.0*d * aam2d * DYF(vab))
   endif
 
-
   vaf= (AYB(h+elb)* vab &
        -2.0* dte*(ady2d + advva + AYB(cor* d* AXF(ua)) &
        + grav*AYB(d)*((1.0-2.0*alpha)* DYB(el) &
@@ -19,6 +18,5 @@ subroutine external_va(iext)
        + dry2d +(wvsurf-wvbot))) / AYB(h+elf)
 
   call bcond2_va()
-  !call disp(vaf, "vaf = ")
 
 end subroutine

@@ -20,9 +20,4 @@ subroutine adjust_ufvf()
   vb = v
   v  = vf
 
-  !call disp(u, "u = ")
-  !call disp(v, "v = ")
-  !call disp(ub, "ub = ")
-  !call disp(vb, "vb = ")
-
 end subroutine

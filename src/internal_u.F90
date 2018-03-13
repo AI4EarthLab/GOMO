@@ -4,17 +4,20 @@ subroutine internal_u()
   use config
   use variables
   implicit none
-  type(array) :: dh, tmpa, bondu, tmparray
+  type(array) :: dh, tmpa, bondu, tmparray, tmp
   integer :: ierr, k, i, pos(3), imax, jmax
   real(kind=8) :: tmpmax
 
   dh=AXB(dhf)
 
+  tmp = AXB(w) * AZB(u)
+  call set(sub(tmp, ':',':',kb), 0.d0)
+
   uf=(AXB(dhb)*ub-dti2*(advx + &
        drhox - AXB(cor*dt*AYF(v) )+  &
        grav* AXB(dt)*(DXB(egf+egb)+ &
        DXB(e_atmos)*2.d0)*0.5d0-  &
-       DZF(AXB(w) * AZB(u)))) /dh
+       DZF(tmp))) /dh
   
   call set(UF(kb),0.d0)
   
@@ -31,11 +34,6 @@ subroutine internal_u()
 
   !bondu = AXB(w) * AZB(u)
   !call set(sub(uf,im,':',':') , sub(bondu,im,':',':')) 
-
-  ! change tmpdzz to a global array, in order to save make_pseudo_3d's
-  ! operations
-  !tmpdzz = dzz
-  !call set(sub(tmpdzz,':',':',[2,kbm1]),sub(dzz,':',':',[1,kbm2]))
 
   c=-dti2*(c+umol)/(dz*tmpdzz*dh*dh)
   

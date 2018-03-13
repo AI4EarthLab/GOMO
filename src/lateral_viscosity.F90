@@ -25,8 +25,8 @@ subroutine lateral_viscosity()
   
 
   ! pos of u and v has changed before, need check OpenArray
-  call grid_bind(u, 2)
-  call grid_bind(v, 1)
+  !call grid_bind(u, 2)
+  !call grid_bind(v, 1)
 
   aam=horcon * dx * dy &
        * sqrt(DXF(u)**2 + DYF(v)**2 &

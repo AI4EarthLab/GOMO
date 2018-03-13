@@ -4,16 +4,18 @@ subroutine internal_v()
   use config
   use variables
   implicit none
-  type(array) dh, tmpa
+  type(array) dh, tmpa, tmp
   integer :: ierr, k, i
 
   dh=AYB(dhf)
+  tmp = AYB(w) * AZB(v)
+  call set(sub(tmp, ':',':',kb), 0.d0)
 
   vf =(AYB(dhb)*vb-dti2*(advy+ &
        drhoy+AYB(cor*dt*AXF(u))+     &
        grav * AYB(dt)*(DYB(egf+egb)+ &
        DYB(e_atmos)*2.d0)/2.d0 &
-       -DZF(AYB(w) * AZB(v))))/dh
+       -DZF(tmp)))/dh
   
   call set(VF(kb), 0.d0)
 
@@ -26,11 +28,6 @@ subroutine internal_v()
   a=tmpa/(dz*dzz*dh*dh) 
   call set(A(kbm1), 0.d0)
   call set(A(kb), 0.d0)
-  
-  ! change tmpdzz to a global array, in order to save make_pseudo_3d's
-  ! operations
-  !tmpdzz=dzz
-  !call set(sub(tmpdzz,':',':',[2,kbm1]),sub(dzz,':',':',[1,kbm2]))
 
   c=-dti2*(c+umol)/(dz*tmpdzz*dh*dh) 
   call set(C(1), 0.d0)

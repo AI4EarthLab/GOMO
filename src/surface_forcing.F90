@@ -18,13 +18,6 @@ subroutine surface_forcing(iint)
      if(iint == 1) then
        vfluxf = 0.0; wtsurf = 0.0
        satm = 0.0; tatm = 0.0
-       
-       ! in matlab set all variables to be zero
-
-       !tatm = sub(t, ':',':',1) + tbias;
-       !wtsurf=  wtsurf+vfluxf*(tatm-sub(t,':',':',1)-tbias);
-       !wssurf=  -vfluxf * (satm - sub(s,':',':',1)+sbias);
-
        wtsurf = mat_zeros_im_jm_1;
        wssurf = mat_zeros_im_jm_1;
 
@@ -119,16 +112,5 @@ subroutine surface_forcing(iint)
    endif
    
   end select
-
-  call destroy(wtsurfb)
-  call destroy(wtsurff)
-  call destroy(swradb)
-  call destroy(swradf)
-  call destroy(wssurfb) 
-  call destroy(wssurff) 
-  call destroy(wusurfb)
-  call destroy(wusurff)
-  call destroy(wvsurfb)
-  call destroy(wvsurff)
 
 end subroutine

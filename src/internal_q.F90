@@ -14,7 +14,6 @@ subroutine internal_q()
 
   type(node) tmp
   
-  ! call MPI_Barrier(MPI_COMM_WORLD, ierr)
   dhf = h + etf;
 
   q2f= (q2b*dhb-dti2*(-DZB(AZF(w*q2)) &
@@ -28,16 +27,12 @@ subroutine internal_q()
        -AZB(AXB(aam))*AXB(h)* DXB(q2lb)*dum ) &
        +DYF(AYB(q2l)*AYB(dt)*AZB(v)  &
        -AZB(AYB(aam))*AYB(h)*DYB(q2lb)*dvm)))/dhf
-  !call check_all("==============================")
-  ! call disp(q2f, "q2f = ")
-  ! call disp(q2lf, "q2lf = ")
 
   a1=0.92d0;      b1=16.6d0;  a2=0.74d0;
   b2=10.1d0;      c1=0.08d0
   e1=1.8d0;       e2=1.33d0;  sef=1.d0;
   cbcnst=100.d0;  surfl=2.d5; shiw=0.d0
 
-!  a=mat_zeros;; c=mat_zeros
   ee=mat_zeros; gg=mat_zeros; l0=mat_zeros;
 
   do i = 2, kbm1

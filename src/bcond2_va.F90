@@ -19,15 +19,13 @@ subroutine bcond2_va()
 
   tmp = ramp * (tmpva + rfn * sqrt(grav/h) * (el - tmpel))
   call set(sub(vaf,[2,imm1], jm), sub(tmp,[2,imm1], jmm1))
-  tmp = ramp * (tmpva - rfs * sqrt(grav/h) * (el - tmpel))
 
+  tmp = ramp * (tmpva - rfs * sqrt(grav/h) * (el - tmpel))
   call set(sub(vaf,[2,imm1], 2), sub(tmp,[2,imm1], 2))
   call set(sub(vaf,[2,imm1], 1), sub(tmp,[2,imm1], 2))  
-
   call set(sub(vaf, im, [1,jm]), 0.d0)
   call set(sub(vaf, 1,  [1,jm]), 0.d0)
   
   vaf = vaf * dvm
-  !call disp(vaf, "vaf = ")
 
 end subroutine 

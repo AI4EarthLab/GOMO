@@ -13,7 +13,7 @@ subroutine update_initial()
   et = etb;
   etf = et;
 
-  d = h + el
+  d = h + el;
   dt = h + et;
 
   l = dt * 0.1d0
@@ -37,9 +37,7 @@ subroutine update_initial()
   v = vb
 
   call dens(rho, t, s)
-  !call disp(rho, "rho = ")
 
-  !print *, "npg = ", npg
   if(npg == 1) then
     call baropg()
   elseif(npg == 2) then
@@ -49,15 +47,12 @@ subroutine update_initial()
      stop
   end if
 
-  ! call disp(drhox, 'drhox')
-  ! call disp(drhoy, 'drhoy')
-
-  ! call disp(dz, 'dz')
-
-  ! call open_debug()
   drx2d = sum(drhox * dz, 3)
-  ! call close_debug()
   dry2d = sum(drhoy * dz, 3)
+
+  !call disp(rho, "rho = ")
+  !call disp(drhox, 'drhox')
+  !call disp(drhoy, 'drhoy')
   !call disp(drx2d, 'dxr2d = ')
   !call disp(dry2d, 'dry2d = ')
 end subroutine

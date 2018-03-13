@@ -10,7 +10,7 @@ subroutine internal_t(ff,f,fb,wfsurf,fsurf,nbc,frad,fclim,fbe,fbw,fbn,fbs)
   integer :: k
   real*8 rr(5),ad1(5),ad2(5)
   type(array), intent(inout):: ff,f,fb,wfsurf,fsurf,frad,fclim,fbe,fbw,fbn,fbs
-  type(array) :: dh
+  type(array) :: dh, tmp, tmp1
   integer :: ierr, i
 
   rr =(/0.58d0,0.62d0,0.67d0,0.77d0,0.78d0/)
@@ -19,13 +19,18 @@ subroutine internal_t(ff,f,fb,wfsurf,fsurf,nbc,frad,fclim,fbe,fbw,fbn,fbs)
 
   if(nadv==1) then
     call tic("internal_t_ff")
+
+    tmp = AZB(f)*w
+    tmp1 = f*w
+    call set(sub(tmp, ':',':',1), sub(tmp1, ':',':',1))
+    call set(sub(tmp, ':',':',kb), 0.d0)
+    
     ff=( dhb*fb &
       - dti2*(DXF(AXB(dt)*AXB(f)*u &
       -AXB(aam)*AXB(h)*tprni*DXB(fb)*dum) + &
       DYF(AYB(dt)*AYB(f)*v-AYB(aam)*AYB(h)*tprni &
-      *DYB(fb)*dvm)-DZF(AZB(f)*w)))/dhf
+      *DYB(fb)*dvm)-DZF(tmp)))/dhf
     call set(sub(ff, ':',':',kb), 0.d0)
-    !call disp(ff, "nadv=1, ff = ")
     call toc("internal_t_ff")     
   else
     ff=mat_zeros

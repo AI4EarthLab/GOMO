@@ -28,9 +28,6 @@ subroutine read_init(fnc)
   allocate(tmp_z1(1,1,kb), tmp_zz1(1,1,kb), &
        tmp_dz1(1,1,kb), tmp_dzz1(1,1,kb))
   
-  !z = seqs(1,1,kb)
-  !call disp(z, 'z = ')
-
   tmp_z1   = z
   tmp_zz1  = zz
   tmp_dz1  = dz

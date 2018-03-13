@@ -17,7 +17,4 @@ subroutine internal_w()
   call set(sub(w, im,':',':'), 0.d0)
   call set(sub(w, ':', ':', kb), 0.d0)
 
-  !call disp(w, "w = ")
-
-  !W(kb)=0.d0
 end subroutine
