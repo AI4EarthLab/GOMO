@@ -17,7 +17,7 @@ program pom2k
   type(array) :: fk, fk1, fk2
 
   call oa_init(MPI_COMM_WORLD, [-1,-1,1])
-
+  call MPI_COMM_RANK (MPI_COMM_WORLD, myrank, ierr)
   call set_stencil(STENCIL_BOX, 1)
 
   !get commandline option
@@ -41,6 +41,7 @@ program pom2k
   !  open(unit=60,file='conservation7200.txt')
   !  write(60,'(2A21,3A12,A27,A10)')'vtot','atot','eaver','taver','saver','tsalt','vamax'
 
+call tic("zzzall")
   do iint = 1, iend 
 
     call get_time(iint)
@@ -209,6 +210,7 @@ swrad0,sclim,sbe,sbw,sbn,sbs)
 !      if(iint == max_step) goto 500
 !      !     call toc(1)
   enddo
+call toc("zzzall")
 
 500 print*,"printout at end, iint = ", iint
   !  call disp(uf, 'uf = ')
@@ -245,7 +247,9 @@ swrad0,sclim,sbe,sbw,sbn,sbs)
   ! call save(h, file='dt.nc', var='data')
   ! call system('ncmpidump dt.nc | ncgen -o dt.nc')
 
-  call show_timer()
+  if(myrank .eq. 0) call show_timer()
+  call print_section(iint, iext, vamax,imax,jmax, &
+           vtot, atot, taver, saver, eaver, tsalt)
 
   call oa_finalize()
 end program pom2k

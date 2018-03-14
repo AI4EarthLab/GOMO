@@ -59,7 +59,7 @@ OBJ	= ${addprefix ${OBJDIR}/, config.o \
 		advt2.o bcond4.o internal_t.o \
 		smol_adif.o bcond3_u.o bcond3_v.o \
 		internal_u.o internal_v.o \
-		adjust_ufvf.o pom2k.o}
+		adjust_ufvf.o pom2k.o print_section.o}
 
 OBJMAIN	= ${OBJ}
 
