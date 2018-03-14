@@ -19,8 +19,6 @@ subroutine internal_u()
        DXB(e_atmos)*2.d0)*0.5d0-  &
        DZF(tmp))) /dh
   
-  call set(UF(kb),0.d0)
-  
   call set(sub(dh,1,':',':'),1.d0)
   call set(sub(dh,':',1,':'),1.d0)
 
@@ -50,8 +48,6 @@ subroutine internal_u()
   enddo
  
   tps=AXB(cbc) * sqrt( UB(kbm1)*UB(kbm1) + AXB( AYF( VB(kbm1)))*AXB( AYF( VB(kbm1))))
-  call set(sub(tps,   1,':',':'), 0.d0)
-  call set(sub(tps, ':', jm,':'), 0.d0)
 
   
  call set(UF(kbm1) , (C(kbm1)*GG(kbm2)-UF(kbm1))/ &
@@ -66,8 +62,5 @@ subroutine internal_u()
   call bcond3_u()
   
   wubot=-tps*UF(kbm1)
-
-  !call disp(uf, "uf = ")
-  !call disp(wubot, "wubot = ")
 
 end subroutine

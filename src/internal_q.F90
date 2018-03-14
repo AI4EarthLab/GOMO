@@ -41,15 +41,12 @@ subroutine internal_q()
 
   a=-dti2*(AZF(kq)+umol)/(a*dhf*dhf)
   call set(A(1),  0.d0)
-  call set(A(kb), 0.d0)
 
   do i = 2, kbm1
      call set(C(i), dzz1(i-1)*dz1(i-1))
   end do
   
   c=-dti2*(AZB(kq)+umol)/(c*dhf*dhf)
-  
-  call set(C(1), 0.d0)
   call set(C(kb),0.d0)
 
   utau2 = sqrt(AXF(wusurf)*AXF(wusurf) +AYF(wvsurf)*AYF(wvsurf))
@@ -60,14 +57,6 @@ subroutine internal_q()
 
   call set(sub(q2f,':',':',kb), &
        sqrt(AXF(wubot)*AXF(wubot) +AYF(wvbot)*AYF(wvbot))*(16.6d0**(2.d0/3.d0))*sef)
-
-  ! call disp(a, "a = ")
-  ! call disp(c, "c = ")
-  ! call disp(utau2, "utau2 = ")
-  ! call disp(gg, "gg = ")
-  ! call disp(l0, "l0 = ")
-  ! call disp(q2f, "q2f = ")
-
 
   p=grav*rhoref*(-zz * mat_ones * h)*1.d-4
 
@@ -82,17 +71,10 @@ subroutine internal_q()
 
   boygr=-grav*DZB(rho)/h + grav*grav/AZB(cc*cc)
 
-  call set(sub(boygr,':',':',1), 0.d0)
-
   l=q2lb / q2b
 
   call grid_bind(l0, 7)
   kappa_l0 = kappa * l0 
-
-  ! call disp(p, "p = ")
-  ! call disp(cc, "cc = ")
-  ! call disp(boygr, "boygr = ")
-  ! call disp(l, "l = ")
 
   call set(l, max(l, kappa_l0), (z_3d > -0.5d0))
 
@@ -105,8 +87,6 @@ subroutine internal_q()
   
   call set(sub(gh,':',':',1),  0.d0)
   call set(sub(gh,':',':',kb), 0.d0)      
-  ! call disp(l, "l = ")
-  ! call disp(gh, "gh = ")
 
   kn = km*sef*(DZB(AXF(u)) *DZB(AXF(u)) + DZB(AYF(v))*DZB(AYF(v)))/(dhf*dhf)&
        -shiw*km*boygr + kh*boygr
@@ -114,9 +94,6 @@ subroutine internal_q()
   
   call set(DTEF(1),  0.d0)
   call set(DTEF(kb), 0.d0)
-  
-  ! call disp(kn, "kn = ")
-  ! call disp(dtef, "dtef = ")
   
   do k=2,kbm1
      call set(GG(k),1.d0/(A(k)+C(k)*(1.d0-EE(k-1))-2.d0*dti2*DTEF(k)-1.d0))
@@ -194,12 +171,5 @@ subroutine internal_q()
 
   call bcond6()
   call smoth_update()
-  
-  !call disp(q2f, "q2f = ")
-  !call disp(q2, "q2 = ")
-  !call disp(q2b, "q2b = ")
-  !call disp(q2lf, "q2lf = ")
-  !call disp(q2l, "q2l = ")
-  !call disp(q2lb, "q2lb = ")
 
 end subroutine

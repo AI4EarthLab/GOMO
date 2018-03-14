@@ -18,8 +18,6 @@ subroutine bcond3_v()
   call set(sub(vf, [2,imm1],jm,[1,kbm1]), sub(tmp, [2,imm1],jm,[1,kbm1]))
   call set(sub(vf, [2,imm1],2 ,[1,kbm1]), sub(tmp, [2,imm1],2 ,[1,kbm1]))
   call set(sub(vf, [2,imm1],1 ,[1,kbm1]), sub(tmp, [2,imm1],2 ,[1,kbm1]))  
-  !call set(sub(vf, im ,[2,jmm1], [1,kbm1]), 0.d0 )
-  !call set(sub(vf, 1  ,[2,jmm1], [1,kbm1]), 0.d0 )
   call set(sub(vf, im ,[1,jm], [1,kbm1]), 0.d0 )
   call set(sub(vf, 1  ,[1,jm], [1,kbm1]), 0.d0 )
 

@@ -5,8 +5,7 @@ subroutine internal_w()
   use config
   use variables
   implicit none
-  type(array) :: del_w,vflux
-  integer :: ierr,k
+  type(array) :: del_w
  
   del_w = shift(csum(dz*(DXF(AXB(dt)*u)+DYF(AYB(dt) * v) + &
        (etf-etb)/dti2), 3), 0, 0, 1)

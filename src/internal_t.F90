@@ -76,8 +76,6 @@ subroutine internal_t(ff,f,fb,wfsurf,fsurf,nbc,frad,fclim,fbe,fbw,fbn,fbs)
          +dti2*(RAD(k)-RAD(k+1))/(dh*dz1(k))) * GG(k))
   enddo
 
-  !call disp_info(f, 'f_'//trim(i2s(__LINE__)))
-  
   call set(FF(kbm1), (C(kbm1)*GG(kbm2)-FF(kbm1)+dti2*(RAD(kbm1)-RAD(kb)) &
           /(dh*dz1(kbm1))) / (C(kbm1)*(1.d0-EE(kbm2))-1.d0))
 
@@ -85,22 +83,12 @@ subroutine internal_t(ff,f,fb,wfsurf,fsurf,nbc,frad,fclim,fbe,fbw,fbn,fbs)
     call set(FF(k),EE(k)*FF(k+1)+GG(k))
   enddo
 
-  !call disp(ff, 'ff = after internal_t')
-
   call tic("bcond4")
   call bcond4(ff,f,fb,fbe,fbw,fbn,fbs)
   call toc("bcond4")
   
-  !call disp(ff,'ff = after bcond4')
-  !call disp_info(f, 'f_'//trim(i2s(__LINE__)))
-
   call tic("smoth_update1")
   call smoth_update1(ff,f,fb)
   call toc("smoth_update1")
-  
-  !call disp(ff,'ff = ')
-  !call disp(f,'f = ')
-  !call disp(fb,'fb =')
-  !print*,"end of internal_t"
   
 end subroutine

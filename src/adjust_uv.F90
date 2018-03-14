@@ -6,9 +6,6 @@ subroutine adjust_uv()
   use config
   use openarray
   implicit none
-  integer::k,ierr 
-
-  type(array) tmp
 
   u = u-sum(u*dz, 3) + (utb+utf)/(2.d0 * AXB(dt))
   call set(sub(u,':',':',kb) , 0.d0)

@@ -10,55 +10,27 @@ subroutine baropg()
   integer:: ierr
 
   type(array) tmp, tmp1, ttt
-
-  ! split one to two
-  !drhox=ramp * grav * AXB(dt)  * csum(-DZB(zz) &
-  !     * DXB(AZB(rho - rmean)) * AXB(dt) &
-  !     + DXB(dt) * DZB(AXB(rho - rmean)) &
-  !     * AZB(zz) * AZB(dz) , 3) * dum;
-
-  !call set(sub(drhox, ':', ':', kb), 0.d0)
-  !call disp(drhox, "old drhox = ")
-  !print *, "start baropg()"
   
   tmp=-DZB(zz) &
        * DXB(AZB(rho - rmean)) * AXB(dt) &
        + DXB(dt) * DZB(AXB(rho - rmean)) &
-       * AZB(zz) * AZB(dz)! , 3);
-
+       * AZB(zz) * AZB(dz)
   tmp1 = -zz * AXB(dt) * DXB(rho-rmean)
   call set(sub(tmp, ':',':',1), sub(tmp1, ':',':',1))
   call set(sub(tmp,':',':',kb),0.d0)
-  !call disp(tmp, "tmpx = ")
-  
-  ! ttt = csum(tmp, 3)
-  ! call disp(ttt, 'ttt')
   drhox=ramp * grav * AXB(dt)  * csum(tmp, 3) * dum;
-
   call set(sub(drhox, ':', ':', kb), 0.d0)
-  ! call disp(drhox, 'drhox2')
-  !call disp(drhox, 'drhox = ')
 
-  !drhoy=ramp * grav * AYB(dt)  * csum(-DZB(zz) &
-  !     * DYB(AZB(rho - rmean)) * AYB(dt)  &
-  !     + DYB(dt) * DZB(AYB(rho - rmean))  &
-  !     * AZB(zz) * AZB(dz) , 3) * dvm;
 
   tmp=-DZB(zz) &
        * DYB(AZB(rho - rmean)) * AYB(dt)  &
        + DYB(dt) * DZB(AYB(rho - rmean))  &
        * AZB(zz) * AZB(dz)
-
   tmp1 = -zz * AYB(dt) * DYB(rho-rmean)
   call set(sub(tmp, ':',':',1), sub(tmp1, ':',':',1))
   call set(sub(tmp,':',':',kb),0.d0)
-  !call disp(tmp, "tmpy = ")
-
   drhoy=ramp * grav * AYB(dt)  * csum(tmp, 3) * dvm;
   call set(sub(drhoy, ':', ':', kb), 0.d0)
-  !call disp(drhoy, 'drhoy = ')
-
-  !print *, "end baropg()"
   
 end subroutine
 
@@ -81,7 +53,6 @@ subroutine baropg_mcc()
   tmpdrho=  DXB(rho) * dum; tmprhou=  AXB(rho) *dum;
   tmpddx=   DXB(d)* dum; tmpd4= AXB(d)*dum;
 
-  !tmpdrho=create_field(tmpdrho),gs,3);     
   call grid_bind(tmp_drho, 3)
   
   drho=tmpdrho -(DXB(DXF(DXB(rho)*dum)) / AXB(dx)&
@@ -94,22 +65,15 @@ subroutine baropg_mcc()
    
   d4  =tmpd4-DXB(2.0*AXF(DXB(d)*dum))/16.0;
   
-  !drho(1:2,:,:)   =tmpdrho(1:2,:,:);       
   call set(sub(drho, [1,2], ':',':'), sub(tmpdrho, [1,2],':',':'))
-  !rhou(1:2,:,:)  =tmprhou(1:2,:,:);  
   call set(sub(rhou, [1,2], ':',':'), sub(tmprhou, [1,2],':',':'))
-  
-  !ddx(1:2,:,:)    =tmpddx(1:2,:,:);
   call set(sub(ddx, [1,2], ':',':'), sub(tmpddx, [1,2],':',':'))
-  
-  !d4(1:2,:,:)    =tmpd4(1:2,:,:);
   call set(sub(d4, [1,2], ':',':'), sub(tmpd4, [1,2],':',':'))
   
   drhox=AXB(dt) * ramp * grav &
        * csum(-DZB(zz)* d4 * AZB(drho) &
        +  AZB(zz) * ddx * DZB(rhou)*AZB(dz), 3)* dum;
   
-  !drhox(im,:,:)=0.0;
   call set(sub(drhox, im, ':',':'), 0)
   
   tmpdrho=   DYB(rho) * dvm;
@@ -118,9 +82,7 @@ subroutine baropg_mcc()
   tmpddx=    DYB(d)*dvm;
   tmpd4=     AYB(d)*dvm;
   
-  !tmpdrho=create_field(tmpdrho),gs,3);
   call grid_bind(tmpdrho, 3)
-
   
   drho=tmpdrho-(DYB(DYF(DYB(rho) * dvm)) &
        / AYB(dy) - 2.0*DYB(rho)*(1-dvm))/24.0;
@@ -130,25 +92,19 @@ subroutine baropg_mcc()
   ddx =tmpddx-(DYB(DYF(DYB(d) * dvm)) &
        / AYB(dy)-2.0*DYB(d)*(1-dvm))/24.0;
   
-  !d4  =tmpd4-DYB(2.0*AYF(DYB(d))*dvm)))/16.0;
   d4  =tmpd4  -DYB(2.0 * AYF(DYB(d ) * dvm))/16.0
   
-  !drho(:,1:2,:)   =tmpdrho(:,1:2,:);
   call set(sub(drho, ':',[1,2],':'), sub(tmpdrho, ':',[1,2],':'))
   
-  !rhou(:,1:2,:)  =tmprhou(:,1:2,:);
   call set(sub(rhou, ':',[1,2],':'), sub(tmprhou, ':',[1,2],':'))
   
-  !ddx(:,1:2,:)    =tmpddx(:,1:2,:);
   call set(sub(ddx, ':',[1,2],':'), sub(tmpddx, ':',[1,2],':'))
   
-  !d4(:,1:2,:)    =tmpd4(:,1:2,:);        
   call set(sub(d4, ':',[1,2],':'), sub(d4, ':',[1,2],':'))
   
   drhoy=AYB(dt) * ramp * grav &
        * csum(-DZB(zz)* d4 * AZB(drho)  &
        + AZB(zz) * ddx * DZB(rhou)*AZB(dz), 3)* dvm;
-  !drhoy(im,:,:)=0.0;
   call set(sub(drhoy, im, ':', ':'), 0)
 
 end subroutine

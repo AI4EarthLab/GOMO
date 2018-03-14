@@ -14,8 +14,6 @@ program pom2k
   real(kind=8) :: vamax
   integer :: max_step
 
-  type(array) :: fk, fk1, fk2
-
   call oa_init(MPI_COMM_WORLD, [-1,-1,1])
   call MPI_COMM_RANK (MPI_COMM_WORLD, myrank, ierr)
   call set_stencil(STENCIL_BOX, 1)
@@ -212,7 +210,7 @@ swrad0,sclim,sbe,sbw,sbn,sbs)
   enddo
 call toc("zzzall")
 
-500 print*,"printout at end, iint = ", iint
+!500 print*,"printout at end, iint = ", iint
   !  call disp(uf, 'uf = ')
   !  call disp(vf, 'vf = ')
   !  call disp(advx, 'advx=')

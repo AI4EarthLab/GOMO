@@ -50,9 +50,4 @@ subroutine update_initial()
   drx2d = sum(drhox * dz, 3)
   dry2d = sum(drhoy * dz, 3)
 
-  !call disp(rho, "rho = ")
-  !call disp(drhox, 'drhox')
-  !call disp(drhoy, 'drhoy')
-  !call disp(drx2d, 'dxr2d = ')
-  !call disp(dry2d, 'dry2d = ')
 end subroutine

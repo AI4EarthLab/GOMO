@@ -22,11 +22,6 @@ subroutine lateral_viscosity()
      stop
   endif
   call tic("aam")
-  
-
-  ! pos of u and v has changed before, need check OpenArray
-  !call grid_bind(u, 2)
-  !call grid_bind(v, 1)
 
   aam=horcon * dx * dy &
        * sqrt(DXF(u)*DXF(u)* + DYF(v)*DYF(v) &
@@ -39,7 +34,5 @@ subroutine lateral_viscosity()
   call set(sub(aam, 1,':',':'),  aam_init)
   call set(sub(aam, im,':',':'), aam_init)
   call set(sub(aam, ':',':',kb), aam_init)
-  
-  !call disp(aam, "aam = ")
 
 end subroutine

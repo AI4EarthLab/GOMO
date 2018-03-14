@@ -16,8 +16,6 @@ subroutine internal_v()
        grav * AYB(dt)*(DYB(egf+egb)+ &
        DYB(e_atmos)*2.d0)/2.d0 &
        -DZF(tmp)))/dh
-  
-  call set(VF(kb), 0.d0)
 
   call set(sub(dh,1,':',':'),1.d0)
   call set(sub(dh,':',1,':'),1.d0)
@@ -43,8 +41,6 @@ subroutine internal_v()
   enddo
 
   tps=AYB(cbc) * sqrt( AYB( AXF( UB(kbm1) ) )*AYB( AXF( UB(kbm1) ) ) + VB(kbm1)*VB(kbm1) )
-  call set(sub(tps, ':',  1,':'), 0.d0)
-  call set(sub(tps,  im,':',':'), 0.d0)
 
   call set(VF(kbm1) , ( C(kbm1)* GG(kbm2)-VF(kbm1) )/ &
        (tps*dti2 /(-dz1(kbm1)*dh)-1.d0-C(kbm1)*( EE(kbm2)-1.d0 ) ) ) 
@@ -57,9 +53,5 @@ subroutine internal_v()
   wvbot=-tps * VF(kbm1)
 
   call bcond3_v()
-
-  !print*,"vf after bcond"
-  !call disp(vf,'vf = ')
-  !call disp(wvbot,'wvbot = ')
   
 end subroutine
