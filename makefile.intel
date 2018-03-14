@@ -1,7 +1,7 @@
 
 # PETSC_INC=-I${PETSC_DIR}/include -I${PETSC_DIR}/${PETSC_ARCH}/include
 # PETSC_LIB=-L${PETSC_DIR}/${PETSC_ARCH}/lib
-OPEN_ARRAY=/home/wangdong/siofive/OpenArray_CXX/build
+OPEN_ARRAY=/home/wangdong/57/OpenArray_CXX/build
 
 SRCDIR           = ./src/
 OBJDIR           = ./lib/

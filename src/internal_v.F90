@@ -42,7 +42,7 @@ subroutine internal_v()
     call set(GG(k), ( C(k) * GG(k-1) - VF(k) ) * GG(k)) 
   enddo
 
-  tps=AYB(cbc) * sqrt( AYB( AXF( UB(kbm1) ) )**2 + VB(kbm1)**2 )
+  tps=AYB(cbc) * sqrt( AYB( AXF( UB(kbm1) ) )*AYB( AXF( UB(kbm1) ) ) + VB(kbm1)*VB(kbm1) )
   call set(sub(tps, ':',  1,':'), 0.d0)
   call set(sub(tps,  im,':',':'), 0.d0)
 

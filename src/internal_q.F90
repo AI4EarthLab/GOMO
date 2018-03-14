@@ -52,14 +52,14 @@ subroutine internal_q()
   call set(C(1), 0.d0)
   call set(C(kb),0.d0)
 
-  utau2 = sqrt(AXF(wusurf)**2 +AYF(wvsurf)**2)
+  utau2 = sqrt(AXF(wusurf)*AXF(wusurf) +AYF(wvsurf)*AYF(wvsurf))
   
   call set(GG(1),(15.8d0*cbcnst)**(2.d0/3.d0)*utau2)
 
   l0 = rep(surfl*utau2/grav, 1, 1, kb)
 
   call set(sub(q2f,':',':',kb), &
-       sqrt(AXF(wubot)**2 +AYF(wvbot)**2)*(16.6d0**(2.d0/3.d0))*sef)
+       sqrt(AXF(wubot)*AXF(wubot) +AYF(wvbot)*AYF(wvbot))*(16.6d0**(2.d0/3.d0))*sef)
 
   ! call disp(a, "a = ")
   ! call disp(c, "c = ")
@@ -72,15 +72,15 @@ subroutine internal_q()
   p=grav*rhoref*(-zz * mat_ones * h)*1.d-4
 
   cc=1449.10d0+0.00821d0*p+4.55d0*(t+tbias) &
-       -0.045d0*(t+tbias)**2 +1.34d0*(s+sbias-35.0d0)
+       -0.045d0*(t+tbias)*(t+tbias) +1.34d0*(s+sbias-35.0d0)
   
-  cc=cc/sqrt((1.d0-0.01642d0*p/cc)*(1.d0-0.4d0*p/cc**2))
+  cc=cc/sqrt((1.d0-0.01642d0*p/cc)*(1.d0-0.4d0*p/(cc*cc)))
 
   call set(sub(cc,':',':',kb), 0.d0)
 
   q2b =abs(q2b);  q2lb=abs(q2lb);
 
-  boygr=-grav*DZB(rho)/h + grav**2/AZB(cc**2)
+  boygr=-grav*DZB(rho)/h + grav*grav/AZB(cc*cc)
 
   call set(sub(boygr,':',':',1), 0.d0)
 
@@ -96,7 +96,7 @@ subroutine internal_q()
 
   call set(l, max(l, kappa_l0), (z_3d > -0.5d0))
 
-  gh = l**2 * boygr / q2b
+  gh = l*l * boygr / q2b
   
   call set(gh, 0.028d0, gh > 0.028d0)
 
@@ -108,7 +108,7 @@ subroutine internal_q()
   ! call disp(l, "l = ")
   ! call disp(gh, "gh = ")
 
-  kn = km*sef*(DZB(AXF(u)) **2 + DZB(AYF(v))**2)/(dhf**2)&
+  kn = km*sef*(DZB(AXF(u)) *DZB(AXF(u)) + DZB(AYF(v))*DZB(AYF(v)))/(dhf*dhf)&
        -shiw*km*boygr + kh*boygr
   dtef=sqrt(q2b)/(b1*l+small)
   
@@ -138,9 +138,7 @@ subroutine internal_q()
   call set(Q2LF(1), 0.d0)
 
   do k=2,kbm1
-     call set(DTEF(k),DTEF(k)*(1.d0+e2*((1.d0/abs(z1(k)-z1(1))&
-          +1.d0/abs(z1(k)-z1(kb)))* &
-          L(k)/(dhf*kappa))**2))
+     call set(DTEF(k),DTEF(k)*(1.d0+e2*((1.d0/abs(z1(k)-z1(1))+1.d0/abs(z1(k)-z1(kb)))*L(k)/(dhf*kappa))*((1.d0/abs(z1(k)-z1(1))+1.d0/abs(z1(k)-z1(kb)))*L(k)/(dhf*kappa))))
   enddo
 
   do k=2,kbm1

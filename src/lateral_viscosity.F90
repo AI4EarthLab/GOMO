@@ -29,8 +29,8 @@ subroutine lateral_viscosity()
   !call grid_bind(v, 1)
 
   aam=horcon * dx * dy &
-       * sqrt(DXF(u)**2 + DYF(v)**2 &
-       + 0.5*(DYB(AYF(AXF(u))) + DXB(AXF(AYF(v))))**2);
+       * sqrt(DXF(u)*DXF(u)* + DYF(v)*DYF(v) &
+       + 0.5*(DYB(AYF(AXF(u))) + DXB(AXF(AYF(v))))*(DYB(AYF(AXF(u))) +   DXB(AXF(AYF(v)))));
 
   call toc("aam")
   
