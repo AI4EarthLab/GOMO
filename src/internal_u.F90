@@ -59,8 +59,8 @@ subroutine internal_u()
   end do
 
   uf=uf*dum;
-  call bcond3_u()
-  
   wubot=-tps*UF(kbm1)
+
+  call bcond3_u()
 
 end subroutine

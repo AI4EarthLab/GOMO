@@ -24,7 +24,7 @@ subroutine lateral_viscosity()
   call tic("aam")
 
   aam=horcon * dx * dy &
-       * sqrt(DXF(u)*DXF(u)* + DYF(v)*DYF(v) &
+       * sqrt(DXF(u)*DXF(u) + DYF(v)*DYF(v) &
        + 0.5*(DYB(AYF(AXF(u))) + DXB(AXF(AYF(v))))*(DYB(AYF(AXF(u))) +   DXB(AXF(AYF(v)))));
 
   call toc("aam")

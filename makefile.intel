@@ -1,7 +1,7 @@
 
 # PETSC_INC=-I${PETSC_DIR}/include -I${PETSC_DIR}/${PETSC_ARCH}/include
 # PETSC_LIB=-L${PETSC_DIR}/${PETSC_ARCH}/lib
-OPEN_ARRAY=/home/wangdong/57/OpenArray_CXX/build
+OPEN_ARRAY=/home/siofive/OpenArray_CXX/build
 
 SRCDIR           = ./src/
 OBJDIR           = ./lib/
@@ -81,7 +81,7 @@ main : ${OBJ}
 	-${FLINKER} -o ${BINDIR}/pom2k ${OBJ} \
 	${EXT_LIB} -I ${OPEN_ARRAY} -L${OPEN_ARRAY} \
 	-lopenarray -lm -ldl -lstdc++ \
-	-lboost_program_options -lboost_system -lboost_log -lboost_log_setup -lboost_thread -ljit -lpnetcdf # /home/siofive/pnetcdf.intel/lib/libpnetcdf.a
+	-lboost_program_options -lboost_system -lboost_log -lboost_log_setup -lboost_thread -ljit -lpnetcdf -larmadillo
 
 run : main
 	-cd ./bin && ./pom2k

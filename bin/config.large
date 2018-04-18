@@ -1,11 +1,11 @@
 &setting
 
 !!tiny
-im               = 513,
-jm               = 259,
-kb               = 31,
+im               = 901,
+jm               = 701,
+kb               = 61,
 kl1              = 2,
-kl2              = 29,
+kl2              = 59,
 
 source='pom2k  2006-05-03'
 title='Run 1'
@@ -34,7 +34,7 @@ isplit           = 30,
 
 iproblem         = 1,
 
-problem = "seamount_middle"
+problem = "seamount_large"
 
 in_path ="./data/"
 
