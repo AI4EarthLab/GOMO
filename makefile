@@ -11,12 +11,12 @@ EXT_LIB = -L${EXT_PATH}/lib64/
 JIT_LIB = ${EXT_PATH}/lib64/
 
 EXE              = GOMO
-FC	             = mpiifort -O3 -g -DBOOST_LOG_DYN_LINK -w
+FC	         = mpiifort -O3 -g -DBOOST_LOG_DYN_LINK -w
 FLINKER          = mpiifort -O3 -g -w
 CFLAGS	         =
 FFLAGS	         =-Wno-tabs -I ${EXT_PATH}/include \
-		              -J ${OBJDIR} -I ${OPEN_ARRAY} -g \
-		              -fbacktrace -ffree-line-length-0 
+		  -J ${OBJDIR} -I ${OPEN_ARRAY} -g \
+		  -fbacktrace -ffree-line-length-0 
 CPPFLAGS         =
 FPPFLAGS         =
 CLEANFILES       = GOMO *.o *.mod *.nc
