@@ -1,7 +1,7 @@
 
 #include "common.h"
 #define STENCIL_BOX 1
-program pom2k
+program gomo
   use openarray
   use config
   use variables
@@ -36,9 +36,6 @@ program pom2k
   call bottom_friction()
   !write(*,*) "====end of bottom_friction"
 
-  !  open(unit=60,file='conservation7200.txt')
-  !  write(60,'(2A21,3A12,A27,A10)')'vtot','atot','eaver','taver','saver','tsalt','vamax'
-
 call tic("zzzall")
   do iint = 1, iend 
 
@@ -56,25 +53,10 @@ call tic("zzzall")
     call tic("lateral_vis")          
     call lateral_viscosity()
     call toc("lateral_vis")
-    !call disp(advx, "advx = ")
-    !call disp(advy, "advy = ")
-    !call disp(drhox, 'drhox = ')
-    !call disp(drhoy, 'drhoy = ')
-    !call disp(aam, "aam = ")
 
     call tic("mode_inter")
     call mode_interaction()
     call toc("mode_inter")
-    !call disp(adx2d, "adx2d = ")
-    !call disp(ady2d, "ady2d = ")
-    !call disp(drx2d, "drx2d = ")
-    !call disp(dry2d, "dry2d = ")
-    !call disp(aam2d, "aam2d = ")
-    !call disp(advua, "advua = ");
-    !call disp(advva, "advva = ");
-    !call disp(egf, "egf = ")
-    !call disp(utf, "utf = ")
-    !call disp(vtf, "vtf = ")
 
      !==============================================
      ! Begin external (2-D) mode
@@ -132,34 +114,17 @@ call tic("zzzall")
            call tic("internal_q")
            call internal_q()
            call toc("internal_q")
-           !call disp(q2f, "q2f = ")
-           !call disp(q2, "q2 = ")
-           !call disp(q2b, "q2b = ")
-           !call disp(q2lf, "q2lf = ")
-           !call disp(q2l, "q2l = ")
-           !call disp(q2lb, "q2lb = ")
-           !call disp(km, "km = ")
-           !call disp(kq, "kq = ")
-           !call disp(kh, "kh = ")
            
-
-           !print*,'internal_t t='
            call tic("internal_t1")
            call internal_t(tf,t,tb,wtsurf,tsurf,nbct, &
 swrad,tclim,tbe,tbw,tbn,tbs)
            call toc("internal_t1")
-           !call disp(tf,'tf = ')
-           !call disp(t,'t = ')
-           !call disp(tb,'tb =')
            
            !print*,'internal_t t='
            call tic("internal_t2")
            call internal_t(sf,s,sb,wssurf,ssurf,nbcs, &
 swrad0,sclim,sbe,sbw,sbn,sbs)
            call toc("internal_t2")
-           !call disp(sf,'sf = ')
-           !call disp(s,'s = ')
-           !call disp(sb,'sb =')
            
            !print*, "dens"           
            call tic("dens")
@@ -171,24 +136,17 @@ swrad0,sclim,sbe,sbw,sbn,sbs)
            call tic("internal_u")
            call internal_u()
            call toc("internal_u")
-           !call disp(uf, "uf = ")
-           !call disp(wubot, "wubot = ")
 
            !print*,'internal_v t='
            call tic("internal_v")
            call internal_v()
            call toc("internal_v")
-           !call disp(vf,'vf = ')
-           !call disp(wvbot,'wvbot = ')
 
            !print*,'internal_ufvf t='
            call tic("adjust_ufvf")
            call adjust_ufvf()
            call toc("adjust_ufvf")
-           !call disp(u, "u = ")
-           !call disp(v, "v = ")
-           !call disp(ub, "ub = ")
-           !call disp(vb, "vb = ")
+
          endif
 
          !print*, 'internal_update'
@@ -199,55 +157,16 @@ swrad0,sclim,sbe,sbw,sbn,sbs)
       endif
 
 !      ! print*, "print_seciton"
-!      call print_section(iint, iext, vamax,imax,jmax, &
-!           vtot, atot, taver, saver, eaver, tsalt)
-!      !     write(60,'(F21.7,F21.7,F12.7,F12.7,F16.10,F27.7,F10.5)') &
-!      !vtot, atot, eaver,taver,saver ,tsalt,vamax
-!      call toc('10')
+      call print_section(iint, iext, vamax,imax,jmax, &
+           vtot, atot, taver, saver, eaver, tsalt)
 
-!      if(iint == max_step) goto 500
-!      !     call toc(1)
   enddo
 call toc("zzzall")
-
-!500 print*,"printout at end, iint = ", iint
-  !  call disp(uf, 'uf = ')
-  !  call disp(vf, 'vf = ')
-  !  call disp(advx, 'advx=')
-  !  call disp(advy, 'advy=')
-  !  call disp(drhox, 'drhox=')
-  !  call disp(drhoy, 'drhoy=')
-  !  call disp(aam, 'aam =')
-  !  call disp(u, 'u =')
-  !  call disp(v, 'v =')
-  !  call disp(dt_3d, 'dt_3d =')
-  !  call disp(w, 'w =')
-  !  call disp(q2b,'q2b =')
-  !  call disp(q2lb,'q2lb =')
-  !  call disp(q2, 'q2 =')
-  !  call disp(q2l, 'q2l =')
-  !  call disp(q2f, 'q2f =')
-  !  call disp(q2lf,'q2lf=')
-  !  call disp(km, 'km =')
-  !  call disp(kh, 'kh =')
-  !  call disp(t, 't =')
-  !  call disp(s, 's =')
-  !  call disp(rho, 'rho =') 
-  !  call disp(ua,  'ua = ')
-  !  call disp(va,  'va = ')
-  !  call disp(el,  'el = ')
-  !  call disp(elf, 'elf = ')
-  !  call disp(etf, 'etf = ')
-  !print*, "vamax = ", vamax
-  !print*, 'imax=', imax
-  !print*, 'jmax=', jmax
 
   ! call save(h, file='dt.nc', var='data')
   ! call system('ncmpidump dt.nc | ncgen -o dt.nc')
 
   if(myrank .eq. 0) call show_timer()
-  call print_section(iint, iext, vamax,imax,jmax, &
-           vtot, atot, taver, saver, eaver, tsalt)
 
   call oa_finalize()
-end program pom2k
+end program gomo
