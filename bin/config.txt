@@ -17,7 +17,7 @@ time_start='2000-01-01 00:00:00 +00:00'
 ! at the surface and kb-kl2-1 at the bottom. For no log portions,
 ! set kl1=2 and kl2=kb-2
 kl1              = 6,
-kl2              = 4,
+kl2              = 19,
 
 
 ! External (2-D) time step (sec.) according to CFL
