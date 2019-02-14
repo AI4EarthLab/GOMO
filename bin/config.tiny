@@ -1,16 +1,15 @@
 &setting
 
-!!tiny
+!! Set size of problem
+!! tiny
 im               = 7,
 jm               = 5,
 kb               = 6,
-kl1              = 6,
-kl2              = 4,
 
-source='pom2k  2006-05-03'
+source='gomo  2006-05-03'
 title='Run 1'
 
-netcdf_file='pom2k.nc'
+netcdf_file='gomo.nc'
 time_start='2000-01-01 00:00:00 +00:00'
 
 ! Integers defining the number of logarithmic
@@ -18,7 +17,8 @@ time_start='2000-01-01 00:00:00 +00:00'
 ! The number of logarithmic layers are kl1-2
 ! at the surface and kb-kl2-1 at the bottom. For no log portions,
 ! set kl1=2 and kl2=kb-2
-
+kl1              = 6,
+kl2              = 4,
 
 ! External (2-D) time step (sec.) according to CFL
 dte              = 6,
@@ -34,8 +34,10 @@ isplit           = 30,
 
 iproblem         = 1,
 
+! set the problem name
 problem = "seamount"
 
+! set the input path
 in_path ="./data/"
 
 ! % setting initial sclim and tclime(1) or not(0);
@@ -60,7 +62,7 @@ mode             = 3,
 
 
 ! nadv           Advection scheme
-! 1 Centered scheme, as originally provide in POM
+! 1 Centered scheme, default scheme
 ! 2 Smolarkiewicz iterative upstream scheme, based
 !   on subroutines provided by Gianmaria Sannino
 !   and Vincenzo Artale
@@ -69,7 +71,7 @@ nadv             = 1,
 
 ! Constants for Smolarkiewicz iterative upstream scheme.
 ! Number of iterations, this should be in the range 1-4,
-! 1 is standard upstream differencing, 3 adds 50% CPU time to POM.
+! 1 is standard upstream differencing, 3 adds 50% CPU time.
 nitera           = 2,
 
 
@@ -157,7 +159,7 @@ z0b       = 0.01
 !% Minimum bottom friction coeff.
 aam_init  = 500.0
 
-!% ramp is not assigned in fortran pom2k before used in barop
+!% ramp is not assigned before used in barop
 ramp      = 0.0
 
 !% Maximum bottom friction coeff.
