@@ -15,4 +15,6 @@ First, compile and install OpenArray. Second, change the directory to GOMO, set 
 
 # Run GOMO
 Within the ./bin directory where GOMO and config.txt files exist, then type:
+  ./GOMO 
+or
   mpirun -np N ./GOMO 
