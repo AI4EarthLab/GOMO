@@ -3,6 +3,8 @@ Generalized Operator Modelling of the Ocean (GOMO) is a practical ocean model ba
 
 The fundamental equations of GOMO are derived from POM2k. GOMO features a bottom-following, free-surface, staggered Arakawa C grid. To effectively evolve the rapid surface fluctuations, GOMO uses the mode-splitting algorithm to address the fast propagating surface gravity waves and slow propagating internal waves in barotropic (external) and baroclinic (internal) modes, respectively. The details of the continuous governing equations, the corresponding operator expression form and the descriptions of all the variables used in GOMO are listed in the docs folder.
 
+An ideal test case `Seamount` is included and `./bin/data/seamount65_49_21.nc` is the input file.
+
 # Compile GOMO
 Before attempting to compile GOMO, the following software are required:
   1) OpenArray ( It is available at https://github.com/hxmhuang/OpenArray_CXX).
