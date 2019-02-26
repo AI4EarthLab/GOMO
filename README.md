@@ -5,6 +5,8 @@ The fundamental equations of GOMO are derived from POM2k. GOMO features a bottom
 
 An ideal test case `Seamount` is included and `./bin/data/seamount65_49_21.nc` is the input file.
 
+For more details, please see the paper (https://www.geosci-model-dev-discuss.net/gmd-2019-28/).
+
 # Compile GOMO
 Before attempting to compile GOMO, the following software are required:
   1) OpenArray ( It is available at https://github.com/hxmhuang/OpenArray_CXX).
