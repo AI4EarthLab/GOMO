@@ -1,1 +1,6 @@
 #The preprocess package of GOMO
+To run a new case, you should follow the commands step by step:
+  1. Modify the value of im, jm, kb in the init_constants.m to set the grid size for your case.
+  2. Run the main function, run_preprocess.m.
+  3. Check if the output file, seamountim_jm_kb.nc, is generated or not.
+  4. Copy the output nc file to the folder ./../bin/data/ 
