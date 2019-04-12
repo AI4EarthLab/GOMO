@@ -5,6 +5,7 @@ program gomo
   use openarray
   use config
   use variables
+  use mpi
   implicit none
   integer :: ierr
   integer :: myrank, mysize
@@ -19,7 +20,7 @@ program gomo
   call set_stencil(STENCIL_BOX, 1)
 
   !get commandline option
-  call oa_get_option(max_step, "s", -1)
+  !call oa_get_option(max_step, "s", -1)
 
   !both namelist data and init data will be loaded.
   call init_variables()
