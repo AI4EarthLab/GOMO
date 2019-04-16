@@ -26,7 +26,7 @@ Before compiling GOMO, OpenArray is required, other required software and librar
   2) Set environment variables to specify path to the required software and library;
   3) Change the directory into GOMO folder and create a ./lib folder. Open makefile and set the path to the libopenarray.a and openarray.mod of OpenArray;
   4) Make. According to the installation guide of OpenArray, makefiles for Linux and Mac OS are provided:
-        For Linux: make -f makefile.linux
+        For Linux: make -f makefile.linux;
         For Mac OS: make -f makefile.macos
 
 # Run GOMO
