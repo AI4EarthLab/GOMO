@@ -1,6 +1,4 @@
 #include "common.h"
-#include "macro.h"
-
 subroutine internal_t(ff,f,fb,wfsurf,fsurf,nbc,frad,fclim,fbe,fbw,fbn,fbs)
   use openarray
   use variables

@@ -1,6 +1,4 @@
-#include "macro.h"
-!#include "common.h"
-
+#include "common.h"
 subroutine internal_q()
   use openarray
   use config

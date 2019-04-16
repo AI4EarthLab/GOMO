@@ -1,5 +1,4 @@
-#include "macro.h"
-
+#include "common.h"
 subroutine internal_update()
   use openarray
   use config

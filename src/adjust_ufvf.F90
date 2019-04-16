@@ -1,5 +1,4 @@
-#include "macro.h"
-
+#include "common.h"
 subroutine adjust_ufvf()
   use openarray
   use config

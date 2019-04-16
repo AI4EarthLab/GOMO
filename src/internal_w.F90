@@ -1,5 +1,4 @@
-#include "macro.h"
-
+#include "common.h"
 subroutine internal_w()
   use openarray
   use config

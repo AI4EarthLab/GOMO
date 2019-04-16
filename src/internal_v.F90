@@ -1,4 +1,4 @@
-#include "macro.h"
+#include "common.h"
 subroutine internal_v()
   use openarray
   use config
