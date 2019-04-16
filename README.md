@@ -20,11 +20,12 @@ To compile GOMO, the following software are required:
   9) Boost C++ Libraries, version 1.65.1 or higher.
 
 Before compiling GOMO, OpenArray is required, other required software and library is the same with that of OpenArray (Shown as Section 2 in the User Mannual of OpenArray). After the installation of required software and OpenArray is done, it is fairly easy to compile GOMO, the basic steps are as follows:
-  1). Download GOMO from GitHub:
+
+  1) Download GOMO from GitHub:
         git clone https://github.com/hxmhuang/GOMO.git;
-  2). Set environment variables to specify path to the required software and library;
-  3). Change the directory into GOMO folder and create a ./lib folder. Open makefile and set the path to the libopenarray.a and openarray.mod of OpenArray;
-  4). Make. According to the installation guide of OpenArray, makefiles for Linux and Mac OS are provided:
+  2) Set environment variables to specify path to the required software and library;
+  3) Change the directory into GOMO folder and create a ./lib folder. Open makefile and set the path to the libopenarray.a and openarray.mod of OpenArray;
+  4) Make. According to the installation guide of OpenArray, makefiles for Linux and Mac OS are provided:
         For Linux: make -f makefile.linux
         For Mac OS: make -f makefile.macos
 
