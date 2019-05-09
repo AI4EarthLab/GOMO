@@ -52,7 +52,7 @@ ${EXE}: ${OBJ}
 	-${FLINKER} -o ${BINDIR}/${EXE} ${OBJ} \
 	${EXT_LIB} -I ${OPEN_ARRAY} -L${OPEN_ARRAY} \
 	-lopenarray -lm -ldl -lstdc++ \
-	-lboost_program_options -lboost_system -lboost_log -lboost_log_setup -lboost_thread -ljit -lpnetcdf 
+	-lpnetcdf 
 clean ::
 	-rm lib/*.o
 	-rm bin/${EXE}
