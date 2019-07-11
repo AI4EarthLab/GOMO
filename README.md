@@ -16,11 +16,11 @@ If the installation of OpenArray is done, it is fairly easy to compile GOMO, the
         wget https://github.com/hxmhuang/GOMO/archive/master.zip  
 
   2) Set environment variables to specify path to pnetcdf   
-        export PATH=/path/to/pnetcdf/bin:$PATH 
-        export CPLUS_INCLUDE_PATH=/path/to/pnetcdf/include:$CPLUS_INCLUDE_PATH
-	export C_INCLUDE_PATH=/path/to/pnetcdf/include:$C_INCLUDE_PATH
-        export LD_LIBRARY_PATH=/path/to/pnetcdf/lib:$LD_LIBRARY_PATH 
-        export LIBRARY_PATH=/path/to/pnetcdf/lib:$LIBRARY_PATH
+        export PATH=/path/to/pnetcdf/bin:$PATH   
+        export CPLUS_INCLUDE_PATH=/path/to/pnetcdf/include:$CPLUS_INCLUDE_PATH    
+	export C_INCLUDE_PATH=/path/to/pnetcdf/include:$C_INCLUDE_PATH   
+        export LD_LIBRARY_PATH=/path/to/pnetcdf/lib:$LD_LIBRARY_PATH    
+        export LIBRARY_PATH=/path/to/pnetcdf/lib:$LIBRARY_PATH   
 
   3) Edit the Makefile, modify the installation directory of OpenArray;  
         export OPEN_ARRAY=/path/to/OpenArray
