@@ -129,9 +129,16 @@ tatm             = 0.0,
 ! Salinity of atm
 satm             = 0.0,
 
-days = 0.1625,
+! Run duration in days
+days = 1.1625,
+
+! Initial print interval (days)
 prtd1=0.0125,
+
+! Final print interval (days)
 prtd2=1.0,
+
+! Time to switch from prtd1 to prtd2
 swtch=1000.0,
 
 grav=9.806

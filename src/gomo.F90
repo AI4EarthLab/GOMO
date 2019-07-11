@@ -14,6 +14,7 @@ program gomo
   integer :: i, iexit, iext, iint, imax, jmax,k
   real(kind=8) :: vamax
   integer :: max_step
+  character(20) :: string
 
   call oa_init(MPI_COMM_WORLD, [-1,-1,1])
   call MPI_COMM_RANK (MPI_COMM_WORLD, myrank, ierr)
@@ -157,15 +158,20 @@ swrad0,sclim,sbe,sbw,sbn,sbs)
 
       endif
 
-!      ! print*, "print_seciton"
       call print_section(iint, iext, vamax,imax,jmax, &
            vtot, atot, taver, saver, eaver, tsalt)
 
+      if(mod(iint, 10) == 0) then
+         write(string, *) iint
+         call save(u,'./output/u_'//trim(adjustl(string))//".nc", 'Eastward_velocity_unit_m*s-1')
+         call save(v,'./output/v_'//trim(adjustl(string))//".nc", 'Northward_velocity_unit_m*s-1')
+         call save(t,'./output/t_'//trim(adjustl(string))//".nc", 'Potential_temperature_unit_K')
+         call save(et,'./output/et_'//trim(adjustl(string))//".nc",'Surface_elevation_unit_m')
+      endif
+         
   enddo
-call toc("zzzall")
 
-  ! call save(h, file='dt.nc', var='data')
-  ! call system('ncmpidump dt.nc | ncgen -o dt.nc')
+  call toc("zzzall")
 
   if(myrank .eq. 0) call show_timer()
 
