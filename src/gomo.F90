@@ -161,7 +161,7 @@ swrad0,sclim,sbe,sbw,sbn,sbs)
       call print_section(iint, iext, vamax,imax,jmax, &
            vtot, atot, taver, saver, eaver, tsalt)
 
-      if(mod(iint, 10) == 0) then
+      if(mod(iint, 200) == 0) then
          write(string, *) iint
          call save(u,'./output/u_'//trim(adjustl(string))//".nc", 'Eastward_velocity_unit_m*s-1')
          call save(v,'./output/v_'//trim(adjustl(string))//".nc", 'Northward_velocity_unit_m*s-1')

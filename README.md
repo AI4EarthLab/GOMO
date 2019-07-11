@@ -5,29 +5,26 @@ The fundamental equations and algorithms of GOMO are derived from POM2k (Blumber
 
 GOMO is composed of 42 Fortran files (.F90), a header file (.h), a single namelist file (.txt), and a makefile. Pre-processing processing package written in Matlab is located in ./pre. You can use the package to produce the input file for the ideal test--seamount. The default input file seamount65_49_21.nc is located at the directory ./bin/data. 
 
-For more details, please see the paper (https://www.geosci-model-dev-discuss.net/gmd-2019-28/) and the simple user mannual of OpenArraylocated at ./docs.
+For more details, please see the paper (https://www.geosci-model-dev-discuss.net/gmd-2019-28/) and the simple user mannual of OpenArray located at ./docs.
 
 # Compile GOMO
-To compile GOMO, the following software are required:
-  1) OpenArray ( It is available at https://github.com/hxmhuang/OpenArray_CXX).
-  2) Fortran 90 or Fortran 95 compiler.
-  3) gcc/g++ compiler version 6.1.0 or higher. 
-  4) Intel icc/icpc compiler version 2017 or higher. 
-  5) GNU make version 3.81 or higher. 
-  6) Message Passing Interface (MPI) library. 
-  7) Parallel NetCDF library version 1.7.0 or higher. 
-  8) Armadillo, a C++ library for linear algebra & scientific computing, version 8.200.2 or higher. 
-  9) Boost C++ Libraries, version 1.65.1 or higher.
+If the installation of OpenArray is done, it is fairly easy to compile GOMO, the basic steps are as follows:
 
-Before compiling GOMO, OpenArray is required, other required software and library is the same with that of OpenArray (Shown as Section 2 in the User Mannual of OpenArray). After the installation of required software and OpenArray is done, it is fairly easy to compile GOMO, the basic steps are as follows:
-
-  1) Download GOMO from GitHub:
-        git clone https://github.com/hxmhuang/GOMO.git;
-  2) Set environment variables to specify path to the required software and library;
-  3) Change the directory into GOMO folder and open makefile, set the path to the libopenarray.a and openarray.mod of OpenArray;
-  4) Make. According to the installation guide of OpenArray, makefiles for Linux and Mac OS are provided:
-        For Linux: make -f makefile.linux;
-        For Mac OS: make -f makefile.macos
+  1) Download GOMO from GitHub: 
+        git clone https://github.com/hxmhuang/GOMO.git;  
+     or 
+        wget https://github.com/hxmhuang/GOMO/archive/master.zip
+  2) Set environment variables to specify path to pnetcdf
+        export PATH=/path/to/pnetcdf/bin:$PATH 
+        export CPLUS_INCLUDE_PATH=/path/to/pnetcdf/include:$CPLUS_INCLUDE_PATH
+	export C_INCLUDE_PATH=/path/to/pnetcdf/include:$C_INCLUDE_PATH
+        export LD_LIBRARY_PATH=/path/to/pnetcdf/lib:$LD_LIBRARY_PATH 
+        export LIBRARY_PATH=/path/to/pnetcdf/lib:$LIBRARY_PATH
+  3) Edit the Makefile, modify the installation directory of OpenArray;
+        export OPEN_ARRAY=/path/to/OpenArray
+  4) Make. Please use the same compiler to complile GOMO and OpenArray.
+        For intel compiler: make -f Makefile.intel;
+        For mpich compiler: make -f Makefile.mpich;
 
 # Run GOMO
 After compiling, the executable file ./bin/GOMO will be generated. Within the directory ./bin where GOMO and config.txt files exist, type:
