@@ -5,8 +5,8 @@ subroutine read_init(fnc)
   use variables
   use config
   use openarray
-  use mpi
   implicit none
+  include 'mpif.h'
   character(len=*) :: fnc
   integer :: ii, ierr,i,j,k
   real*8, allocatable :: tmp_z1(:,:,:), &

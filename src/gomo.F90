@@ -5,8 +5,8 @@ program gomo
   use openarray
   use config
   use variables
-  use mpi
   implicit none
+  include 'mpif.h'
   integer :: ierr
   integer :: myrank, mysize
 

@@ -130,7 +130,7 @@ tatm             = 0.0,
 satm             = 0.0,
 
 ! Run duration in days
-days = 1.1625,
+days = 1.0000,
 
 ! Initial print interval (days)
 prtd1=0.0125,
