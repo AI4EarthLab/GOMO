@@ -28,7 +28,7 @@ If the installation of OpenArray is done, it is fairly easy to compile GOMO, the
   4) Make. Please use the same compiler to complile GOMO, PnetCDF and OpenArray.  
         For intel compiler: make -f Makefile.intel;  
         For mpich compiler: make -f Makefile.mpich;  
-     or use the install-package:  
+     or  use the install-package:  
         aclocal; autoconf; automake --add-missing  
 	./configure  
         make  
