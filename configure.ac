@@ -499,7 +499,7 @@ AS_IF([test "x$PNETCDF_DIR" != x], [APPEND_SEARCH_PATH([$PNETCDF_DIR])],
 
 # check for openarray lib
 AC_ARG_VAR(OPEN_ARRAY, [openarray installition directory])
-LDFLAGS=" -L$OPEN_ARRAY/lib ${LDFLAGS}"
+LDFLAGS=" -L$OPEN_ARRAY/ ${LDFLAGS}"
 # echo "$(env)"
 AC_SEARCH_LIBS([c_init], [openarray], [], [AC_MSG_ERROR([
                                 -----------------------------------------------------------------------
