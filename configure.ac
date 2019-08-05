@@ -12,10 +12,10 @@ AC_CHECK_PROGS(NPROC_PROG, [nproc])
 AC_DEFUN([APPEND_SEARCH_PATH],
         [
             LDFLAGS+=" -L$1/lib "
-            CFLAGS+=" -I$1/include "
-            FCFLAGS+=" -I$1/include "
-            CPPFLAGS+=" -I$1/include "
-            CXXFLAGS+=" -I$1/include "
+            CFLAGS+=" -I$1/ "
+            FCFLAGS+=" -I$1/ "
+            CPPFLAGS+=" -I$1/ "
+            CXXFLAGS+=" -I$1/ "
             AC_SUBST(LDFLAGS)
             AC_SUBST(CFLAGS)
             AC_SUBST(FCFLAGS)

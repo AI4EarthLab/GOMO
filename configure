@@ -3471,10 +3471,10 @@ if test "${with_mpi+set}" = set; then :
     fi
 
             LDFLAGS+=" -L$withval/lib "
-            CFLAGS+=" -I$withval/include "
-            FCFLAGS+=" -I$withval/include "
-            CPPFLAGS+=" -I$withval/include "
-            CXXFLAGS+=" -I$withval/include "
+            CFLAGS+=" -I$withval/ "
+            FCFLAGS+=" -I$withval/ "
+            CPPFLAGS+=" -I$withval/ "
+            CXXFLAGS+=" -I$withval/ "
 
 
 
@@ -7959,10 +7959,10 @@ LDFLAGS=${old_LDFLAGS}
 if test "x$PNETCDF_DIR" != x; then :
 
             LDFLAGS+=" -L$PNETCDF_DIR/lib "
-            CFLAGS+=" -I$PNETCDF_DIR/include "
-            FCFLAGS+=" -I$PNETCDF_DIR/include "
-            CPPFLAGS+=" -I$PNETCDF_DIR/include "
-            CXXFLAGS+=" -I$PNETCDF_DIR/include "
+            CFLAGS+=" -I$PNETCDF_DIR/ "
+            FCFLAGS+=" -I$PNETCDF_DIR/ "
+            CPPFLAGS+=" -I$PNETCDF_DIR/ "
+            CXXFLAGS+=" -I$PNETCDF_DIR/ "
 
 
 
@@ -8041,10 +8041,10 @@ fi
 if test "x$OPEN_ARRAY" != x; then :
 
             LDFLAGS+=" -L$OPEN_ARRAY/lib "
-            CFLAGS+=" -I$OPEN_ARRAY/include "
-            FCFLAGS+=" -I$OPEN_ARRAY/include "
-            CPPFLAGS+=" -I$OPEN_ARRAY/include "
-            CXXFLAGS+=" -I$OPEN_ARRAY/include "
+            CFLAGS+=" -I$OPEN_ARRAY/ "
+            FCFLAGS+=" -I$OPEN_ARRAY/ "
+            CPPFLAGS+=" -I$OPEN_ARRAY/ "
+            CXXFLAGS+=" -I$OPEN_ARRAY/ "
 
 
 
