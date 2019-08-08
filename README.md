@@ -1,7 +1,7 @@
 # GOMO
 Generalized Operator Modelling of the Ocean (GOMO) is a three-dimensional ocean model based on OpenArray which is a simple operator library for the decoupling of ocean modelling and parallel computing.
 
-The fundamental equations and algorithms of GOMO are derived from POM2k (Blumberg and Mellor, 1987). GOMO features bottom-following, free-surface, staggered Arakawa C-grid. To effectively evolve the rapid surface fluctuations, GOMO uses the mode-splitting algorithm to address the fast propagating surface gravity waves and slow propagating internal waves in barotropic (external) and baroclinic (internal) modes, respectively. The details of the continuous governing equations, the corresponding operator expression form and the descriptions of all the variables used in GOMO are listed in the `./docs` folder.
+The fundamental equations and algorithms of GOMO are derived from POM2k (Blumberg and Mellor, 1987). The details of the continuous governing equations, the corresponding operator expression form and the descriptions of all the variables used in GOMO are listed in the `./docs` folder.
 
 GOMO is composed of 42 Fortran files (.F90), a header file (.h), and a single namelist file (.txt). Pre-processing processing package written in Matlab is located in `./pre`. You can use the package to produce the input file for the ideal test--seamount. The default input file `seamount65_49_21.nc` is located at the directory `./bin/data`. 
 
@@ -46,7 +46,6 @@ If the installation of OpenArray is done, it is fairly easy to compile GOMO, the
   5) Make. Please use the same compilers to build GOMO, PnetCDF and OpenArray. If PnetCDF and OpenArray are built by mpich, then:  
 
 ```shell
-        aclocal; autoconf; automake --add-missing  
 	./configure MPICC=mpicc MPICXX=mpicxx MPIF77=mpif77 MPIF90=mpif90
         make  
 ```
