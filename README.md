@@ -44,14 +44,14 @@ If the installation of OpenArray is done, it is fairly easy to compile GOMO, the
 ```
 
   5) Make. Please use the same compilers to build GOMO, PnetCDF and OpenArray.   
-   * If PnetCDF and OpenArray are built by GNU compiler and mpich or openmpi, then:  
+> >  If PnetCDF and OpenArray are built by GNU compiler and mpich or openmpi, then:  
 
 ```shell
 	./configure MPICC=mpicc MPICXX=mpicxx MPIF77=mpif77 MPIF90=mpif90
         make  
 ```
 
-   * If PnetCDF and OpenArray are built by intel compiler, then:  
+> >   If PnetCDF and OpenArray are built by intel compiler, then:  
 
 ```shell
 	./configure MPICC=mpiicc MPICXX=mpiicpc MPIF77=mpiifort MPIF90=mpiifort
