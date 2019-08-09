@@ -21,29 +21,20 @@ If the installation of OpenArray is done, it is fairly easy to compile GOMO, the
 	unzip master.zip
 ```
 
-  2) Set environment variables to specify path to pnetcdf   
-
+  2) Set paths to PnetCDF and OpenArray, if PnetCDF and OpenArray are installed in the default directory, `${HOME}/install`.  
 ```shell
-        export PATH=/path/to/pnetcdf/bin:$PATH   
-        export CPLUS_INCLUDE_PATH=/path/to/pnetcdf/include:$CPLUS_INCLUDE_PATH    
-	export C_INCLUDE_PATH=/path/to/pnetcdf/include:$C_INCLUDE_PATH   
-        export LD_LIBRARY_PATH=/path/to/pnetcdf/lib:$LD_LIBRARY_PATH    
-        export LIBRARY_PATH=/path/to/pnetcdf/lib:$LIBRARY_PATH   
+        export OPEN_ARRAY=${HOME}/install 
+	export PNETCDF_DIR=${HOME}/install 
 ```
 
-  3) Specify the path to OpenArray;  
-```shell
-        export OPEN_ARRAY=/path/to/OpenArray
-```
-
-  4) Check the compilers used to build PnetCDF.
+  3) Check the compilers used to build PnetCDF.
 
 ```shell
-	which pnetcdf_version
-	pnetcdf_version
+	cd ${HOME}/install/bin
+	./pnetcdf_version
 ```
 
-  5) Make. Please use the same compilers to build GOMO, PnetCDF and OpenArray.   
+  4) Make. Please use the same compilers to build GOMO, PnetCDF and OpenArray.   
 > >  If PnetCDF and OpenArray are built by GNU compiler and mpich or openmpi, then:  
 
 ```shell
