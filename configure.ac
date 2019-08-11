@@ -12,10 +12,10 @@ AC_CHECK_PROGS(NPROC_PROG, [nproc])
 AC_DEFUN([APPEND_SEARCH_PATH],
         [
             LDFLAGS+=" -L$1/lib "
-            CFLAGS+=" -I$1/ "
-            FCFLAGS+=" -I$1/ "
-            CPPFLAGS+=" -I$1/ "
-            CXXFLAGS+=" -I$1/ "
+            CFLAGS+=" -I$1/include "
+            FCFLAGS+=" -I$1/include "
+            CPPFLAGS+=" -I$1/include "
+            CXXFLAGS+=" -I$1/include "
             AC_SUBST(LDFLAGS)
             AC_SUBST(CFLAGS)
             AC_SUBST(FCFLAGS)
@@ -499,7 +499,7 @@ AS_IF([test "x$PNETCDF_DIR" != x], [APPEND_SEARCH_PATH([$PNETCDF_DIR])],
 
 # check for openarray lib
 AC_ARG_VAR(OPEN_ARRAY, [openarray installition directory])
-LDFLAGS=" -L$OPEN_ARRAY/ ${LDFLAGS}"
+LDFLAGS=" -L$OPEN_ARRAY/lib ${LDFLAGS}"
 # echo "$(env)"
 AC_SEARCH_LIBS([c_init], [openarray], [], [AC_MSG_ERROR([
                                 -----------------------------------------------------------------------

@@ -3471,10 +3471,10 @@ if test "${with_mpi+set}" = set; then :
     fi
 
             LDFLAGS+=" -L$withval/lib "
-            CFLAGS+=" -I$withval/ "
-            FCFLAGS+=" -I$withval/ "
-            CPPFLAGS+=" -I$withval/ "
-            CXXFLAGS+=" -I$withval/ "
+            CFLAGS+=" -I$withval/include "
+            FCFLAGS+=" -I$withval/include "
+            CPPFLAGS+=" -I$withval/include "
+            CXXFLAGS+=" -I$withval/include "
 
 
 
@@ -7959,10 +7959,10 @@ LDFLAGS=${old_LDFLAGS}
 if test "x$PNETCDF_DIR" != x; then :
 
             LDFLAGS+=" -L$PNETCDF_DIR/lib "
-            CFLAGS+=" -I$PNETCDF_DIR/ "
-            FCFLAGS+=" -I$PNETCDF_DIR/ "
-            CPPFLAGS+=" -I$PNETCDF_DIR/ "
-            CXXFLAGS+=" -I$PNETCDF_DIR/ "
+            CFLAGS+=" -I$PNETCDF_DIR/include "
+            FCFLAGS+=" -I$PNETCDF_DIR/include "
+            CPPFLAGS+=" -I$PNETCDF_DIR/include "
+            CXXFLAGS+=" -I$PNETCDF_DIR/include "
 
 
 
@@ -7973,7 +7973,7 @@ fi
 
 # check for openarray lib
 
-LDFLAGS=" -L$OPEN_ARRAY/ ${LDFLAGS}"
+LDFLAGS=" -L$OPEN_ARRAY/lib ${LDFLAGS}"
 # echo "$(env)"
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing c_init" >&5
 $as_echo_n "checking for library containing c_init... " >&6; }
@@ -8041,10 +8041,10 @@ fi
 if test "x$OPEN_ARRAY" != x; then :
 
             LDFLAGS+=" -L$OPEN_ARRAY/lib "
-            CFLAGS+=" -I$OPEN_ARRAY/ "
-            FCFLAGS+=" -I$OPEN_ARRAY/ "
-            CPPFLAGS+=" -I$OPEN_ARRAY/ "
-            CXXFLAGS+=" -I$OPEN_ARRAY/ "
+            CFLAGS+=" -I$OPEN_ARRAY/include "
+            FCFLAGS+=" -I$OPEN_ARRAY/include "
+            CPPFLAGS+=" -I$OPEN_ARRAY/include "
+            CXXFLAGS+=" -I$OPEN_ARRAY/include "
 
 
 
