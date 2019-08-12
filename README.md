@@ -17,35 +17,28 @@ If the installation of OpenArray is done, it is fairly easy to compile GOMO, the
   (a) Download GOMO from GitHub:  
 
 ```shell
-        wget https://github.com/hxmhuang/GOMO/archive/master.zip  
-	unzip master.zip
+  wget https://github.com/hxmhuang/GOMO/archive/master.zip  
+  unzip master.zip
 ```
 
   (b) Set paths to PnetCDF and OpenArray, if PnetCDF and OpenArray are installed in the default directory, `${HOME}/install`.  
 ```shell
-        export OPENARRAY_DIR=${HOME}/install 
-	export PNETCDF_DIR=${HOME}/install 
+  export OPENARRAY_DIR=${HOME}/install 
+  export PNETCDF_DIR=${HOME}/install 
 ```
 
-  (c) Check the compilers used to build PnetCDF.
-
-```shell
-	cd ${HOME}/install/bin
-	./pnetcdf_version
-```
-
-  (d) Make. Please use the same compilers to build GOMO, PnetCDF and OpenArray.   
+  (c) Make. Please use the same compilers to build GOMO, PnetCDF and OpenArray.   
    For GNU compiler and mpich or openmpi, then:  
 
 ```shell
-	./configure MPICC=mpicc MPICXX=mpicxx MPIF77=mpif77 MPIF90=mpif90
-        make  
+  ./configure MPICC=mpicc MPICXX=mpicxx MPIF77=mpif77 MPIF90=mpif90
+  make  
 ```
    For intel compiler, then:  
 
 ```shell
-	./configure MPICC=mpiicc MPICXX=mpiicpc MPIF77=mpiifort MPIF90=mpiifort
-        make  
+  ./configure MPICC=mpiicc MPICXX=mpiicpc MPIF77=mpiifort MPIF90=mpiifort
+  make  
 ```
 
 ## Run GOMO
