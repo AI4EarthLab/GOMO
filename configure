@@ -624,7 +624,7 @@ LTLIBOBJS
 LIBOBJS
 RANLIB
 MPI_DIR
-OPEN_ARRAY
+OPENARRAY_DIR
 CPP
 PNETCDF_DIR
 HAVE_MPI_MOD_FALSE
@@ -773,7 +773,7 @@ FC
 FCFLAGS
 PNETCDF_DIR
 CPP
-OPEN_ARRAY'
+OPENARRAY_DIR'
 
 
 # Initialize some variables set by options.
@@ -1425,7 +1425,8 @@ Some influential environment variables:
               contains the include and lib subdirectory, for example
               /path/to/pnetcdf_dir/
   CPP         C preprocessor
-  OPEN_ARRAY  openarray installition directory
+  OPENARRAY_DIR
+              openarray installition directory
 
 Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
@@ -7973,7 +7974,7 @@ fi
 
 # check for openarray lib
 
-LDFLAGS=" -L$OPEN_ARRAY/lib ${LDFLAGS}"
+LDFLAGS=" -L$OPENARRAY_DIR/lib ${LDFLAGS}"
 # echo "$(env)"
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing c_init" >&5
 $as_echo_n "checking for library containing c_init... " >&6; }
@@ -8034,17 +8035,17 @@ else
                                 -----------------------------------------------------------------------
                                 Invalid openarray lib specified or detected
                                 A working openarray lib is required. Please specify the location
-                                in the OPEN_ARRAY environment variable. Abort.
+                                in the OPENARRAY_DIR environment variable. Abort.
                             -----------------------------------------------------------------------" "$LINENO" 5
 fi
 
-if test "x$OPEN_ARRAY" != x; then :
+if test "x$OPENARRAY_DIR" != x; then :
 
-            LDFLAGS+=" -L$OPEN_ARRAY/lib "
-            CFLAGS+=" -I$OPEN_ARRAY/include "
-            FCFLAGS+=" -I$OPEN_ARRAY/include "
-            CPPFLAGS+=" -I$OPEN_ARRAY/include "
-            CXXFLAGS+=" -I$OPEN_ARRAY/include "
+            LDFLAGS+=" -L$OPENARRAY_DIR/lib "
+            CFLAGS+=" -I$OPENARRAY_DIR/include "
+            FCFLAGS+=" -I$OPENARRAY_DIR/include "
+            CPPFLAGS+=" -I$OPENARRAY_DIR/include "
+            CXXFLAGS+=" -I$OPENARRAY_DIR/include "
 
 
 

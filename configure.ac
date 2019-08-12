@@ -498,21 +498,21 @@ AS_IF([test "x$PNETCDF_DIR" != x], [APPEND_SEARCH_PATH([$PNETCDF_DIR])],
       [])
 
 # check for openarray lib
-AC_ARG_VAR(OPEN_ARRAY, [openarray installition directory])
-LDFLAGS=" -L$OPEN_ARRAY/lib ${LDFLAGS}"
+AC_ARG_VAR(OPENARRAY_DIR, [openarray installition directory])
+LDFLAGS=" -L$OPENARRAY_DIR/lib ${LDFLAGS}"
 # echo "$(env)"
 AC_SEARCH_LIBS([c_init], [openarray], [], [AC_MSG_ERROR([
                                 -----------------------------------------------------------------------
                                 Invalid openarray lib specified or detected
                                 A working openarray lib is required. Please specify the location 
-                                in the OPEN_ARRAY environment variable. Abort.
+                                in the OPENARRAY_DIR environment variable. Abort.
                             -----------------------------------------------------------------------])],
                             [-lstdc++ -lgfortran -lpnetcdf -lm -ldl -lpthread])
-AS_IF([test "x$OPEN_ARRAY" != x], [APPEND_SEARCH_PATH([$OPEN_ARRAY])], [])
+AS_IF([test "x$OPENARRAY_DIR" != x], [APPEND_SEARCH_PATH([$OPENARRAY_DIR])], [])
 
 AC_SUBST(MPI_DIR)
 AC_SUBST(PNETCDF_DIR)
-AC_SUBST(OPEN_ARRAY)
+AC_SUBST(OPENARRAY_DIR)
 
 AC_PROG_RANLIB
 AC_CONFIG_FILES([Makefile])
