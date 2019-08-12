@@ -14,35 +14,34 @@ For more details, please refer to the paper (https://www.geosci-model-dev-discus
 ## Compile 
 If the installation of OpenArray is done, it is fairly easy to compile GOMO, the basic steps are as follows:
 
-  1) Download GOMO from GitHub:  
+  (a) Download GOMO from GitHub:  
 
 ```shell
         wget https://github.com/hxmhuang/GOMO/archive/master.zip  
 	unzip master.zip
 ```
 
-  2) Set paths to PnetCDF and OpenArray, if PnetCDF and OpenArray are installed in the default directory, `${HOME}/install`.  
+  (b) Set paths to PnetCDF and OpenArray, if PnetCDF and OpenArray are installed in the default directory, `${HOME}/install`.  
 ```shell
-        export OPEN_ARRAY=${HOME}/install 
+        export OPENARRAY_DIR=${HOME}/install 
 	export PNETCDF_DIR=${HOME}/install 
 ```
 
-  3) Check the compilers used to build PnetCDF.
+  (c) Check the compilers used to build PnetCDF.
 
 ```shell
 	cd ${HOME}/install/bin
 	./pnetcdf_version
 ```
 
-  4) Make. Please use the same compilers to build GOMO, PnetCDF and OpenArray.   
-> >  If PnetCDF and OpenArray are built by GNU compiler and mpich or openmpi, then:  
+  (d) Make. Please use the same compilers to build GOMO, PnetCDF and OpenArray.   
+   For GNU compiler and mpich or openmpi, then:  
 
 ```shell
 	./configure MPICC=mpicc MPICXX=mpicxx MPIF77=mpif77 MPIF90=mpif90
         make  
 ```
-
-> >   If PnetCDF and OpenArray are built by intel compiler, then:  
+   For intel compiler, then:  
 
 ```shell
 	./configure MPICC=mpiicc MPICXX=mpiicpc MPIF77=mpiifort MPIF90=mpiifort
