@@ -201,43 +201,43 @@ AUTOCONF = ${SHELL} /home/huangxing/git/GOMO/missing autoconf
 AUTOHEADER = ${SHELL} /home/huangxing/git/GOMO/missing autoheader
 AUTOMAKE = ${SHELL} /home/huangxing/git/GOMO/missing automake-1.13
 AWK = gawk
-CC = /home/huangxing/software/bin/mpicc 
-CFLAGS = -g -O2 -I/home/huangxing/install/include  -I/usr/local/include -I /usr/include $(oplevel0)
-CPP = /home/huangxing/software/bin/mpicc  -E
-CPPFLAGS =  -I/home/huangxing/install/include 
-CXX = /home/huangxing/software/bin/mpicxx 
-CXXFLAGS = -g -O2 -I/home/huangxing/install/include  -I/usr/local/include -I /usr/include $(oplevel0)
+CC = /home/app/mpich-3.2.1/bin/mpicc 
+CFLAGS = -g -O2 -I/home/huangxing/software/openarray/include  -I/usr/local/include -I /usr/include $(oplevel0)
+CPP = /home/app/mpich-3.2.1/bin/mpicc  -E
+CPPFLAGS =  -I/home/huangxing/software/openarray/include 
+CXX = /home/app/mpich-3.2.1/bin/mpicxx 
+CXXFLAGS = -g -O2 -I/home/huangxing/software/openarray/include  -I/usr/local/include -I /usr/include $(oplevel0)
 CYGPATH_W = echo
-DEFS = -DPACKAGE_NAME=\"GOMO\" -DPACKAGE_TARNAME=\"gomo\" -DPACKAGE_VERSION=\"1.0\" -DPACKAGE_STRING=\"GOMO\ 1.0\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DHAVE_DECL_MPICH_VERSION=0 -DHAVE_DECL_MPICH2_VERSION=0 -DHAVE_DECL_OMPI_MAJOR_VERSION=1 -DHAVE_DECL_MVAPICH2_VERSION=0 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1
+DEFS = -DPACKAGE_NAME=\"GOMO\" -DPACKAGE_TARNAME=\"gomo\" -DPACKAGE_VERSION=\"1.0\" -DPACKAGE_STRING=\"GOMO\ 1.0\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DHAVE_DECL_MPICH_VERSION=1 -DHAVE_DECL_MPICH2_VERSION=0 -DHAVE_DECL_OMPI_MAJOR_VERSION=0 -DHAVE_DECL_MVAPICH2_VERSION=0 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
 EGREP = /usr/bin/grep -E
 EXEEXT = 
-FC = /home/huangxing/software/bin/mpif90
-FCFLAGS = -g -O2 -I/home/huangxing/install/include  -fbacktrace -ffree-line-length-0 \
+FC = /home/app/mpich-3.2.1/bin/mpif90
+FCFLAGS = -g -O2 -I/home/huangxing/software/openarray/include  -fbacktrace -ffree-line-length-0 \
 	-I/usr/local/include -I /usr/include $(oplevel0)
-FCLIBS =  -L/home/huangxing/software/lib -L/home/app/gcc-7.3/lib/gcc/x86_64-pc-linux-gnu/7.3.0 -L/home/app/gcc-7.3/lib/gcc/x86_64-pc-linux-gnu/7.3.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/home/huangxing/software/pnetcdf-1.11.2-openmpi-3.1.1/lib -L. -L/home/app/gcc-7.3/lib/gcc/x86_64-pc-linux-gnu/7.3.0/../../.. -lmpi_usempif08 -lmpi_usempi_ignore_tkr -lmpi_mpifh -lmpi -lgfortran -lm -lquadmath -lpthread
+FCLIBS =  -L/home/app/mpich-3.2.1/lib -L/home/app/gcc-7.3/lib/gcc/x86_64-pc-linux-gnu/7.3.0 -L/home/app/gcc-7.3/lib/gcc/x86_64-pc-linux-gnu/7.3.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/home/huangxing/software/pnetcdf-1.11.2-mpich-3.2.1/lib -L. -L/home/app/gcc-7.3/lib/gcc/x86_64-pc-linux-gnu/7.3.0/../../.. -lmpifort -lmpi -lgfortran -lm -lquadmath
 GREP = /usr/bin/grep
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-LDFLAGS =  -L/home/huangxing/install/lib  -L/home/huangxing/install/lib 
+LDFLAGS =  -L/home/huangxing/software/openarray/lib  -L/home/huangxing/software/openarray/lib 
 LIBOBJS = 
 LIBS = -lopenarray -lpnetcdf 
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /home/huangxing/git/GOMO/missing makeinfo
 MKDIR_P = /usr/bin/mkdir -p
-MPICC = /home/huangxing/software/bin/mpicc 
-MPICXX = /home/huangxing/software/bin/mpicxx 
-MPIF77 = /home/huangxing/software/bin/mpif77
-MPIF90 = /home/huangxing/software/bin/mpif90
+MPICC = /home/app/mpich-3.2.1/bin/mpicc 
+MPICXX = /home/app/mpich-3.2.1/bin/mpicxx 
+MPIF77 = /home/app/mpich-3.2.1/bin/mpif77
+MPIF90 = /home/app/mpich-3.2.1/bin/mpif90
 MPI_DIR = 
 NPROC_PROG = nproc
 OBJEXT = o
-OPENARRAY_DIR = /home/huangxing/install
+OPENARRAY_DIR = /home/huangxing/software/openarray
 PACKAGE = gomo
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = GOMO
@@ -260,13 +260,13 @@ abs_srcdir = /home/huangxing/git/GOMO
 abs_top_builddir = /home/huangxing/git/GOMO
 abs_top_srcdir = /home/huangxing/git/GOMO
 ac_ct_AR = ar
-ac_ct_CC = /home/huangxing/software/bin/mpicc 
+ac_ct_CC = /home/app/mpich-3.2.1/bin/mpicc 
 ac_ct_CXX = 
 ac_ct_FC = 
-ac_mpi_prog_MPICC = /home/huangxing/software/bin/mpicc
-ac_mpi_prog_MPICXX = /home/huangxing/software/bin/mpicxx
-ac_mpi_prog_MPIF77 = /home/huangxing/software/bin/mpif77
-ac_mpi_prog_MPIF90 = /home/huangxing/software/bin/mpif90
+ac_mpi_prog_MPICC = /home/app/mpich-3.2.1/bin/mpicc
+ac_mpi_prog_MPICXX = /home/app/mpich-3.2.1/bin/mpicxx
+ac_mpi_prog_MPIF77 = /home/app/mpich-3.2.1/bin/mpif77
+ac_mpi_prog_MPIF90 = /home/app/mpich-3.2.1/bin/mpif90
 am__leading_dot = .
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
@@ -329,7 +329,7 @@ __top_builddir__bin_GOMO_SOURCES = src/config.F90 src/variables.F90 \
 	src/bcond3_u.F90 src/bcond3_v.F90 src/internal_u.F90 \
 	src/internal_v.F90 src/print_section.F90 src/adjust_ufvf.F90 \
 	src/gomo.F90
-__top_builddir__bin_GOMO_LDADD = -lm -ldl -lstdc++ -L. -lstdc++ -lgfortran -lm -ldl -lpthread ${AM_LDFLAGS}
+__top_builddir__bin_GOMO_LDADD =-lopenarray -lm -ldl -lstdc++ -L. -lstdc++ -lgfortran -lm -ldl -lpthread ${AM_LDFLAGS}
 all: all-am
 
 .SUFFIXES:
