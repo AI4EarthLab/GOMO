@@ -329,7 +329,7 @@ __top_builddir__bin_GOMO_SOURCES = src/config.F90 src/variables.F90 \
 	src/bcond3_u.F90 src/bcond3_v.F90 src/internal_u.F90 \
 	src/internal_v.F90 src/print_section.F90 src/adjust_ufvf.F90 \
 	src/gomo.F90
-__top_builddir__bin_GOMO_LDADD =-lopenarray -lm -ldl -lstdc++ -L. -lstdc++ -lgfortran -lm -ldl -lpthread ${AM_LDFLAGS}
+__top_builddir__bin_GOMO_LDADD = -lopenarray -lm -ldl -lstdc++ -L. -lstdc++ -lgfortran -lm -ldl -lpthread ${AM_LDFLAGS}
 all: all-am
 
 .SUFFIXES:

@@ -47,7 +47,7 @@ __top_builddir__bin_GOMO_SOURCES += src/print_section.F90
 __top_builddir__bin_GOMO_SOURCES += src/adjust_ufvf.F90
 __top_builddir__bin_GOMO_SOURCES += src/gomo.F90
 
-__top_builddir__bin_GOMO_LDADD = -lm -ldl -lstdc++ -L. -lstdc++ -lgfortran -lm -ldl -lpthread ${AM_LDFLAGS}
+__top_builddir__bin_GOMO_LDADD = -lopenarray -lm -ldl -lstdc++ -L. -lstdc++ -lgfortran -lm -ldl -lpthread ${AM_LDFLAGS}
 
 src/adjust_ufvf.o : src/adjust_ufvf.F90 src/variables.o src/config.o
 src/adjust_uv.o : src/adjust_uv.F90 src/config.o src/variables.o
